@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 70 综合学习指南 - 逻辑</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/mathjax-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>📚 CS 70 综合学习指南</h1>
+    <div class="header-controls">
+      <input type="text" class="search-box" placeholder="搜索知识点或题目..." id="searchBox">
+      <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+      <div class="lang-toggle" id="langToggle">
+        <button type="button" class="theme-toggle" data-lang="zh-CN">中文</button>
+        <button type="button" class="theme-toggle" data-lang="en">English</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <a class="nav-item" href="logic.html#logic">1. Propositional Logic</a>
+    <a class="nav-subitem" href="logic.html#logic-operators">1.1 基本逻辑运算符</a>
+    <a class="nav-subitem" href="logic.html#logic-equivalence">1.2 逻辑等价</a>
+    <a class="nav-subitem" href="logic.html#logic-quantifiers">1.3 量词</a>
+
+    <a class="nav-item" href="proofs.html#proofs">2. Proof Techniques</a>
+    <a class="nav-subitem" href="proofs.html#proof-direct">2.1 直接证明</a>
+    <a class="nav-subitem" href="proofs.html#proof-contradiction">2.2 反证法</a>
+    <a class="nav-subitem" href="proofs.html#proof-contrapositive">2.3 逆否命题</a>
+    <a class="nav-subitem" href="proofs.html#proof-pigeonhole">2.4 鸽笼原理</a>
+
+    <a class="nav-item" href="induction.html#induction">3. Induction</a>
+    <a class="nav-subitem" href="induction.html#induction-weak">3.1 弱归纳法</a>
+    <a class="nav-subitem" href="induction.html#induction-strong">3.2 强归纳法</a>
+    <a class="nav-subitem" href="induction.html#induction-formulas">3.3 常用求和公式</a>
+
+    <a class="nav-item" href="matching.html#matching">4. Stable Matching</a>
+    <a class="nav-item" href="graphs.html#graphs">5. Graph Theory</a>
+
+    <a class="nav-item" href="modular.html#section6">6. Modular Arithmetic</a>
+    <a class="nav-item" href="polynomials.html#section7">7. Polynomials</a>
+    <a class="nav-item" href="counting.html#counting">8. Counting</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Section 1: Propositional Logic -->
+    <section class="section" id="logic">
+            <h2 class="section-title">1. Propositional Logic（命题逻辑）</h2>
+
+            <!-- 1.1 Basic Operators -->
+            <div class="subsection" id="logic-operators">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+                    1.1 基本逻辑运算符
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>📚 核心概念</h4>
+                        <p>命题逻辑是研究命题（可以判断真假的陈述）之间关系的数学分支。</p>
+                        <ul>
+                            <li><strong>命题</strong>：可以判断真假的陈述句</li>
+                            <li><strong>复合命题</strong>：由基本命题通过逻辑运算符组合而成</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>📐 重要公式</h4>
+                        <div class="formula-item">
+                            <strong>否定（Negation）：</strong> \(\neg P\)
+                            <br>真值：\(P\) 为真时 \(\neg P\) 为假；\(P\) 为假时 \(\neg P\) 为真
+                        </div>
+                        <div class="formula-item">
+                            <strong>合取（Conjunction）：</strong> \(P \land Q\)
+                            <br>真值：仅当 \(P\) 和 \(Q\) 都为真时为真
+                        </div>
+                        <div class="formula-item">
+                            <strong>析取（Disjunction）：</strong> \(P \lor Q\)
+                            <br>真值：当 \(P\) 或 \(Q\) 至少有一个为真时为真
+                        </div>
+                        <div class="formula-item">
+                            <strong>蕴含（Implication）：</strong> \(P \Rightarrow Q\)
+                            <br>真值：仅当 \(P\) 为真且 \(Q\) 为假时为假
+                            <br><em>等价形式：</em> \(\neg P \lor Q\)
+                        </div>
+                        <div class="formula-item">
+                            <strong>双向蕴含（Biconditional）：</strong> \(P \Leftrightarrow Q\)
+                            <br>真值：当 \(P\) 和 \(Q\) 真值相同时为真
+                            <br><em>等价形式：</em> \((P \Rightarrow Q) \land (Q \Rightarrow P)\)
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>💡 解题技巧</h4>
+                        <ul>
+                            <li>记住蕴含的真值表：只有"真推假"为假，其他都为真</li>
+                            <li>蕴含式的否定：\(\neg(P \Rightarrow Q) \equiv P \land \neg Q\)</li>
+                            <li>使用真值表验证复杂命题的等价性</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem 1 -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q3.1(b)</span>
+                                <span class="difficulty">⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>判断以下命题是否总是为真（tautology）：
+                            \[P \lor [(P \Rightarrow Q) \land (P \Rightarrow \neg Q)]\]
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+                            <button class="btn btn-secondary">标记重点</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>✅ 答案：Yes（总是为真）</h4>
+                            <p><strong>解析：</strong></p>
+                            <ol>
+                                <li>分析括号内：\((P \Rightarrow Q) \land (P \Rightarrow \neg Q)\)</li>
+                                <li>当 \(P\) 为真时：
+                                    <ul>
+                                        <li>\(P \Rightarrow Q\) 为真当且仅当 \(Q\) 为真</li>
+                                        <li>\(P \Rightarrow \neg Q\) 为真当且仅当 \(Q\) 为假</li>
+                                        <li>两者不能同时为真，所以括号内为假</li>
+                                    </ul>
+                                </li>
+                                <li>当 \(P\) 为假时：
+                                    <ul>
+                                        <li>两个蕴含式都为真（假可以推出任何东西）</li>
+                                        <li>括号内为真，但 \(P\) 为假</li>
+                                    </ul>
+                                </li>
+                                <li>无论 \(P\) 真假，整个式子 \(P \lor [...]\) 总有一部分为真</li>
+                                <li>因此该命题是永真式</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem 2 -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp24.pdf - Q4(a)</span>
+                                <span class="difficulty">⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>将以下英文翻译成逻辑表达式：<br>
+                            "The robot is not in motion unless it is powered on."
+                            <br><br>
+                            变量定义：
+                            <ul>
+                                <li>\(P\): the robot is powered on</li>
+                                <li>\(M\): the robot is in motion</li>
+                            </ul>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+                            <button class="btn btn-secondary">标记重点</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>✅ 答案：\(M \Rightarrow P\)</h4>
+                            <p><strong>解析：</strong></p>
+                            <ul>
+                                <li>"not in motion unless powered on" 意思是：如果在运动，那么必定powered on</li>
+                                <li>"unless" 可以理解为 "if not"，但在这里更直接的理解是蕴含关系</li>
+                                <li>等价表述："只有在powered on的情况下才能in motion"</li>
+                                <li>逻辑形式：\(M \Rightarrow P\)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.2 Logic Equivalence -->
+            <div class="subsection" id="logic-equivalence">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+                    1.2 逻辑等价
+                </h3>
+                <div class="collapsible-content">
+                    <div class="formula-box">
+                        <h4>📐 重要公式</h4>
+                        <div class="formula-item">
+                            <strong>德摩根定律（De Morgan's Laws）：</strong>
+                            \[\neg(P \land Q) \equiv (\neg P) \lor (\neg Q)\]
+                            \[\neg(P \lor Q) \equiv (\neg P) \land (\neg Q)\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>蕴含式等价：</strong>
+                            \[P \Rightarrow Q \equiv \neg P \lor Q\]
+                            \[P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P \text{ （逆否命题）}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>蕴含式否定：</strong>
+                            \[\neg(P \Rightarrow Q) \equiv P \land \neg Q\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>双重否定：</strong>
+                            \[\neg(\neg P) \equiv P\]
+                        </div>
+                    </div>
+
+                    <!-- Problem -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q3.1(c)</span>
+                                <span class="difficulty">⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>判断以下命题是否总是为真：
+                            \[\neg(P \Rightarrow Q) \equiv (P \land \neg Q)\]
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>✅ 答案：Yes（总是为真）</h4>
+                            <p><strong>解析：</strong></p>
+                            <ol>
+                                <li>首先，\(P \Rightarrow Q \equiv \neg P \lor Q\)</li>
+                                <li>因此，\(\neg(P \Rightarrow Q) \equiv \neg(\neg P \lor Q)\)</li>
+                                <li>应用德摩根定律：\(\neg(\neg P \lor Q) \equiv \neg(\neg P) \land \neg Q\)</li>
+                                <li>应用双重否定：\(\neg(\neg P) \land \neg Q \equiv P \land \neg Q\)</li>
+                                <li>所以命题成立 ✓</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.3 Quantifiers -->
+            <div class="subsection" id="logic-quantifiers">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+                    1.3 量词
+                </h3>
+                <div class="collapsible-content">
+                    <div class="formula-box">
+                        <h4>📐 重要公式</h4>
+                        <div class="formula-item">
+                            <strong>全称量词（Universal Quantifier）：</strong>
+                            \[\forall x \in S, P(x)\]
+                            意思：对于集合 \(S\) 中的所有 \(x\)，\(P(x)\) 都成立
+                        </div>
+                        <div class="formula-item">
+                            <strong>存在量词（Existential Quantifier）：</strong>
+                            \[\exists x \in S, P(x)\]
+                            意思：存在集合 \(S\) 中的某个 \(x\)，使得 \(P(x)\) 成立
+                        </div>
+                        <div class="formula-item">
+                            <strong>量词否定：</strong>
+                            \[\neg(\forall x \in S, P(x)) \equiv \exists x \in S, \neg P(x)\]
+                            \[\neg(\exists x \in S, P(x)) \equiv \forall x \in S, \neg P(x)\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>量词分配（需要注意）：</strong>
+                            \[(\forall x, P(x)) \land (\forall x, Q(x)) \equiv \forall x, (P(x) \land Q(x))\]
+                            \[(\exists x, P(x)) \lor (\exists x, Q(x)) \equiv \exists x, (P(x) \lor Q(x))\]
+                            <br><strong>⚠️ 但以下不等价：</strong>
+                            \[(\forall x, P(x)) \lor (\forall x, Q(x)) \not\equiv \forall x, (P(x) \lor Q(x))\]
+                        </div>
+                    </div>
+
+                    <!-- Problem -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q3.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>对于非空集合 \(S\)，判断以下蕴含式是否总是为真：
+                            \[
+                            \left[(\forall y \in S)(\exists x \in S)(Q(x) \land P(y))\right] \Rightarrow
+                            \left[(\exists x \in S)Q(x) \land (\forall y \in S)P(y)\right]
+                            \]
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>✅ 答案：Yes（总是为真）</h4>
+                            <p><strong>解析：</strong></p>
+                            <ol>
+                                <li><strong>分析左边（前提）：</strong>
+                                    <ul>
+                                        <li>\((\forall y \in S)(\exists x \in S)(Q(x) \land P(y))\)</li>
+                                        <li>对于每个 \(y\)，都存在某个 \(x\) 使得 \(Q(x)\) 和 \(P(y)\) 都成立</li>
+                                    </ul>
+                                </li>
+                                <li><strong>推导右边第一部分 \((\exists x \in S)Q(x)\)：</strong>
+                                    <ul>
+                                        <li>因为 \(S\) 非空，至少存在一个 \(y_0 \in S\)</li>
+                                        <li>由前提，存在某个 \(x_0\) 使得 \(Q(x_0) \land P(y_0)\) 成立</li>
+                                        <li>因此 \(Q(x_0)\) 成立，所以 \((\exists x \in S)Q(x)\) 成立 ✓</li>
+                                    </ul>
+                                </li>
+                                <li><strong>推导右边第二部分 \((\forall y \in S)P(y)\)：</strong>
+                                    <ul>
+                                        <li>对于任意 \(y \in S\)，由前提知存在某个 \(x\) 使得 \(Q(x) \land P(y)\)</li>
+                                        <li>从 \(Q(x) \land P(y)\) 可得 \(P(y)\)</li>
+                                        <li>因此对所有 \(y\)，\(P(y)\) 都成立 ✓</li>
+                                    </ul>
+                                </li>
+                                <li>两部分都成立，所以蕴含式为真</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis01a Problem 1 - Propositional Logic Review -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis01a.pdf - Problem 1</span>
+                                <span class="difficulty">⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>命题逻辑综合练习
+                            <br><br>
+                            <strong>(a)</strong> 假设 \(P\) 为真，\(Q\) 为假。评估以下命题的真值：
+                            <ul>
+                                <li>(i) \(P \land Q\)</li>
+                                <li>(ii) \(P \Rightarrow Q\)</li>
+                                <li>(iii) \(\neg P \Rightarrow Q\)</li>
+                                <li>(iv) \(\neg Q \Rightarrow \neg P\)</li>
+                            </ul>
+                            <strong>(b)</strong> 将以下英文句子转换为命题逻辑：<br>
+                            <em>"Every integer has at least one divisor."</em>
+                            <br><br>
+                            <strong>(c)</strong> 将以下命题逻辑语句转换为英文：<br>
+                            \[\neg(\forall x, y \in \mathbb{Z})[(x < y) \Rightarrow (\exists z \in \mathbb{Z})(x < z < y)]\]
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 评估命题真值（已知 \(P\) = T, \(Q\) = F）：</strong></p>
+
+                            <p><strong>(i) \(P \land Q\)：</strong></p>
+                            <ul>
+                                <li>\(P \land Q = \text{T} \land \text{F} = \text{F}\)</li>
+                                <li><strong>答案：False</strong></li>
+                            </ul>
+
+                            <p><strong>(ii) \(P \Rightarrow Q\)：</strong></p>
+                            <ul>
+                                <li>\(P \Rightarrow Q = \text{T} \Rightarrow \text{F} = \text{F}\)</li>
+                                <li>记住：蕴含式只有在"真推假"时为假</li>
+                                <li><strong>答案：False</strong></li>
+                            </ul>
+
+                            <p><strong>(iii) \(\neg P \Rightarrow Q\)：</strong></p>
+                            <ul>
+                                <li>\(\neg P = \neg \text{T} = \text{F}\)</li>
+                                <li>\(\neg P \Rightarrow Q = \text{F} \Rightarrow \text{F} = \text{T}\)</li>
+                                <li>"假推假"为真（假命题可以推出任何东西）</li>
+                                <li><strong>答案：True</strong></li>
+                            </ul>
+
+                            <p><strong>(iv) \(\neg Q \Rightarrow \neg P\)：</strong></p>
+                            <ul>
+                                <li>\(\neg Q = \neg \text{F} = \text{T}\)</li>
+                                <li>\(\neg P = \neg \text{T} = \text{F}\)</li>
+                                <li>\(\neg Q \Rightarrow \neg P = \text{T} \Rightarrow \text{F} = \text{F}\)</li>
+                                <li><strong>答案：False</strong></li>
+                            </ul>
+
+                            <p><strong>注意：</strong>(iv) 是 (ii) 的逆否命题，但它们的真值相同。这验证了 \(P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P\)。</p>
+
+                            <hr>
+
+                            <p><strong>(b) 英文转命题逻辑：</strong></p>
+                            <p><em>"Every integer has at least one divisor."</em></p>
+
+                            <p><strong>分析：</strong></p>
+                            <ul>
+                                <li>"Every integer" → \(\forall n \in \mathbb{Z}\)</li>
+                                <li>"has at least one divisor" → \(\exists d \in \mathbb{Z}\) 使得 \(d \mid n\)</li>
+                            </ul>
+
+                            <p><strong>答案：</strong></p>
+                            \[(\forall n \in \mathbb{Z})(\exists d \in \mathbb{Z})(d \mid n)\]
+
+                            <p><strong>注意：</strong>这个命题是真的，因为每个整数都至少有 1 和它自己作为因子。</p>
+
+                            <hr>
+
+                            <p><strong>(c) 命题逻辑转英文：</strong></p>
+                            \[\neg(\forall x, y \in \mathbb{Z})[(x < y) \Rightarrow (\exists z \in \mathbb{Z})(x < z < y)]\]
+
+                            <p><strong>逐步分析：</strong></p>
+
+                            <p><strong>步骤 1：</strong>理解内层命题</p>
+                            <ul>
+                                <li>\((x < y) \Rightarrow (\exists z \in \mathbb{Z})(x < z < y)\)</li>
+                                <li>意思：如果 \(x < y\)，那么存在一个整数 \(z\) 使得 \(x < z < y\)</li>
+                            </ul>
+
+                            <p><strong>步骤 2：</strong>全称量词</p>
+                            <ul>
+                                <li>\((\forall x, y \in \mathbb{Z})[…]\)</li>
+                                <li>意思：对于任意两个整数 \(x\) 和 \(y\)，上述蕴含式成立</li>
+                            </ul>
+
+                            <p><strong>步骤 3：</strong>否定</p>
+                            <ul>
+                                <li>\(\neg(\forall x, y \in \mathbb{Z})[…]\)</li>
+                                <li>等价于：\((\exists x, y \in \mathbb{Z})[\neg(…)]\)</li>
+                            </ul>
+
+                            <p><strong>应用量词否定和蕴含式否定：</strong></p>
+                            \[\begin{align}
+                            &\neg(\forall x, y)[(x < y) \Rightarrow (\exists z)(x < z < y)] \\
+                            \equiv\; &(\exists x, y)[\neg((x < y) \Rightarrow (\exists z)(x < z < y))] \\
+                            \equiv\; &(\exists x, y)[(x < y) \land \neg(\exists z)(x < z < y)] \\
+                            \equiv\; &(\exists x, y)[(x < y) \land (\forall z)(\neg(x < z < y))] \\
+                            \equiv\; &(\exists x, y)[(x < y) \land (\forall z)(z \leq x \lor z \geq y)]
+                            \end{align}\]
+
+                            <p><strong>答案（英文）：</strong></p>
+                            <p><em>"There exist integers x and y such that x is less than y, but there is no integer strictly between them."</em></p>
+
+                            <p>或者更自然的表述：</p>
+                            <p><em>"There exist two integers with no integer between them."</em></p>
+
+                            <p><strong>注意：</strong>这个命题是<strong>真</strong>的！例如 \(x = 1, y = 2\)，它们之间没有整数。这说明原始命题（被否定的）是假的。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  </main>
+
+  <button class="back-to-top" id="backToTop">↑</button>
+</body>
+</html>

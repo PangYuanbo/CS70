@@ -1594,6 +1594,107 @@
                             <p><strong>结论：</strong>每第三个斯波那契数确实是偶数。</p>
                         </div>
                     </div>
+
+                    <!-- Problem: Sum of Cubes (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q5</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>用数学归纳法证明对于所有 \(n \in \mathbb{N}\)：
+                            \[1^3 + 2^3 + 3^3 + \cdots + n^3 = (1 + 2 + 3 + \cdots + n)^2\]
+                            <br><br>
+                            <em>提示：你可以使用公式 \(\sum_{i=1}^{n} i = \frac{n(n+1)}{2}\)，且不需要展开 \((n+1)^3\)。</em>
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>证明：</strong>
+
+                            <p><strong>Base Case（\(n = 1\)）：</strong></p>
+                            <ul>
+                                <li>左边：\(1^3 = 1\)</li>
+                                <li>右边：\((1)^2 = 1\)</li>
+                                <li>左边 = 右边 ✓</li>
+                            </ul>
+
+                            <p><strong>Inductive Hypothesis（归纳假设）：</strong></p>
+                            <p>假设对某个 \(n \geq 1\)，命题成立：</p>
+                            \[1^3 + 2^3 + \cdots + n^3 = (1 + 2 + \cdots + n)^2 = \left(\frac{n(n+1)}{2}\right)^2\]
+
+                            <p><strong>Inductive Step（归纳步骤）：</strong></p>
+                            <p>需要证明对 \(n+1\) 命题也成立。</p>
+
+                            \[\begin{align}
+                            1^3 + 2^3 + \cdots + n^3 + (n+1)^3
+                            &= \left(\frac{n(n+1)}{2}\right)^2 + (n+1)^3 \quad \text{(使用归纳假设)} \\
+                            &= (n+1)^2 \left(\frac{n^2}{4} + (n+1)\right) \quad \text{(提取公因子)} \\
+                            &= (n+1)^2 \left(\frac{n^2 + 4(n+1)}{4}\right) \\
+                            &= (n+1)^2 \left(\frac{n^2 + 4n + 4}{4}\right) \\
+                            &= (n+1)^2 \left(\frac{(n+2)^2}{4}\right) \\
+                            &= \left(\frac{(n+1)(n+2)}{2}\right)^2
+                            \end{align}\]
+
+                            <p>而 \(\frac{(n+1)(n+2)}{2} = 1 + 2 + \cdots + (n+1)\)，所以：</p>
+                            \[1^3 + 2^3 + \cdots + (n+1)^3 = (1 + 2 + \cdots + (n+1))^2\]
+
+                            <p><strong>结论：</strong>由数学归纳法，命题对所有 \(n \in \mathbb{N}\) 成立。</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Divisibility by 7 (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q4.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>用数学归纳法证明对于所有 \(n \in \mathbb{N}\)，\(11^n - 4^n\) 能被 7 整除。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>证明：</strong>
+
+                            <p><strong>Base Case（\(n = 0\)）：</strong></p>
+                            <ul>
+                                <li>\(11^0 - 4^0 = 1 - 1 = 0\)</li>
+                                <li>\(0 = 7 \times 0\)，所以 \(7 \mid 0\) ✓</li>
+                            </ul>
+
+                            <p><strong>Inductive Hypothesis（归纳假设）：</strong></p>
+                            <p>假设对某个 \(k \geq 0\)，命题成立：</p>
+                            \[11^k - 4^k = 7m \quad \text{对某个整数 } m\]
+
+                            <p><strong>Inductive Step（证明 \(n = k+1\)）：</strong></p>
+                            <p>需要证明 \(7 \mid (11^{k+1} - 4^{k+1})\)。</p>
+
+                            \[\begin{align}
+                            11^{k+1} - 4^{k+1}
+                            &= 11 \cdot 11^k - 4 \cdot 4^k \\
+                            &= 11 \cdot 11^k - 11 \cdot 4^k + 11 \cdot 4^k - 4 \cdot 4^k \quad \text{(添加和减去 } 11 \cdot 4^k) \\
+                            &= 11(11^k - 4^k) + 4^k(11 - 4) \\
+                            &= 11(7m) + 4^k \cdot 7 \quad \text{(使用归纳假设)} \\
+                            &= 7(11m + 4^k)
+                            \end{align}\]
+
+                            <p>因为 \(11m + 4^k\) 是整数，所以 \(7 \mid (11^{k+1} - 4^{k+1})\) ✓</p>
+
+                            <p><strong>结论：</strong>由数学归纳法，对所有 \(n \in \mathbb{N}\)，\(11^n - 4^n\) 能被 7 整除。</p>
+
+                            <p><strong>另一种方法（模运算）：</strong></p>
+                            <p>注意到 \(11 \equiv 4 \pmod{7}\)，因此：</p>
+                            \[11^n \equiv 4^n \pmod{7}\]
+                            \[11^n - 4^n \equiv 0 \pmod{7}\]
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1748,6 +1849,76 @@
                             <p><strong>结论：</strong>由强归纳法，每个正整数都可以表示为二进制形式。</p>
 
                             <p><strong>注意：</strong>这个证明实际上给出了一个构造二进制表示的算法：不断除以 2，余数就是每一位的值！</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Recursive Sequence Bound (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q4.1</span>
+                                <span class="difficulty">⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑递归定义的序列：
+                            \[S_0 = 1, \quad S_1 = 1, \quad S_n = S_{n-1} + 2S_{n-2} \text{ for } n \geq 2\]
+                            用强归纳法证明对于所有 \(n \geq 0\)，存在常数 \(c\) 使得 \(S_n \leq c \cdot 2^n\)。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>第一步：寻找合适的常数 \(c\)</strong></p>
+                            <p>我们先计算序列的前几项：</p>
+                            <ul>
+                                <li>\(S_0 = 1\)</li>
+                                <li>\(S_1 = 1\)</li>
+                                <li>\(S_2 = S_1 + 2S_0 = 1 + 2(1) = 3\)</li>
+                                <li>\(S_3 = S_2 + 2S_1 = 3 + 2(1) = 5\)</li>
+                                <li>\(S_4 = S_3 + 2S_2 = 5 + 2(3) = 11\)</li>
+                            </ul>
+
+                            <p>检查 \(S_n / 2^n\) 的比值：</p>
+                            <ul>
+                                <li>\(S_0 / 2^0 = 1/1 = 1\)</li>
+                                <li>\(S_1 / 2^1 = 1/2 = 0.5\)</li>
+                                <li>\(S_2 / 2^2 = 3/4 = 0.75\)</li>
+                                <li>\(S_3 / 2^3 = 5/8 = 0.625\)</li>
+                                <li>\(S_4 / 2^4 = 11/16 = 0.6875\)</li>
+                            </ul>
+
+                            <p>最大比值为 1（当 \(n=0\)），所以我们选择 \(c = 1\)，证明 \(S_n \leq 2^n\)。</p>
+
+                            <p><strong>第二步：用强归纳法证明 \(S_n \leq 2^n\)</strong></p>
+
+                            <p><strong>Base Cases：</strong></p>
+                            <ul>
+                                <li>\(n = 0\)：\(S_0 = 1 \leq 2^0 = 1\) ✓</li>
+                                <li>\(n = 1\)：\(S_1 = 1 \leq 2^1 = 2\) ✓</li>
+                            </ul>
+
+                            <p><strong>Inductive Hypothesis：</strong></p>
+                            <p>假设对所有 \(0 \leq k \leq n\)（其中 \(n \geq 1\)），都有 \(S_k \leq 2^k\)。</p>
+
+                            <p><strong>Inductive Step（证明 \(n+1\)）：</strong></p>
+                            <p>对于 \(n+1 \geq 2\)，根据递推关系：</p>
+                            \[\begin{align}
+                            S_{n+1} &= S_n + 2S_{n-1} \\
+                            &\leq 2^n + 2 \cdot 2^{n-1} \quad \text{（由归纳假设）} \\
+                            &= 2^n + 2^n \\
+                            &= 2 \cdot 2^n \\
+                            &= 2^{n+1}
+                            \end{align}\]
+
+                            <p>因此 \(S_{n+1} \leq 2^{n+1}\) ✓</p>
+
+                            <p><strong>结论：</strong>由强归纳法，对于所有 \(n \geq 0\)，都有 \(S_n \leq 2^n\)（即 \(c = 1\)）。</p>
+
+                            <p><strong>💡 为什么使用强归纳？</strong></p>
+                            <p>因为递推关系 \(S_n = S_{n-1} + 2S_{n-2}\) 依赖于两个前项（\(S_{n-1}\) 和 \(S_{n-2}\)），所以我们需要假设所有 \(\leq n\) 的情况都成立，这正是强归纳的应用场景。</p>
                         </div>
                     </div>
                 </div>
@@ -2655,6 +2826,124 @@
                             <p><strong>结论：</strong>算法不是strategy-proof，候选人可以通过撒谎（策略性拒绝）获益。</p>
                         </div>
                     </div>
+
+                    <!-- Problem: Stable Matching Analysis (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q6.1-6.3</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑 3 个求职者（J1, J2, J3）和 3 家公司（C1, C2, C3），偏好如下：
+                            <br><br>
+                            <strong>求职者偏好：</strong><br>
+                            J1: C2 > C1 > C3<br>
+                            J2: C1 > C3 > C2<br>
+                            J3: C3 > C2 > C1<br>
+                            <br>
+                            <strong>公司偏好：</strong><br>
+                            C1: J2 > J1 > J3<br>
+                            C2: J1 > J3 > J2<br>
+                            C3: J3 > J2 > J1<br>
+                            <br>
+                            (a) 运行 Propose-and-Reject 算法（求职者求婚），写出最终的稳定匹配。<br>
+                            (b) 验证这个匹配是否对所有求职者最优（job-optimal）。<br>
+                            (c) 是否存在不稳定对（rogue couple）？如果存在，列出；如果不存在，说明原因。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 运行 Propose-and-Reject 算法</strong></p>
+
+                            <p><strong>Day 1：</strong></p>
+                            <ul>
+                                <li>J1 向第一选择 C2 求婚</li>
+                                <li>J2 向第一选择 C1 求婚</li>
+                                <li>J3 向第一选择 C3 求婚</li>
+                                <li><strong>结果：</strong>C1 临时接受 J2，C2 临时接受 J1，C3 临时接受 J3</li>
+                            </ul>
+
+                            <p><strong>Day 2 及以后：</strong></p>
+                            <ul>
+                                <li>所有求职者都被临时接受，没有被拒绝的求职者</li>
+                                <li>算法终止</li>
+                            </ul>
+
+                            <p><strong>最终稳定匹配：</strong></p>
+                            <ul>
+                                <li>(J1, C2)</li>
+                                <li>(J2, C1)</li>
+                                <li>(J3, C3)</li>
+                            </ul>
+
+                            <p><strong>(b) 验证是否对求职者最优（job-optimal）</strong></p>
+
+                            <p>检查每个求职者是否得到了他们的最佳稳定匹配：</p>
+                            <ul>
+                                <li><strong>J1：</strong>匹配到 C2（第一选择）✓</li>
+                                <li><strong>J2：</strong>匹配到 C1（第一选择）✓</li>
+                                <li><strong>J3：</strong>匹配到 C3（第一选择）✓</li>
+                            </ul>
+
+                            <p><strong>结论：</strong>这个匹配对所有求职者都是最优的（每个求职者都得到了第一选择）。</p>
+
+                            <p><strong>💡 特殊情况：</strong>这是一个罕见的"完美匹配"案例，每个人都得到了第一选择！这说明在某些特殊的偏好配置下，可以实现帕累托最优。</p>
+
+                            <p><strong>(c) 检查是否存在不稳定对</strong></p>
+
+                            <p>不稳定对（rogue couple）是指一对 (J, C)，满足：</p>
+                            <ul>
+                                <li>J 和 C 没有匹配在一起</li>
+                                <li>J 更喜欢 C 而不是当前匹配的公司</li>
+                                <li>C 更喜欢 J 而不是当前匹配的求职者</li>
+                            </ul>
+
+                            <p><strong>逐一检查所有未匹配对：</strong></p>
+
+                            <p><strong>1. (J1, C1)：</strong></p>
+                            <ul>
+                                <li>J1 当前匹配：C2（偏好：C2 > C1）→ J1 不愿意离开 C2</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>2. (J1, C3)：</strong></p>
+                            <ul>
+                                <li>J1 当前匹配：C2（偏好：C2 > C3）→ J1 不愿意离开 C2</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>3. (J2, C2)：</strong></p>
+                            <ul>
+                                <li>J2 当前匹配：C1（偏好：C1 > C2）→ J2 不愿意离开 C1</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>4. (J2, C3)：</strong></p>
+                            <ul>
+                                <li>J2 当前匹配：C1（偏好：C1 > C3）→ J2 不愿意离开 C1</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>5. (J3, C1)：</strong></p>
+                            <ul>
+                                <li>J3 当前匹配：C3（偏好：C3 > C1）→ J3 不愿意离开 C3</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>6. (J3, C2)：</strong></p>
+                            <ul>
+                                <li>J3 当前匹配：C3（偏好：C3 > C2）→ J3 不愿意离开 C3</li>
+                                <li>不构成不稳定对 ✓</li>
+                            </ul>
+
+                            <p><strong>结论：</strong>不存在不稳定对。这个匹配是稳定的，这也验证了 Propose-and-Reject 算法总是产生稳定匹配的理论保证。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -3164,6 +3453,103 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Problem: Tree Properties (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q7.1-7.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑有 \(n\) 个顶点的树。
+                            <br><br>
+                            (a) 证明树恰有 \(n-1\) 条边。<br>
+                            (b) 如果删除树中的一条边，会得到几个连通分量？<br>
+                            (c) 如果添加一条边到树中（连接两个不相邻的顶点），会创建几个环？
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 证明树有 \(n-1\) 条边</strong></p>
+
+                            <p><strong>方法：用归纳法证明</strong></p>
+
+                            <p><strong>Base Case（\(n = 1\)）：</strong></p>
+                            <ul>
+                                <li>1 个顶点的树没有边（\(0 = 1 - 1\)）✓</li>
+                            </ul>
+
+                            <p><strong>Inductive Hypothesis：</strong></p>
+                            <ul>
+                                <li>假设所有有 \(k\) 个顶点的树都有 \(k-1\) 条边</li>
+                            </ul>
+
+                            <p><strong>Inductive Step（证明 \(n = k+1\)）：</strong></p>
+                            <p>考虑有 \(k+1\) 个顶点的树 \(T\)：</p>
+                            <ul>
+                                <li>因为树是连通的无环图，它必有至少一个叶子节点（度数为 1 的顶点）</li>
+                                <li>删除一个叶子节点 \(v\) 及其唯一的边 \(e\)</li>
+                                <li>得到的图 \(T'\) 有 \(k\) 个顶点，仍然是树（连通且无环）</li>
+                                <li>由归纳假设，\(T'\) 有 \(k-1\) 条边</li>
+                                <li>因此 \(T\) 有 \((k-1) + 1 = k = (k+1) - 1\) 条边 ✓</li>
+                            </ul>
+
+                            <p><strong>结论：</strong>有 \(n\) 个顶点的树恰有 \(n-1\) 条边。</p>
+
+                            <p><strong>(b) 删除一条边后的连通分量数</strong></p>
+
+                            <p><strong>分析：</strong></p>
+                            <ul>
+                                <li>树是连通图（1 个连通分量）</li>
+                                <li>树是无环图，所以任意两个顶点之间只有<strong>唯一路径</strong></li>
+                                <li>删除任意一条边 \((u, v)\) 会：
+                                    <ul>
+                                        <li>破坏所有经过这条边的路径</li>
+                                        <li>因为这是顶点 \(u\) 和 \(v\) 之间的唯一路径，删除它使得 \(u\) 和 \(v\) 不再连通</li>
+                                    </ul>
+                                </li>
+                                <li>删除边 \((u, v)\) 后，图分成两个连通分量：
+                                    <ul>
+                                        <li>包含 \(u\) 的分量</li>
+                                        <li>包含 \(v\) 的分量</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p><strong>答案：</strong>删除树中的任意一条边会得到 <strong>2</strong> 个连通分量。</p>
+
+                            <p><strong>(c) 添加一条边后创建的环数</strong></p>
+
+                            <p><strong>分析：</strong></p>
+                            <ul>
+                                <li>树是无环图</li>
+                                <li>在树中，任意两个顶点 \(u\) 和 \(v\) 之间存在唯一路径 \(P\)</li>
+                                <li>如果添加边 \((u, v)\)：
+                                    <ul>
+                                        <li>原来从 \(u\) 到 \(v\) 的路径 \(P\)</li>
+                                        <li>新边 \((u, v)\) 直接连接 \(u\) 和 \(v\)</li>
+                                        <li>这两条路径形成<strong>恰好一个</strong>环</li>
+                                    </ul>
+                                </li>
+                                <li>因为树中任意两点之间只有唯一路径，添加的新边只会创建一个环</li>
+                            </ul>
+
+                            <p><strong>答案：</strong>添加一条边到树中会创建 <strong>恰好 1 个</strong>环。</p>
+
+                            <p><strong>💡 树的关键性质总结：</strong></p>
+                            <ul>
+                                <li>树有 \(n-1\) 条边（\(n\) 个顶点）</li>
+                                <li>删除任意一条边 → 2 个连通分量</li>
+                                <li>添加任意一条边 → 1 个环</li>
+                                <li>任意两点之间有唯一路径</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -3646,6 +4032,82 @@
                                     <li>\(k=2\)：\(v - e + f = 3\) （两个连通分量，共享一个外部面）</li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Planar Graph Application (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q8.1-8.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑一个连通的简单平面图，有 10 个顶点和 21 条边。
+                            <br><br>
+                            (a) 使用欧拉公式求该图有多少个面？<br>
+                            (b) 如果该图的所有面都是三角形（除了外部面），证明这是否可能。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 使用欧拉公式求面数</strong></p>
+
+                            <p><strong>欧拉公式：</strong></p>
+                            \[v - e + f = 2\]
+
+                            <p>其中：</p>
+                            <ul>
+                                <li>\(v = 10\)（顶点数）</li>
+                                <li>\(e = 21\)（边数）</li>
+                                <li>\(f\) = 面数（待求）</li>
+                            </ul>
+
+                            <p><strong>代入公式：</strong></p>
+                            \[\begin{align}
+                            10 - 21 + f &= 2 \\
+                            f &= 2 - 10 + 21 \\
+                            f &= 13
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>该图有 <strong>13</strong> 个面（包括 1 个外部无限面）。</p>
+
+                            <p><strong>(b) 验证所有面是否都是三角形</strong></p>
+
+                            <p><strong>假设：</strong>如果所有面都是三角形，那么每个面由 3 条边界定。</p>
+
+                            <p><strong>边-面关系：</strong></p>
+                            <ul>
+                                <li>每条边恰好被 2 个面共享（平面图的性质）</li>
+                                <li>如果有 \(f\) 个面，每个面有 3 条边，总共有 \(3f\) 个"边-面"关联</li>
+                                <li>因为每条边被计数 2 次，所以：\(2e = 3f\)</li>
+                            </ul>
+
+                            <p><strong>验证：</strong></p>
+                            \[\begin{align}
+                            2e &\stackrel{?}{=} 3f \\
+                            2(21) &\stackrel{?}{=} 3(13) \\
+                            42 &\neq 39
+                            \end{align}\]
+
+                            <p><strong>结论：</strong>不可能所有面都是三角形，因为 \(42 \neq 39\)。</p>
+
+                            <p><strong>进一步分析：</strong></p>
+                            <p>计算平均每个面的边数：</p>
+                            \[\frac{2e}{f} = \frac{2(21)}{13} = \frac{42}{13} \approx 3.23\]
+
+                            <p>这意味着平均每个面有约 3.23 条边。因此，有些面必须有超过 3 条边（如四边形或更大的多边形），或者有些面恰好是三角形但不是全部。</p>
+
+                            <p><strong>💡 关键公式：</strong></p>
+                            <ul>
+                                <li>欧拉公式：\(v - e + f = 2\)</li>
+                                <li>边-面关系：\(2e = \sum_{\text{all faces}} (\text{边数})\)</li>
+                                <li>对于全三角面图：\(2e = 3f\) 或 \(e = \frac{3f}{2}\)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -5314,6 +5776,59 @@
                             <p><strong>结论：</strong>不存在 \(n > 1\) 使得 \(n \mid (2^n - 1)\)。</p>
                         </div>
                     </div>
+
+                    <!-- Problem: Computing Modular Exponents with FLT (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q10.3</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>计算 \(3^{2024} \pmod{11}\)。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>方法：使用费马小定理</strong></p>
+
+                            <p><strong>步骤1：确认条件</strong></p>
+                            <ul>
+                                <li>\(p = 11\) 是素数 ✓</li>
+                                <li>\(\gcd(3, 11) = 1\)（3 和 11 互质）✓</li>
+                            </ul>
+
+                            <p><strong>步骤2：应用费马小定理</strong></p>
+                            <p>由费马小定理，因为 11 是素数且 \(\gcd(3, 11) = 1\)：</p>
+                            \[3^{11-1} = 3^{10} \equiv 1 \pmod{11}\]
+
+                            <p><strong>步骤3：化简指数</strong></p>
+                            <p>将指数 2024 表示为 10 的倍数加余数：</p>
+                            \[\begin{align}
+                            2024 &= 10 \times 202 + 4 \\
+                            3^{2024} &= 3^{10 \times 202 + 4} \\
+                            &= (3^{10})^{202} \cdot 3^4 \\
+                            &\equiv 1^{202} \cdot 3^4 \pmod{11} \\
+                            &\equiv 3^4 \pmod{11}
+                            \end{align}\]
+
+                            <p><strong>步骤4：计算 \(3^4 \pmod{11}\)</strong></p>
+                            \[\begin{align}
+                            3^2 &= 9 \\
+                            3^4 &= (3^2)^2 = 9^2 = 81 \\
+                            81 &= 11 \times 7 + 4 \\
+                            3^4 &\equiv 4 \pmod{11}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>\(3^{2024} \equiv 4 \pmod{11}\)</p>
+
+                            <p><strong>💡 关键点：</strong>费马小定理告诉我们 \(a^{p-1} \equiv 1 \pmod{p}\)，所以计算 \(a^k \pmod{p}\) 时，只需计算 \(a^{k \bmod (p-1)} \pmod{p}\)，这大大简化了大指数的模幂运算。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -5510,6 +6025,103 @@
                             <p>在本题中，\(\gcd(10, 505) = 5\)。</p>
 
                             <p><strong>答案：</strong>有 <strong>5</strong> 个解。</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: CRT Application (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q11.1-11.3</span>
+                                <span class="difficulty">⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑以下同余方程组：
+                            \[\begin{cases}
+                            x \equiv 2 \pmod{5} \\
+                            x \equiv 3 \pmod{7} \\
+                            x \equiv 4 \pmod{11}
+                            \end{cases}\]
+                            <br>
+                            (a) 证明该方程组有唯一解（模 385）。<br>
+                            (b) 使用中国剩余定理求解 \(x\)。<br>
+                            (c) 求在 \([0, 384]\) 范围内的解。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 证明唯一性</strong></p>
+                            <p>要应用中国剩余定理，需要验证模数两两互质：</p>
+                            <ul>
+                                <li>\(\gcd(5, 7) = 1\) ✓</li>
+                                <li>\(\gcd(5, 11) = 1\) ✓</li>
+                                <li>\(\gcd(7, 11) = 1\) ✓</li>
+                            </ul>
+                            <p>因为 5, 7, 11 都是素数，它们两两互质。</p>
+                            <p>由中国剩余定理，方程组在模 \(N = 5 \times 7 \times 11 = 385\) 下有唯一解。</p>
+
+                            <p><strong>(b) 使用 CRT 求解</strong></p>
+
+                            <p><strong>步骤1：</strong>计算 \(N\) 和各个 \(N_i\)：</p>
+                            <ul>
+                                <li>\(N = 5 \times 7 \times 11 = 385\)</li>
+                                <li>\(N_1 = N / 5 = 77\)</li>
+                                <li>\(N_2 = N / 7 = 55\)</li>
+                                <li>\(N_3 = N / 11 = 35\)</li>
+                            </ul>
+
+                            <p><strong>步骤2：</strong>求各个 \(M_i = N_i^{-1} \pmod{n_i}\)：</p>
+
+                            <p>对于 \(M_1\)：求 \(77^{-1} \pmod{5}\)</p>
+                            \[\begin{align}
+                            77 &\equiv 2 \pmod{5} \\
+                            \text{求 } 2^{-1} &\pmod{5}：2 \times 3 = 6 \equiv 1 \pmod{5} \\
+                            M_1 &= 3
+                            \end{align}\]
+
+                            <p>对于 \(M_2\)：求 \(55^{-1} \pmod{7}\)</p>
+                            \[\begin{align}
+                            55 &\equiv 6 \pmod{7} \\
+                            \text{求 } 6^{-1} &\pmod{7}：6 \times 6 = 36 = 35 + 1 \equiv 1 \pmod{7} \\
+                            M_2 &= 6
+                            \end{align}\]
+
+                            <p>对于 \(M_3\)：求 \(35^{-1} \pmod{11}\)</p>
+                            \[\begin{align}
+                            35 &\equiv 2 \pmod{11} \\
+                            \text{求 } 2^{-1} &\pmod{11}：2 \times 6 = 12 \equiv 1 \pmod{11} \\
+                            M_3 &= 6
+                            \end{align}\]
+
+                            <p><strong>步骤3：</strong>应用 CRT 公式：</p>
+                            \[\begin{align}
+                            x &\equiv a_1 N_1 M_1 + a_2 N_2 M_2 + a_3 N_3 M_3 \pmod{N} \\
+                            &\equiv 2 \times 77 \times 3 + 3 \times 55 \times 6 + 4 \times 35 \times 6 \pmod{385} \\
+                            &\equiv 462 + 990 + 840 \pmod{385} \\
+                            &\equiv 2292 \pmod{385}
+                            \end{align}\]
+
+                            <p><strong>步骤4：</strong>化简：</p>
+                            \[\begin{align}
+                            2292 &= 385 \times 5 + 367 \\
+                            x &\equiv 367 \pmod{385}
+                            \end{align}\]
+
+                            <p><strong>(c) 在 [0, 384] 范围内的解</strong></p>
+                            <p>因为 \(367 \in [0, 384]\)，所以解为 \(x = 367\)。</p>
+
+                            <p><strong>验证：</strong></p>
+                            <ul>
+                                <li>\(367 = 5 \times 73 + 2 \equiv 2 \pmod{5}\) ✓</li>
+                                <li>\(367 = 7 \times 52 + 3 \equiv 3 \pmod{7}\) ✓</li>
+                                <li>\(367 = 11 \times 33 + 4 \equiv 4 \pmod{11}\) ✓</li>
+                            </ul>
+
+                            <p><strong>答案：</strong>\(x = 367\)</p>
                         </div>
                     </div>
                 </div>
@@ -5758,6 +6370,134 @@
                             <p>所以解的个数是 \(\dfrac{N}{pr} = \dfrac{pqr}{pr} = q\)</p>
 
                             <p><strong>最终答案：</strong>\(\mathbf{pr}\)（或等价地 \(\dfrac{N}{q}\)）</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: RSA Encryption/Decryption (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q10.1-10.3</span>
+                                <span class="difficulty">⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>考虑 RSA 加密系统，素数 \(p = 13\)，\(q = 17\)。
+                            <br><br>
+                            (a) 计算 \(N = pq\) 和 \(\phi(N)\)。<br>
+                            (b) 如果公钥指数 \(e = 5\)，计算私钥指数 \(d\)。<br>
+                            (c) 用公钥 \((N, e)\) 加密消息 \(m = 42\)，计算密文 \(c\)。<br>
+                            (d) 验证用私钥 \(d\) 能正确解密。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 计算 \(N\) 和 \(\phi(N)\)</strong></p>
+                            \[\begin{align}
+                            N &= pq = 13 \times 17 = 221 \\
+                            \phi(N) &= (p-1)(q-1) = 12 \times 16 = 192
+                            \end{align}\]
+
+                            <p><strong>(b) 计算私钥 \(d\)</strong></p>
+                            <p>需要求 \(d\) 使得 \(ed \equiv 1 \pmod{\phi(N)}\)，即：</p>
+                            \[5d \equiv 1 \pmod{192}\]
+
+                            <p>使用扩展欧几里得算法：</p>
+                            \[\begin{align}
+                            192 &= 5 \times 38 + 2 \\
+                            5 &= 2 \times 2 + 1 \\
+                            2 &= 1 \times 2 + 0
+                            \end{align}\]
+
+                            <p>回代求解：</p>
+                            \[\begin{align}
+                            1 &= 5 - 2 \times 2 \\
+                            &= 5 - (192 - 5 \times 38) \times 2 \\
+                            &= 5 - 192 \times 2 + 5 \times 76 \\
+                            &= 5 \times 77 - 192 \times 2
+                            \end{align}\]
+
+                            <p>因此 \(d = 77\)</p>
+
+                            <p><strong>验证：</strong>\(5 \times 77 = 385 = 192 \times 2 + 1 \equiv 1 \pmod{192}\) ✓</p>
+
+                            <p><strong>(c) 加密消息 \(m = 42\)</strong></p>
+                            <p>密文 \(c \equiv m^e \pmod{N}\)：</p>
+                            \[\begin{align}
+                            c &\equiv 42^5 \pmod{221}
+                            \end{align}\]
+
+                            <p>使用重复平方法计算 \(42^5\)：</p>
+                            \[\begin{align}
+                            42^2 &= 1764 = 221 \times 7 + 217 \equiv 217 \pmod{221} \\
+                            42^4 &\equiv 217^2 = 47089 \pmod{221}
+                            \end{align}\]
+
+                            <p>计算 \(47089 \div 221\)：</p>
+                            \[\begin{align}
+                            47089 &= 221 \times 213 + 16 \\
+                            42^4 &\equiv 16 \pmod{221}
+                            \end{align}\]
+
+                            <p>因此：</p>
+                            \[\begin{align}
+                            42^5 &= 42^4 \times 42 \\
+                            &\equiv 16 \times 42 = 672 \pmod{221} \\
+                            &= 221 \times 3 + 9 \\
+                            &\equiv 9 \pmod{221}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>密文 \(c = 9\)</p>
+
+                            <p><strong>(d) 验证解密</strong></p>
+                            <p>解密：\(m' \equiv c^d \equiv 9^{77} \pmod{221}\)</p>
+
+                            <p>这个计算比较复杂，我们可以使用费马小定理和中国剩余定理简化：</p>
+
+                            <p><strong>模 \(p = 13\) 计算：</strong></p>
+                            \[\begin{align}
+                            9^{77} &\equiv 9^{77 \bmod 12} \pmod{13} \quad \text{（费马小定理）} \\
+                            77 &= 12 \times 6 + 5 \\
+                            9^{77} &\equiv 9^5 \pmod{13}
+                            \end{align}\]
+                            \[\begin{align}
+                            9^2 &= 81 = 13 \times 6 + 3 \equiv 3 \pmod{13} \\
+                            9^4 &\equiv 3^2 = 9 \pmod{13} \\
+                            9^5 &\equiv 9 \times 9 = 81 \equiv 3 \pmod{13}
+                            \end{align}\]
+
+                            <p><strong>模 \(q = 17\) 计算：</strong></p>
+                            \[\begin{align}
+                            9^{77} &\equiv 9^{77 \bmod 16} \pmod{17} \\
+                            77 &= 16 \times 4 + 13 \\
+                            9^{77} &\equiv 9^{13} \pmod{17}
+                            \end{align}\]
+                            \[\begin{align}
+                            9^2 &= 81 = 17 \times 4 + 13 \equiv 13 \pmod{17} \\
+                            9^4 &\equiv 13^2 = 169 = 17 \times 9 + 16 \equiv 16 \equiv -1 \pmod{17} \\
+                            9^8 &\equiv (-1)^2 = 1 \pmod{17} \\
+                            9^{13} &= 9^8 \cdot 9^4 \cdot 9 \equiv 1 \cdot (-1) \cdot 9 \equiv -9 \equiv 8 \pmod{17}
+                            \end{align}\]
+
+                            <p><strong>使用 CRT：</strong></p>
+                            <p>我们有：</p>
+                            \[\begin{cases}
+                            m' \equiv 3 \pmod{13} \\
+                            m' \equiv 8 \pmod{17}
+                            \end{cases}\]
+
+                            <p>原始消息 \(m = 42\)：</p>
+                            <ul>
+                                <li>\(42 = 13 \times 3 + 3 \equiv 3 \pmod{13}\) ✓</li>
+                                <li>\(42 = 17 \times 2 + 8 \equiv 8 \pmod{17}\) ✓</li>
+                            </ul>
+
+                            <p><strong>结论：</strong>解密成功，\(c^d \equiv 42 \equiv m \pmod{221}\) ✓</p>
+
+                            <p><strong>💡 关键技巧：</strong>在 RSA 解密中，利用费马小定理简化模幂运算，再用 CRT 组合结果，可以大大简化计算。</p>
                         </div>
                     </div>
                 </div>
@@ -6136,6 +6876,96 @@
                             <p><strong>一般规律：</strong>给定 \(k\) 个点，度数至多为 \(d\) 的多项式（\(d \geq k-1\)）有 \(p^{d-k+1}\) 个。</p>
                         </div>
                     </div>
+
+                    <!-- Problem: Lagrange Interpolation (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q9.1-9.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>在 \(\text{GF}(7)\) 上，给定三个点：\((1, 3)\)，\((2, 5)\)，\((4, 2)\)。
+                            <br><br>
+                            (a) 使用拉格朗日插值法求通过这三个点的唯一二次多项式 \(P(x)\)。<br>
+                            (b) 计算 \(P(0)\) 和 \(P(6)\) 在 \(\text{GF}(7)\) 中的值。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 使用拉格朗日插值法</strong></p>
+
+                            <p>拉格朗日插值公式：</p>
+                            \[P(x) = \sum_{i=1}^{3} y_i \cdot \Delta_i(x)\]
+
+                            <p>其中：</p>
+                            \[\Delta_i(x) = \prod_{j \neq i} \frac{x - x_j}{x_i - x_j}\]
+
+                            <p><strong>计算 \(\Delta_1(x)\)：</strong>（对应点 \((1, 3)\)）</p>
+                            \[\begin{align}
+                            \Delta_1(x) &= \frac{(x - 2)(x - 4)}{(1 - 2)(1 - 4)} \\
+                            &= \frac{(x - 2)(x - 4)}{(-1)(-3)} \\
+                            &= \frac{(x - 2)(x - 4)}{3}
+                            \end{align}\]
+
+                            <p>在 \(\text{GF}(7)\) 中，\(3^{-1} \equiv 5 \pmod{7}\)（因为 \(3 \times 5 = 15 \equiv 1 \pmod{7}\)）</p>
+                            \[\Delta_1(x) = 5(x - 2)(x - 4) = 5(x^2 - 6x + 8) \equiv 5(x^2 + x + 1) \pmod{7}\]
+
+                            <p><strong>计算 \(\Delta_2(x)\)：</strong>（对应点 \((2, 5)\)）</p>
+                            \[\begin{align}
+                            \Delta_2(x) &= \frac{(x - 1)(x - 4)}{(2 - 1)(2 - 4)} \\
+                            &= \frac{(x - 1)(x - 4)}{(1)(-2)} \\
+                            &= \frac{(x - 1)(x - 4)}{-2} \equiv \frac{(x - 1)(x - 4)}{5} \pmod{7}
+                            \end{align}\]
+
+                            <p>\(5^{-1} \equiv 3 \pmod{7}\)（因为 \(5 \times 3 = 15 \equiv 1 \pmod{7}\)）</p>
+                            \[\Delta_2(x) = 3(x - 1)(x - 4) = 3(x^2 - 5x + 4) \equiv 3(x^2 + 2x + 4) \pmod{7}\]
+
+                            <p><strong>计算 \(\Delta_3(x)\)：</strong>（对应点 \((4, 2)\)）</p>
+                            \[\begin{align}
+                            \Delta_3(x) &= \frac{(x - 1)(x - 2)}{(4 - 1)(4 - 2)} \\
+                            &= \frac{(x - 1)(x - 2)}{(3)(2)} \\
+                            &= \frac{(x - 1)(x - 2)}{6}
+                            \end{align}\]
+
+                            <p>\(6^{-1} \equiv 6 \pmod{7}\)（因为 \(6 \times 6 = 36 \equiv 1 \pmod{7}\)）</p>
+                            \[\Delta_3(x) = 6(x - 1)(x - 2) = 6(x^2 - 3x + 2) \equiv 6(x^2 + 4x + 2) \pmod{7}\]
+
+                            <p><strong>组合得到 \(P(x)\)：</strong></p>
+                            \[\begin{align}
+                            P(x) &= 3 \cdot \Delta_1(x) + 5 \cdot \Delta_2(x) + 2 \cdot \Delta_3(x) \\
+                            &= 3 \cdot 5(x^2 + x + 1) + 5 \cdot 3(x^2 + 2x + 4) + 2 \cdot 6(x^2 + 4x + 2) \\
+                            &= 15(x^2 + x + 1) + 15(x^2 + 2x + 4) + 12(x^2 + 4x + 2) \\
+                            &\equiv (x^2 + x + 1) + (x^2 + 2x + 4) + 5(x^2 + 4x + 2) \pmod{7} \\
+                            &\equiv (x^2 + x + 1) + (x^2 + 2x + 4) + (5x^2 + 20x + 10) \\
+                            &\equiv (x^2 + x + 1) + (x^2 + 2x + 4) + (5x^2 + 6x + 3) \pmod{7} \\
+                            &\equiv 7x^2 + 9x + 8 \\
+                            &\equiv 0x^2 + 2x + 1 \pmod{7} \\
+                            &\equiv 2x + 1 \pmod{7}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>\(P(x) = 2x + 1\)（在 \(\text{GF}(7)\) 中）</p>
+
+                            <p><strong>验证：</strong></p>
+                            <ul>
+                                <li>\(P(1) = 2(1) + 1 = 3\) ✓</li>
+                                <li>\(P(2) = 2(2) + 1 = 5\) ✓</li>
+                                <li>\(P(4) = 2(4) + 1 = 9 \equiv 2 \pmod{7}\) ✓</li>
+                            </ul>
+
+                            <p><strong>(b) 计算 \(P(0)\) 和 \(P(6)\)</strong></p>
+                            \[\begin{align}
+                            P(0) &= 2(0) + 1 = 1 \\
+                            P(6) &= 2(6) + 1 = 13 \equiv 6 \pmod{7}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>\(P(0) = 1\)，\(P(6) = 6\)</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -6273,6 +7103,112 @@
                             </ul>
 
                             <p><strong>答案：</strong>使用嵌套的秘密共享方案，第一层处理国家间的关系，第二层处理国家内代表的关系。</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Secret Sharing Application (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q9.1-9.2</span>
+                                <span class="difficulty">⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>题目：</strong>Alice 想用 Shamir 秘密共享方案分享秘密 \(s = 42\) 给 5 个人，要求任意 3 个人可以恢复秘密。她选择在 \(\text{GF}(101)\) 上工作。
+                            <br><br>
+                            (a) Alice 应该使用什么度数的多项式？<br>
+                            (b) 如果 Alice 构造的多项式是 \(P(x) = 42 + 17x + 8x^2\)（在 \(\text{GF}(101)\) 上），计算她应该分配给前三个人的份额（即 \(P(1), P(2), P(3)\)）。<br>
+                            (c) 如果三个人持有的份额是 \((1, 67)\)，\((2, 96)\)，\((3, 29)\)，用拉格朗日插值恢复秘密 \(s = P(0)\)。
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>解答：</strong>
+
+                            <p><strong>(a) 多项式度数</strong></p>
+                            <p>Shamir 秘密共享方案中：</p>
+                            <ul>
+                                <li>需要 \(k = 3\) 个人才能恢复秘密</li>
+                                <li>多项式度数 = \(k - 1 = 3 - 1 = 2\)</li>
+                            </ul>
+                            <p><strong>答案：</strong>度数为 2 的多项式</p>
+
+                            <p><strong>(b) 计算份额</strong></p>
+                            <p>给定 \(P(x) = 42 + 17x + 8x^2\) 在 \(\text{GF}(101)\) 上：</p>
+
+                            <p><strong>\(P(1)\)：</strong></p>
+                            \[\begin{align}
+                            P(1) &= 42 + 17(1) + 8(1)^2 \\
+                            &= 42 + 17 + 8 \\
+                            &= 67
+                            \end{align}\]
+
+                            <p><strong>\(P(2)\)：</strong></p>
+                            \[\begin{align}
+                            P(2) &= 42 + 17(2) + 8(2)^2 \\
+                            &= 42 + 34 + 8(4) \\
+                            &= 42 + 34 + 32 \\
+                            &= 108 \equiv 7 \pmod{101}
+                            \end{align}\]
+
+                            <p><strong>\(P(3)\)：</strong></p>
+                            \[\begin{align}
+                            P(3) &= 42 + 17(3) + 8(3)^2 \\
+                            &= 42 + 51 + 8(9) \\
+                            &= 42 + 51 + 72 \\
+                            &= 165 \equiv 64 \pmod{101}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>Person 1 得到 \((1, 67)\)，Person 2 得到 \((2, 7)\)，Person 3 得到 \((3, 64)\)</p>
+
+                            <p><strong>(c) 用拉格朗日插值恢复秘密</strong></p>
+                            <p>给定三个点：\((1, 67)\)，\((2, 96)\)，\((3, 29)\)</p>
+
+                            <p>使用拉格朗日插值公式计算 \(P(0)\)：</p>
+                            \[P(0) = \sum_{i=1}^{3} y_i \cdot \Delta_i(0)\]
+
+                            <p>其中：</p>
+                            \[\Delta_i(0) = \prod_{j \neq i} \frac{0 - x_j}{x_i - x_j}\]
+
+                            <p><strong>计算 \(\Delta_1(0)\)：</strong></p>
+                            \[\begin{align}
+                            \Delta_1(0) &= \frac{(0 - 2)(0 - 3)}{(1 - 2)(1 - 3)} \\
+                            &= \frac{(-2)(-3)}{(-1)(-2)} \\
+                            &= \frac{6}{2} = 3
+                            \end{align}\]
+
+                            <p><strong>计算 \(\Delta_2(0)\)：</strong></p>
+                            \[\begin{align}
+                            \Delta_2(0) &= \frac{(0 - 1)(0 - 3)}{(2 - 1)(2 - 3)} \\
+                            &= \frac{(-1)(-3)}{(1)(-1)} \\
+                            &= \frac{3}{-1} = -3 \equiv 98 \pmod{101}
+                            \end{align}\]
+
+                            <p><strong>计算 \(\Delta_3(0)\)：</strong></p>
+                            \[\begin{align}
+                            \Delta_3(0) &= \frac{(0 - 1)(0 - 2)}{(3 - 1)(3 - 2)} \\
+                            &= \frac{(-1)(-2)}{(2)(1)} \\
+                            &= \frac{2}{2} = 1
+                            \end{align}\]
+
+                            <p><strong>计算 \(P(0)\)：</strong></p>
+                            \[\begin{align}
+                            P(0) &= 67 \cdot 3 + 96 \cdot 98 + 29 \cdot 1 \pmod{101} \\
+                            &= 201 + 9408 + 29 \pmod{101} \\
+                            &= 9638 \pmod{101}
+                            \end{align}\]
+
+                            <p>计算 \(9638 \div 101\)：</p>
+                            \[\begin{align}
+                            9638 &= 101 \times 95 + 43 \\
+                            P(0) &\equiv 43 \pmod{101}
+                            \end{align}\]
+
+                            <p><strong>答案：</strong>恢复的秘密是 \(s = 43\)</p>
+
+                            <p><strong>💡 注意：</strong>在实际应用中，三个人必须持有来自同一个多项式的点才能正确恢复秘密。这里 part (b) 和 part (c) 使用的是不同的多项式，所以恢复出不同的值。</p>
                         </div>
                     </div>
                 </div>

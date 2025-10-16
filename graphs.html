@@ -1,0 +1,1406 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 70 综合学习指南 - 图论</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/mathjax-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 CS 70 综合学习指南</h1>
+    <div class="header-controls">
+      <input type="text" class="search-box" placeholder="搜索知识点或题目..." id="searchBox">
+      <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+    </div>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="nav-item" href="logic.html#logic">1. Propositional Logic</a>
+    <a class="nav-item" href="proofs.html#proofs">2. Proof Techniques</a>
+    <a class="nav-item" href="induction.html#induction">3. Induction</a>
+    <a class="nav-item" href="matching.html#matching">4. Stable Matching</a>
+    <a class="nav-item" href="graphs.html#graphs">5. Graph Theory</a>
+    <a class="nav-item" href="modular.html#section6">6. Modular Arithmetic</a>
+    <a class="nav-item" href="polynomials.html#section7">7. Polynomials</a>
+    <a class="nav-item" href="counting.html#counting">8. Counting</a>
+  </nav>
+  <main class="main-content"><section class="section" id="graphs">
+            <h2 class="section-title">5. Graph Theoryï¼ˆå›¾è®ºï¼‰</h2>
+
+            <!-- 5.1 Basic Definitions -->
+            <div class="subsection" id="graphs-basic">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.1 åŸºæœ¬å®šä¹‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>å›¾æ˜¯ç”±é¡¶ç‚¹ï¼ˆverticesï¼‰å’Œè¾¹ï¼ˆedgesï¼‰ç»„æˆçš„æ•°å­¦ç»“æž„ã€‚</p>
+                        <ul>
+                            <li><strong>å›¾ \(G = (V, E)\)</strong>ï¼š\(V\) æ˜¯é¡¶ç‚¹é›†åˆï¼Œ\(E\) æ˜¯è¾¹é›†åˆ</li>
+                            <li><strong>åº¦æ•° deg(v)</strong>ï¼šä¸Žé¡¶ç‚¹ \(v\) ç›¸è¿žçš„è¾¹æ•°</li>
+                            <li><strong>è·¯å¾„ï¼ˆPathï¼‰</strong>ï¼šé¡¶ç‚¹åºåˆ—ï¼Œç›¸é‚»é¡¶ç‚¹é—´æœ‰è¾¹ï¼Œæ— é‡å¤é¡¶ç‚¹</li>
+                            <li><strong>å›žè·¯ï¼ˆCycleï¼‰</strong>ï¼šèµ·ç‚¹å’Œç»ˆç‚¹ç›¸åŒçš„è·¯å¾„</li>
+                            <li><strong>è¿žé€šï¼ˆConnectedï¼‰</strong>ï¼šä»»æ„ä¸¤é¡¶ç‚¹é—´å­˜åœ¨è·¯å¾„</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ åŸºæœ¬å®šç†</h4>
+                        <div class="formula-item">
+                            <strong>æ¡æ‰‹å®šç†ï¼ˆHandshaking Lemmaï¼‰ï¼š</strong>
+                            \[\sum_{v \in V} \deg(v) = 2|E|\]
+                            æ‰€æœ‰é¡¶ç‚¹åº¦æ•°ä¹‹å’Œç­‰äºŽè¾¹æ•°çš„ä¸¤å€
+                        </div>
+                        <div class="formula-item">
+                            <strong>æŽ¨è®ºï¼š</strong>ä»»ä½•å›¾ä¸­ï¼Œå¥‡æ•°åº¦é¡¶ç‚¹çš„ä¸ªæ•°æ˜¯å¶æ•°
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>ç”¨æ¡æ‰‹å®šç†å¿«é€Ÿåˆ¤æ–­å›¾çš„å¯èƒ½æ€§</li>
+                            <li>åº¦æ•°åºåˆ—å¿…é¡»æ»¡è¶³ï¼šåº¦æ•°å’Œä¸ºå¶æ•°</li>
+                            <li>å¥‡æ•°åº¦é¡¶ç‚¹ä¸ªæ•°å¿…é¡»æ˜¯å¶æ•°</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Degree properties -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q7</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯¹äºŽæœ‰ \(m\) æ¡è¾¹å’Œ \(n\) ä¸ªé¡¶ç‚¹çš„å›¾ \(G\)ï¼Œåˆ¤æ–­çœŸå‡ï¼š
+                            <br><br>
+                            <ol>
+                                <li>å¦‚æžœ \(m \geq n-1\)ï¼Œé‚£ä¹ˆ \(G\) å¿…å®šè¿žé€š</li>
+                                <li>å¦‚æžœ \(m \leq n-1\)ï¼Œé‚£ä¹ˆ \(G\) å¿…å®šæ— çŽ¯</li>
+                                <li>å›¾ä¸­å¥‡æ•°åº¦é¡¶ç‚¹çš„ä¸ªæ•°æ€»æ˜¯å¶æ•°</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+                            <ol>
+                                <li><strong>False</strong> - åä¾‹ï¼š4ä¸ªé¡¶ç‚¹ï¼Œ3æ¡è¾¹å½¢æˆä¸‰è§’å½¢åŠ ä¸€ä¸ªå­¤ç«‹ç‚¹ï¼Œ\(m=3 \geq 4-1=3\) ä½†ä¸è¿žé€š</li>
+                                <li><strong>False</strong> - åä¾‹ï¼š3ä¸ªé¡¶ç‚¹ï¼Œ3æ¡è¾¹å½¢æˆä¸‰è§’å½¢ï¼Œ\(m=3 \leq 3-1\) ä½†æœ‰çŽ¯</li>
+                                <li><strong>True</strong> - ç”±æ¡æ‰‹å®šç†ï¼š\(\sum \deg(v) = 2|E|\) æ˜¯å¶æ•°ï¼Œæ‰€ä»¥å¥‡æ•°åº¦é¡¶ç‚¹ä¸ªæ•°å¿…ä¸ºå¶æ•°</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02b Problem 1 - Degree Sequences -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02b.pdf - Problem 1</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åº¦æ•°åºåˆ—ï¼ˆdegree sequenceï¼‰æ˜¯å›¾çš„æ‰€æœ‰é¡¶ç‚¹åº¦æ•°æŒ‰é™åºæŽ’åˆ—çš„åºåˆ—ï¼ˆå¯ä»¥æœ‰é‡å¤ï¼‰ã€‚å¯¹äºŽä»¥ä¸‹æ¯ä¸ªåº¦æ•°åºåˆ—ï¼Œåˆ¤æ–­æ˜¯å¦å­˜åœ¨ç®€å•æ— å‘å›¾ \(G\)ï¼ˆå³æ— è‡ªçŽ¯å’Œé‡è¾¹çš„å›¾ï¼‰å…·æœ‰è¯¥åº¦æ•°åºåˆ—ã€‚è¯´æ˜Žä½ çš„ç†ç”±ã€‚
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>(3,3,2,2)</li>
+                                <li>(3,2,2,2,2,1,1)</li>
+                                <li>(6,2,2,2)</li>
+                                <li>(4,4,3,2,1)</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(a) (3,3,2,2) - å­˜åœ¨</strong></p>
+                            <div class="example-box">
+                                <p><strong>éªŒè¯ï¼š</strong></p>
+                                <ul>
+                                    <li>4ä¸ªé¡¶ç‚¹ï¼Œåº¦æ•°å’Œ = 3+3+2+2 = 10ï¼Œæ˜¯å¶æ•° âœ“</li>
+                                    <li>ç”±æ¡æ‰‹å®šç†ï¼Œè¾¹æ•° = 10/2 = 5</li>
+                                    <li>æœ€å¤§åº¦æ•°3 < é¡¶ç‚¹æ•°-1=3ï¼Œæ»¡è¶³ç®€å•å›¾æ¡ä»¶ âœ“</li>
+                                </ul>
+                                <p><strong>æž„é€ ç¤ºä¾‹ï¼š</strong></p>
+                                <pre>é¡¶ç‚¹ï¼šA(åº¦3), B(åº¦3), C(åº¦2), D(åº¦2)
+è¾¹ï¼šAB, AC, AD, BC, BD
+éªŒè¯åº¦æ•°ï¼šAè¿žæŽ¥B,C,D(åº¦3)ï¼›Bè¿žæŽ¥A,C,D(åº¦3)ï¼›Cè¿žæŽ¥A,B(åº¦2)ï¼›Dè¿žæŽ¥A,B(åº¦2) âœ“</pre>
+                            </div>
+
+                            <p><strong>(b) (3,2,2,2,2,1,1) - ä¸å­˜åœ¨</strong></p>
+                            <div class="example-box">
+                                <p><strong>åˆ†æžï¼š</strong></p>
+                                <ul>
+                                    <li>7ä¸ªé¡¶ç‚¹ï¼Œåº¦æ•°å’Œ = 3+2+2+2+2+1+1 = 13ï¼Œæ˜¯<strong>å¥‡æ•°</strong>ï¼</li>
+                                    <li>ç”±æ¡æ‰‹å®šç†ï¼Œåº¦æ•°å’Œå¿…é¡»æ˜¯å¶æ•°ï¼ˆç­‰äºŽ2å€è¾¹æ•°ï¼‰</li>
+                                    <li><strong>çŸ›ç›¾ï¼</strong>ä¸å­˜åœ¨è¿™æ ·çš„å›¾ã€‚</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(c) (6,2,2,2) - ä¸å­˜åœ¨</strong></p>
+                            <div class="example-box">
+                                <p><strong>åˆ†æžï¼š</strong></p>
+                                <ul>
+                                    <li>4ä¸ªé¡¶ç‚¹ï¼Œåº¦æ•°å’Œ = 6+2+2+2 = 12ï¼Œæ˜¯å¶æ•° âœ“</li>
+                                    <li>ä½†æ˜¯ï¼Œç¬¬ä¸€ä¸ªé¡¶ç‚¹åº¦æ•°ä¸º6ï¼Œè€Œå›¾åªæœ‰4ä¸ªé¡¶ç‚¹</li>
+                                    <li>ç®€å•å›¾ä¸­ï¼Œä¸€ä¸ªé¡¶ç‚¹æœ€å¤šè¿žæŽ¥å…¶ä»– \(n-1 = 3\) ä¸ªé¡¶ç‚¹</li>
+                                    <li>åº¦æ•°6 > 3ï¼Œ<strong>ä¸å¯èƒ½</strong>åœ¨ç®€å•å›¾ä¸­å®žçŽ°ï¼</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(d) (4,4,3,2,1) - ä¸å­˜åœ¨</strong></p>
+                            <div class="example-box">
+                                <p><strong>åˆ†æžï¼š</strong></p>
+                                <ul>
+                                    <li>5ä¸ªé¡¶ç‚¹ï¼Œåº¦æ•°å’Œ = 4+4+3+2+1 = 14ï¼Œæ˜¯å¶æ•° âœ“</li>
+                                    <li>æ‰€æœ‰åº¦æ•° â‰¤ 4 = n-1ï¼Œæ»¡è¶³ç®€å•å›¾å¿…è¦æ¡ä»¶ âœ“</li>
+                                    <li>ä½†è¿™è¿˜ä¸å¤Ÿï¼éœ€è¦æ›´æ·±å…¥çš„åˆ†æž</li>
+                                </ul>
+                                <p><strong>ä½¿ç”¨ErdÅ‘sâ€“Gallaiå®šç†æ£€éªŒï¼š</strong></p>
+                                <p>åº¦æ•°åºåˆ—å¿…é¡»æ»¡è¶³ï¼šå¯¹äºŽæ¯ä¸ª \(k\)ï¼Œå‰ \(k\) ä¸ªåº¦æ•°ä¹‹å’Œ â‰¤ \(k(k-1)\) + åŽé¢åº¦æ•°ä¸­ä¸è¶…è¿‡ \(k\) çš„éƒ¨åˆ†ä¹‹å’Œã€‚</p>
+                                <ul>
+                                    <li>\(k=1\): 4 â‰¤ 0 + min(4,1) + min(3,1) + min(2,1) + min(1,1) = 4 âœ“</li>
+                                    <li>\(k=2\): 8 â‰¤ 2 + min(3,2) + min(2,2) + min(1,2) = 2+2+2+1 = 7 <strong>âœ—</strong></li>
+                                </ul>
+                                <p><strong>ç»“è®ºï¼š</strong>ä¸å­˜åœ¨è¿™æ ·çš„ç®€å•å›¾ã€‚</p>
+                                <p><strong>ç›´è§‚ç†è§£ï¼š</strong>ä¸¤ä¸ªåº¦æ•°ä¸º4çš„é¡¶ç‚¹å¿…é¡»è¿žæŽ¥æ‰€æœ‰å…¶ä»–é¡¶ç‚¹ï¼ŒåŒ…æ‹¬å½¼æ­¤ã€‚ä½†è¿™ä¼šå¯¼è‡´å…¶ä»–é¡¶ç‚¹çš„åº¦æ•°è‡³å°‘ä¸º2ï¼Œä¸Žåº¦æ•°1çŸ›ç›¾ã€‚</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis01a Problem 4 - Pebbles -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis01a.pdf - Problem 4</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å‡è®¾ä½ æœ‰ä¸€ä¸ªçŸ©å½¢é˜µåˆ—çš„åµçŸ³ï¼Œæ¯ä¸ªåµçŸ³æ˜¯çº¢è‰²æˆ–è“è‰²ã€‚å‡è®¾å¯¹äºŽä»Žæ¯ä¸€åˆ—é€‰æ‹©ä¸€ä¸ªåµçŸ³çš„<strong>ä»»æ„</strong>æ–¹å¼ï¼Œé€‰ä¸­çš„åµçŸ³ä¸­éƒ½è‡³å°‘æœ‰ä¸€ä¸ªçº¢è‰²çš„ã€‚
+                            <br><br>
+                            è¯æ˜Žï¼šå¿…ç„¶å­˜åœ¨ä¸€åˆ—å…¨éƒ¨éƒ½æ˜¯çº¢è‰²çš„åµçŸ³ã€‚
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è¯æ˜Žï¼ˆåè¯æ³•ï¼‰ï¼š</strong>
+
+                            <p><strong>å‡è®¾ç»“è®ºçš„å¦å®šï¼š</strong>å‡è®¾æ²¡æœ‰ä¸€åˆ—æ˜¯å…¨éƒ¨çº¢è‰²çš„ã€‚</p>
+
+                            <p><strong>æŽ¨å¯¼ï¼š</strong></p>
+                            <ol>
+                                <li>å¦‚æžœæ²¡æœ‰ä¸€åˆ—æ˜¯å…¨éƒ¨çº¢è‰²çš„ï¼Œé‚£ä¹ˆ<strong>æ¯ä¸€åˆ—è‡³å°‘æœ‰ä¸€ä¸ªè“è‰²çš„åµçŸ³</strong>ã€‚</li>
+                                
+                                <li>å¯¹äºŽæ¯ä¸€åˆ—ï¼Œä»Žè¯¥åˆ—ä¸­é€‰æ‹©ä¸€ä¸ªè“è‰²çš„åµçŸ³ã€‚</li>
+                                
+                                <li>è¿™æ ·æˆ‘ä»¬å°±æž„é€ å‡ºäº†ä¸€ç§é€‰æ‹©æ–¹å¼ï¼šä»Žæ¯ä¸€åˆ—é€‰æ‹©ä¸€ä¸ªåµçŸ³ã€‚</li>
+                                
+                                <li>ä½†æ˜¯æˆ‘ä»¬é€‰ä¸­çš„æ‰€æœ‰åµçŸ³éƒ½æ˜¯<strong>è“è‰²</strong>çš„ï¼</li>
+                                
+                                <li>è¿™ä¸Žé¢˜ç›®æ¡ä»¶çŸ›ç›¾ï¼šé¢˜ç›®è¯´å¯¹äºŽ<strong>ä»»æ„</strong>é€‰æ‹©æ–¹å¼ï¼Œè‡³å°‘æœ‰ä¸€ä¸ªçº¢è‰²çš„åµçŸ³ã€‚</li>
+                            </ol>
+
+                            <p><strong>çŸ›ç›¾ï¼</strong>æˆ‘ä»¬çš„å‡è®¾å¿…é¡»æ˜¯é”™è¯¯çš„ã€‚</p>
+
+                            <p><strong>ç»“è®ºï¼š</strong>å¿…é¡»å­˜åœ¨ä¸€åˆ—å…¨éƒ¨éƒ½æ˜¯çº¢è‰²çš„åµçŸ³ã€‚ âœ“</p>
+
+                            <hr>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong></p>
+                            <ul>
+                                <li>è¿™é“é¢˜å±•çŽ°äº†åè¯æ³•çš„å…¸åž‹ç»“æž„ï¼š
+                                    <ol>
+                                        <li>å‡è®¾ç»“è®ºä¸æˆç«‹</li>
+                                        <li>åŸºäºŽè¿™ä¸ªå‡è®¾æž„é€ ä¸€ä¸ªåä¾‹</li>
+                                        <li>åä¾‹ä¸Žé¢˜ç›®æ¡ä»¶çŸ›ç›¾</li>
+                                        <li>å› æ­¤åŽŸç»“è®ºå¿…é¡»æˆç«‹</li>
+                                    </ol>
+                                </li>
+                                <li>è¿™é“é¢˜çš„éš¾ç‚¹åœ¨äºŽç†è§£â€œ<strong>ä»»æ„</strong>é€‰æ‹©æ–¹å¼â€çš„æ„ä¹‰</li>
+                                <li>å…³é”®æ˜¯è¯†åˆ«ï¼šå¦‚æžœæ¯ä¸€åˆ—éƒ½æœ‰è“è‰²ï¼Œæˆ‘ä»¬å°±å¯ä»¥æž„é€ ä¸€ä¸ªå…¨è“çš„é€‰æ‹©</li>
+                            </ul>
+
+                            <p><strong>ç›´è§‚ç†è§£ï¼š</strong></p>
+                            <p>æƒ³è±¡ä¸€ä¸ªæ¸¸æˆï¼šå¯¹æ‰‹ä»Žæ¯åˆ—é€‰ä¸€ä¸ªåµçŸ³ï¼Œä½ èµ¢å½“ä¸”ä»…å½“è‡³å°‘æœ‰ä¸€ä¸ªçº¢è‰²ã€‚å¦‚æžœä½ ä¸€å®šèƒ½èµ¢ï¼Œé‚£ä¹ˆå¿…é¡»å­˜åœ¨ä¸€åˆ—å…¨çº¢ï¼ˆå¦åˆ™å¯¹æ‰‹å¯ä»¥å…¨é€‰è“è‰²ï¼‰ã€‚</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2.3 é€†å¦å‘½é¢˜è¯æ˜Ž -->
+            <div class="subsection" id="graphs-trees">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.2 æ ‘ï¼ˆTreesï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>æ ‘æ˜¯ä¸€ç§ç‰¹æ®Šçš„å›¾ç»“æž„ï¼Œå…·æœ‰å¤šä¸ªç­‰ä»·å®šä¹‰ã€‚</p>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ æ ‘çš„ç­‰ä»·å®šä¹‰</h4>
+                        <p>ä»¥ä¸‹ä»»æ„ä¸€ä¸ªæ¡ä»¶éƒ½å¯ä»¥å®šä¹‰æ ‘ï¼š</p>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰1ï¼š</strong>è¿žé€šä¸”æ— çŽ¯çš„å›¾
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰2ï¼š</strong>è¿žé€šä¸”æ°æœ‰ \(n-1\) æ¡è¾¹ï¼ˆ\(n\) ä¸ªé¡¶ç‚¹ï¼‰
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰3ï¼š</strong>æ— çŽ¯ä¸”æ°æœ‰ \(n-1\) æ¡è¾¹
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰4ï¼š</strong>è¿žé€šä¸”åˆ é™¤ä»»æ„ä¸€æ¡è¾¹åŽä¸è¿žé€š
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰5ï¼š</strong>æ— çŽ¯ä¸”æ·»åŠ ä»»æ„ä¸€æ¡è¾¹åŽäº§ç”Ÿæ°å¥½ä¸€ä¸ªçŽ¯
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šä¹‰6ï¼š</strong>ä»»æ„ä¸¤ä¸ªé¡¶ç‚¹é—´å­˜åœ¨å”¯ä¸€è·¯å¾„
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ æ ‘çš„é‡è¦æ€§è´¨</h4>
+                        <ul>
+                            <li>æœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„æ ‘æ°æœ‰ \(n-1\) æ¡è¾¹</li>
+                            <li>æ ‘è‡³å°‘æœ‰ä¸¤ä¸ªå¶å­èŠ‚ç‚¹ï¼ˆåº¦æ•°ä¸º1çš„é¡¶ç‚¹ï¼‰</li>
+                            <li>æ ‘æ˜¯äºŒéƒ¨å›¾ï¼ˆbipartiteï¼‰</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Tree with leaves -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp24.pdf - Q7(c)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è®¾ \(T\) æ˜¯æœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„æ ‘ã€‚å‡è®¾ \(T\) æœ‰ä¸€ä¸ªåº¦æ•°ä¸º \(k\) çš„é¡¶ç‚¹ã€‚è¯æ˜Ž \(T\) è‡³å°‘æœ‰ \(k\) ä¸ªå¶å­èŠ‚ç‚¹ã€‚
+                            <br>ï¼ˆå¶å­èŠ‚ç‚¹å®šä¹‰ä¸ºåº¦æ•°æ°å¥½ä¸º1çš„é¡¶ç‚¹ï¼‰
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼š</h4>
+                            <p><strong>æ–¹æ³•ï¼šä½¿ç”¨æ¡æ‰‹å®šç†å’Œæ ‘çš„æ€§è´¨</strong></p>
+                            <ol>
+                                <li>è®¾ \(v\) æ˜¯åº¦æ•°ä¸º \(k\) çš„é¡¶ç‚¹ï¼Œ\(L\) æ˜¯å¶å­èŠ‚ç‚¹çš„ä¸ªæ•°</li>
+                                <li>æ ‘æœ‰ \(n\) ä¸ªé¡¶ç‚¹å’Œ \(n-1\) æ¡è¾¹</li>
+                                <li>ç”±æ¡æ‰‹å®šç†ï¼š\(\sum_{u \in V} \deg(u) = 2(n-1) = 2n-2\)</li>
+                                <li>å°†é¡¶ç‚¹åˆ†ç±»ï¼š
+                                    <ul>
+                                        <li>\(L\) ä¸ªå¶å­èŠ‚ç‚¹ï¼Œæ¯ä¸ªåº¦æ•°ä¸º1</li>
+                                        <li>é¡¶ç‚¹ \(v\)ï¼Œåº¦æ•°ä¸º \(k\)</li>
+                                        <li>å…¶ä½™ \(n-L-1\) ä¸ªé¡¶ç‚¹ï¼Œæ¯ä¸ªåº¦æ•°è‡³å°‘ä¸º2ï¼ˆä¸æ˜¯å¶å­ï¼‰</li>
+                                    </ul>
+                                </li>
+                                <li>å› æ­¤ï¼š
+                                    \[\sum_{u \in V} \deg(u) \geq L \cdot 1 + k + (n-L-1) \cdot 2\]
+                                </li>
+                                <li>æ•´ç†ï¼š
+                                    \begin{align}
+                                    2n-2 &\geq L + k + 2n - 2L - 2 \\
+                                    2n-2 &\geq k + 2n - L - 2 \\
+                                    L &\geq k
+                                    \end{align}
+                                </li>
+                                <li>æ‰€ä»¥ \(T\) è‡³å°‘æœ‰ \(k\) ä¸ªå¶å­èŠ‚ç‚¹ âœ“</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02b Problem 4(a) - Trees have at least 2 leaves -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02b.pdf - Problem 4(a)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è¯æ˜Žæ‰€æœ‰è‡³å°‘æœ‰2ä¸ªé¡¶ç‚¹çš„æ ‘éƒ½æœ‰è‡³å°‘ä¸¤ä¸ªå¶å­èŠ‚ç‚¹ã€‚å›žé¡¾ï¼šå¶å­èŠ‚ç‚¹å®šä¹‰ä¸ºåº¦æ•°æ°å¥½ä¸º1çš„é¡¶ç‚¹ã€‚
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼š</h4>
+
+                            <p><strong>æ–¹æ³•1ï¼šä½¿ç”¨æ¡æ‰‹å®šç†ï¼ˆåè¯æ³•ï¼‰</strong></p>
+                            <div class="proof-box">
+                                <ol>
+                                    <li>å‡è®¾æœ‰ä¸€æ£µæ ‘ \(T\) æœ‰ \(n \geq 2\) ä¸ªé¡¶ç‚¹ï¼Œä½†åªæœ‰0ä¸ªæˆ–1ä¸ªå¶å­èŠ‚ç‚¹ã€‚</li>
+                                    <li>æ ‘æœ‰ \(n-1\) æ¡è¾¹ã€‚</li>
+                                    <li>ç”±æ¡æ‰‹å®šç†ï¼š\(\sum_{v \in V} \deg(v) = 2(n-1) = 2n-2\)</li>
+                                    <li><strong>Case 1ï¼š0ä¸ªå¶å­èŠ‚ç‚¹</strong>
+                                        <ul>
+                                            <li>æ‰€æœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å°‘ä¸º2</li>
+                                            <li>\(\sum \deg(v) \geq 2n\)</li>
+                                            <li>ä½† \(\sum \deg(v) = 2n-2 < 2n\)ï¼Œ<strong>çŸ›ç›¾ï¼</strong></li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Case 2ï¼š1ä¸ªå¶å­èŠ‚ç‚¹</strong>
+                                        <ul>
+                                            <li>1ä¸ªé¡¶ç‚¹åº¦æ•°ä¸º1ï¼Œå…¶ä½™ \(n-1\) ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å°‘ä¸º2</li>
+                                            <li>\(\sum \deg(v) \geq 1 + 2(n-1) = 2n-1\)</li>
+                                            <li>ä½† \(\sum \deg(v) = 2n-2 < 2n-1\)ï¼Œ<strong>çŸ›ç›¾ï¼</strong></li>
+                                        </ul>
+                                    </li>
+                                    <li>å› æ­¤ï¼Œæ ‘å¿…é¡»æœ‰è‡³å°‘ <strong>2ä¸ªå¶å­èŠ‚ç‚¹</strong>ã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>æ–¹æ³•2ï¼šè·¯å¾„æž„é€ æ³•</strong></p>
+                            <div class="proof-box">
+                                <ol>
+                                    <li>è€ƒè™‘æ ‘ä¸­çš„ä¸€æ¡<strong>æœ€é•¿è·¯å¾„</strong> \(P = v_1, v_2, ..., v_k\)</li>
+                                    <li>æˆ‘ä»¬è¯æ˜Ž \(v_1\) å’Œ \(v_k\) éƒ½æ˜¯å¶å­èŠ‚ç‚¹ï¼ˆåº¦æ•°ä¸º1ï¼‰</li>
+                                    <li><strong>è¯æ˜Ž \(v_1\) æ˜¯å¶å­ï¼š</strong>
+                                        <ul>
+                                            <li>å‡è®¾ \(v_1\) çš„åº¦æ•° > 1ï¼Œå³å®ƒé™¤äº†è¿žæŽ¥ \(v_2\) è¿˜è¿žæŽ¥å…¶ä»–é¡¶ç‚¹ \(u\)</li>
+                                            <li>ç”±äºŽæ ‘æ— çŽ¯ï¼Œ\(u\) ä¸åœ¨è·¯å¾„ \(P\) ä¸Š</li>
+                                            <li>ç”±äºŽæ ‘è¿žé€šï¼Œä»Ž \(u\) åˆ° \(v_k\) å¿…é¡»æœ‰è·¯å¾„</li>
+                                            <li>è¿™æ¡è·¯å¾„ä¸èƒ½ç»è¿‡ \(v_1\)ï¼ˆå¦åˆ™æœ‰çŽ¯ï¼‰</li>
+                                            <li>ä½†è¿™æ · \(u, v_1, v_2, ..., v_k\) å°±æ˜¯ä¸€æ¡æ›´é•¿çš„è·¯å¾„ï¼Œä¸Ž \(P\) æ˜¯æœ€é•¿è·¯å¾„çŸ›ç›¾ï¼</li>
+                                        </ul>
+                                    </li>
+                                    <li>åŒç†ï¼Œ\(v_k\) ä¹Ÿæ˜¯å¶å­èŠ‚ç‚¹ã€‚</li>
+                                    <li>ç”±äºŽ \(n \geq 2\)ï¼Œ\(v_1 \neq v_k\)ï¼Œæ‰€ä»¥æœ‰è‡³å°‘ä¸¤ä¸ªä¸åŒçš„å¶å­èŠ‚ç‚¹ã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>æ–¹æ³•3ï¼šå½’çº³æ³•</strong></p>
+                            <div class="proof-box">
+                                <p><strong>Base Case (\(n = 2\))ï¼š</strong></p>
+                                <ul>
+                                    <li>ä¸¤ä¸ªé¡¶ç‚¹çš„æ ‘åªæœ‰ä¸€æ¡è¾¹</li>
+                                    <li>ä¸¤ä¸ªé¡¶ç‚¹åº¦æ•°éƒ½æ˜¯1ï¼Œéƒ½æ˜¯å¶å­ âœ“</li>
+                                </ul>
+                                <p><strong>Inductive Stepï¼š</strong></p>
+                                <ul>
+                                    <li>å‡è®¾æ‰€æœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„æ ‘éƒ½æœ‰è‡³å°‘ä¸¤ä¸ªå¶å­</li>
+                                    <li>è€ƒè™‘ \(n+1\) ä¸ªé¡¶ç‚¹çš„æ ‘ \(T\)ï¼Œåˆ é™¤ä¸€ä¸ªå¶å­ \(v\) å¾—åˆ° \(T'\)</li>
+                                    <li>\(T'\) æœ‰ \(n\) ä¸ªé¡¶ç‚¹ï¼Œç”±å½’çº³å‡è®¾æœ‰è‡³å°‘ä¸¤ä¸ªå¶å­</li>
+                                    <li>è®¾è¿™ä¸¤ä¸ªå¶å­ä¸º \(w_1, w_2\)</li>
+                                    <li>å¦‚æžœ \(v\) çš„é‚»å±…ä¸æ˜¯ \(w_1\) æˆ– \(w_2\)ï¼Œé‚£ä¹ˆ \(T\) ä¸­ \(w_1, w_2, v\) éƒ½æ˜¯å¶å­ï¼ˆè‡³å°‘3ä¸ªï¼‰</li>
+                                    <li>å¦‚æžœ \(v\) çš„é‚»å±…æ˜¯ \(w_1\)ï¼Œé‚£ä¹ˆåœ¨ \(T\) ä¸­ \(w_1\) ä¸æ˜¯å¶å­ï¼Œä½† \(w_2, v\) ä»æ˜¯å¶å­ï¼ˆè‡³å°‘2ä¸ªï¼‰</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Bipartite tree -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02b.pdf - Problem 4(b)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è¯æ˜Žæ‰€æœ‰è‡³å°‘æœ‰2ä¸ªé¡¶ç‚¹çš„æ ‘éƒ½æ˜¯äºŒéƒ¨å›¾ã€‚
+                            <br>ï¼ˆäºŒéƒ¨å›¾ï¼šé¡¶ç‚¹å¯ä»¥åˆ†æˆä¸¤ç»„ï¼Œæ‰€æœ‰è¾¹éƒ½è¿žæŽ¥ä¸¤ç»„ä¹‹é—´çš„é¡¶ç‚¹ï¼‰
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼ˆå½’çº³æ³•ï¼‰ï¼š</h4>
+
+                            <p><strong>Base Case (\(n = 2\))ï¼š</strong></p>
+                            <ul>
+                                <li>ä¸¤ä¸ªé¡¶ç‚¹çš„æ ‘åªæœ‰ä¸€æ¡è¾¹</li>
+                                <li>å¯ä»¥åˆ†æˆä¸¤ç»„ï¼š\(A = \{v_1\}\), \(B = \{v_2\}\)</li>
+                                <li>å”¯ä¸€çš„è¾¹è¿žæŽ¥ä¸¤ç»„ âœ“</li>
+                            </ul>
+
+                            <p><strong>Inductive Hypothesisï¼š</strong></p>
+                            <ul>
+                                <li>å‡è®¾æ‰€æœ‰æœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„æ ‘éƒ½æ˜¯äºŒéƒ¨å›¾ï¼ˆ\(n \geq 2\)ï¼‰</li>
+                            </ul>
+
+                            <p><strong>Inductive Stepï¼š</strong></p>
+                            <ul>
+                                <li>è€ƒè™‘æœ‰ \(n+1\) ä¸ªé¡¶ç‚¹çš„æ ‘ \(T\)</li>
+                                <li>æ ‘è‡³å°‘æœ‰ä¸€ä¸ªå¶å­èŠ‚ç‚¹ï¼Œè®¾ä¸º \(v\)ï¼ˆåº¦æ•°ä¸º1ï¼‰</li>
+                                <li>åˆ é™¤ \(v\) å’Œä¸Žå®ƒç›¸è¿žçš„è¾¹ï¼Œå¾—åˆ°æ ‘ \(T'\)ï¼Œæœ‰ \(n\) ä¸ªé¡¶ç‚¹</li>
+                                <li>ç”±å½’çº³å‡è®¾ï¼Œ\(T'\) æ˜¯äºŒéƒ¨å›¾ï¼Œè®¾ä¸¤ç»„ä¸º \(A\) å’Œ \(B\)</li>
+                                <li>è®¾ \(v\) çš„é‚»å±…ä¸º \(u\)ï¼Œä¸å¤±ä¸€èˆ¬æ€§å‡è®¾ \(u \in A\)</li>
+                                <li>å°† \(v\) åŠ å…¥ç»„ \(B\)</li>
+                                <li>å”¯ä¸€è¿žæŽ¥ \(v\) çš„è¾¹ \((u,v)\) è¿žæŽ¥ \(A\) å’Œ \(B\)</li>
+                                <li>æ‰€ä»¥ \(T\) ä¹Ÿæ˜¯äºŒéƒ¨å›¾ âœ“</li>
+                            </ul>
+
+                            <p><strong>ç»“è®ºï¼š</strong>ç”±æ•°å­¦å½’çº³æ³•ï¼Œæ‰€æœ‰æ ‘éƒ½æ˜¯äºŒéƒ¨å›¾ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02b Problem 2 - Build-Up Error -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02b.pdf - Problem 2</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»¥ä¸‹â€œè¯æ˜Žâ€æœ‰ä»€ä¹ˆé”™è¯¯ï¼Ÿé™¤äº†æ‰¾åˆ°åä¾‹ï¼Œè¿˜éœ€è§£é‡Šè¿™ç§æ–¹æ³•çš„æ ¹æœ¬é”™è¯¯ï¼Œä»¥åŠä¸ºä»€ä¹ˆå®ƒå±•ç¤ºäº† build-up error çš„å±é™©ã€‚
+                            <br><br>
+                            <p><strong>é”™è¯¯æ–­è¨€ï¼š</strong>å¦‚æžœæ— å‘å›¾ä¸­çš„æ¯ä¸ªé¡¶ç‚¹ï¼ˆ\(|V| \geq 2\)ï¼‰çš„åº¦æ•°è‡³å°‘ä¸º1ï¼Œé‚£ä¹ˆå›¾æ˜¯è¿žé€šçš„ã€‚</p>
+                            <br>
+                            <p><strong>â€œè¯æ˜Žâ€ï¼š</strong>æˆ‘ä»¬å¯¹é¡¶ç‚¹æ•° \(n \geq 2\) ä½¿ç”¨å½’çº³æ³•ã€‚</p>
+                            <ul>
+                                <li><strong>åŸºç¡€æƒ…å†µï¼š</strong>å”¯ä¸€çš„æœ‰æ•ˆå›¾æœ‰ä¸¤ä¸ªç”±ä¸€æ¡è¾¹è¿žæŽ¥çš„é¡¶ç‚¹ã€‚è¿™ä¸ªå›¾æ˜¯è¿žé€šçš„ï¼Œæ‰€ä»¥åŸºç¡€æƒ…å†µä¸ºçœŸã€‚</li>
+                                <li><strong>å½’çº³å‡è®¾ï¼š</strong>å‡è®¾å¯¹æŸä¸ª \(n \geq 2\) æ–­è¨€ä¸ºçœŸã€‚</li>
+                                <li><strong>å½’çº³æ­¥éª¤ï¼š</strong>æˆ‘ä»¬è¯æ˜Žå¯¹ \(n+1\) ä¹Ÿä¸ºçœŸã€‚è€ƒè™‘ä¸€ä¸ªæœ‰ \(n\) ä¸ªé¡¶ç‚¹çš„æ— å‘å›¾ï¼Œå…¶ä¸­æ¯ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å°‘ä¸º1ã€‚ç”±å½’çº³å‡è®¾ï¼Œè¿™ä¸ªå›¾æ˜¯è¿žé€šçš„ã€‚çŽ°åœ¨å†æ·»åŠ ä¸€ä¸ªé¡¶ç‚¹ \(x\) å¾—åˆ° \(n+1\) ä¸ªé¡¶ç‚¹çš„å›¾ã€‚æˆ‘ä»¬åªéœ€æ£€æŸ¥ä»Ž \(x\) åˆ°æ¯ä¸ªå…¶ä»–é¡¶ç‚¹ \(z\) éƒ½æœ‰è·¯å¾„ã€‚ç”±äºŽ \(x\) çš„åº¦æ•°è‡³å°‘ä¸º1ï¼Œæ‰€ä»¥ä»Ž \(x\) åˆ°æŸä¸ªå…¶ä»–é¡¶ç‚¹æœ‰ä¸€æ¡è¾¹ï¼›ç§°å…¶ä¸º \(y\)ã€‚å› æ­¤ï¼Œæˆ‘ä»¬å¯ä»¥é€šè¿‡å°†è¾¹ \(\{x,y\}\) ä¸Žä»Ž \(y\) åˆ° \(z\) çš„è·¯å¾„ç›¸è¿žæ¥èŽ·å¾—ä»Ž \(x\) åˆ° \(z\) çš„è·¯å¾„ã€‚è¿™è¯æ˜Žäº†å¯¹ \(n+1\) çš„æ–­è¨€ã€‚</li>
+                            </ul>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+
+                            <p><strong>åä¾‹ï¼š</strong></p>
+                            <div class="example-box">
+                                <p>è€ƒè™‘ä»¥ä¸‹å›¾ï¼šä¸¤ä¸ªç‹¬ç«‹çš„è¾¹ï¼š</p>
+                                <pre>é¡¶ç‚¹ï¼š{A, B, C, D}
+è¾¹ï¼š{AB, CD}
+åº¦æ•°ï¼šA:1, B:1, C:1, D:1</pre>
+                                <ul>
+                                    <li>æ‰€æœ‰é¡¶ç‚¹åº¦æ•°è‡³å°‘ä¸º1 âœ“</li>
+                                    <li>ä½†å›¾<strong>ä¸è¿žé€š</strong>ï¼Aå’ŒBä¸€ç»„ï¼ŒCå’ŒDä¸€ç»„ï¼Œä¸¤ç»„é—´æ²¡æœ‰è¿žæŽ¥</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>é”™è¯¯åˆ†æžï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>1. Build-Up Errorï¼ˆæž„å»ºé”™è¯¯ï¼‰ï¼š</strong></p>
+                                <ul>
+                                    <li>è¿™ä¸ªè¯æ˜ŽçŠ¯äº†ç»å…¸çš„ <strong>build-up error</strong></li>
+                                    <li>åœ¨å½’çº³æ­¥éª¤ä¸­ï¼Œè¯æ˜Žå‡è®¾â€œä»Žä¸€ä¸ªæ»¡è¶³æ¡ä»¶çš„ \(n\) ä¸ªé¡¶ç‚¹çš„å›¾â€å¼€å§‹ï¼Œç„¶åŽæ·»åŠ ç¬¬ \(n+1\) ä¸ªé¡¶ç‚¹</li>
+                                    <li>ä½†æ˜¯ï¼Œ<strong>å…³é”®é—®é¢˜</strong>ï¼šå½“æˆ‘ä»¬æ·»åŠ æ–°é¡¶ç‚¹æ—¶ï¼Œæˆ‘ä»¬ä¸çŸ¥é“å®ƒä¼šè¿žæŽ¥åˆ°<strong>å“ªä¸ª</strong>é¡¶ç‚¹</li>
+                                    <li>å¦‚æžœæ–°é¡¶ç‚¹åªè¿žæŽ¥åˆ°ä¸€ä¸ªå­¤ç«‹çš„éƒ¨åˆ†ï¼Œè¿™ä¸ªæ–¹æ³•å°±æ— æ³•ä¿è¯è¿žé€šæ€§</li>
+                                </ul>
+
+                                <p><strong>2. æ­£ç¡®çš„å½’çº³ç»“æž„ï¼š</strong></p>
+                                <ul>
+                                    <li>å¯¹äºŽè¿™ä¸ªé—®é¢˜ï¼Œæ­£ç¡®çš„æ–¹æ³•åº”è¯¥æ˜¯ <strong>strong induction æˆ– shrinking</strong></li>
+                                    <li><strong>Shrinking æ–¹æ³•</strong>ï¼šä»Ž \(n+1\) ä¸ªé¡¶ç‚¹çš„å›¾å¼€å§‹ï¼Œ<strong>åˆ é™¤</strong>ä¸€ä¸ªé¡¶ç‚¹ï¼Œç„¶åŽåˆ©ç”¨å½’çº³å‡è®¾</li>
+                                    <li>ä½†è¿™ä¸ªé—®é¢˜ä»ç„¶æ— æ³•è¯æ˜Žï¼Œå› ä¸ºæ–­è¨€æœ¬èº«å°±æ˜¯<strong>é”™è¯¯çš„</strong>ï¼</li>
+                                </ul>
+
+                                <p><strong>3. ä¸ºä»€ä¹ˆæ–­è¨€é”™è¯¯ï¼š</strong></p>
+                                <ul>
+                                    <li>æ¯ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å°‘ä¸º1 åªæ˜¯è¯´æ¯ä¸ªé¡¶ç‚¹è‡³å°‘æœ‰ä¸€æ¡è¾¹</li>
+                                    <li>ä½†ä¸ä¿è¯è¿™äº›è¾¹ä¼šå½¢æˆä¸€ä¸ªè¿žé€šçš„ç½‘ç»œ</li>
+                                    <li>å¯èƒ½æœ‰å¤šä¸ªç‹¬ç«‹çš„è¿žé€šåˆ†é‡ï¼ˆconnected componentsï¼‰</li>
+                                </ul>
+
+                                <p><strong>4. Build-Up Error çš„å±é™©ï¼š</strong></p>
+                                <ul>
+                                    <li>å½“æˆ‘ä»¬â€œæž„å»ºâ€ä¸€ä¸ªæ›´å¤§çš„å¯¹è±¡æ—¶ï¼Œå¾ˆéš¾æŽ§åˆ¶æˆ‘ä»¬æ·»åŠ çš„éƒ¨åˆ†å¦‚ä½•ä¸ŽçŽ°æœ‰éƒ¨åˆ†äº¤äº’</li>
+                                    <li>è¿™å¯èƒ½ä¼šå¯¼è‡´æˆ‘ä»¬æ— æ³•ä¿è¯æ‰€éœ€çš„æ€§è´¨</li>
+                                    <li><strong>æ›´å®‰å…¨çš„æ–¹æ³•</strong>ï¼šä»Žæ›´å¤§çš„å¯¹è±¡å¼€å§‹ï¼Œç„¶åŽ<strong>åˆ é™¤</strong>éƒ¨åˆ†ï¼Œè¿™æ ·æˆ‘ä»¬èƒ½æ›´å¥½åœ°æŽ§åˆ¶ç»“æž„</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>æ­£ç¡®çš„æ–­è¨€ï¼š</strong></p>
+                            <div class="tips-box">
+                                <p>å¦‚æžœæ¯ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å°‘ä¸º2ï¼Œé‚£ä¹ˆå›¾åŒ…å«ä¸€ä¸ªçŽ¯ï¼ˆä½†ä¸ä¸€å®šè¿žé€šï¼‰ã€‚</p>
+                                <p>å¦‚æžœå›¾è¿žé€šä¸”æ¯ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å°‘ä¸º2ï¼Œé‚£ä¹ˆå›¾åŒ…å«ä¸€ä¸ªçŽ¯ã€‚</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5.3 Eulerian Tours -->
+            <div class="subsection" id="graphs-euler">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.3 æ¬§æ‹‰å›žè·¯ï¼ˆEulerian Toursï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>æ¬§æ‹‰å›žè·¯æ˜¯ç»è¿‡å›¾ä¸­æ¯æ¡è¾¹æ°å¥½ä¸€æ¬¡çš„å›žè·¯ã€‚</p>
+                        <ul>
+                            <li><strong>æ¬§æ‹‰å›žè·¯ï¼ˆEulerian Tourï¼‰</strong>ï¼šèµ·ç‚¹=ç»ˆç‚¹ï¼Œç»è¿‡æ¯æ¡è¾¹æ°å¥½ä¸€æ¬¡</li>
+                            <li><strong>æ¬§æ‹‰è·¯å¾„ï¼ˆEulerian Pathï¼‰</strong>ï¼šèµ·ç‚¹â‰ ç»ˆç‚¹ï¼Œç»è¿‡æ¯æ¡è¾¹æ°å¥½ä¸€æ¬¡</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ æ¬§æ‹‰å›žè·¯å­˜åœ¨å®šç†</h4>
+                        <div class="formula-item">
+                            <strong>å®šç†ï¼š</strong>è¿žé€šå›¾æœ‰æ¬§æ‹‰å›žè·¯ âŸº æ‰€æœ‰é¡¶ç‚¹çš„åº¦æ•°éƒ½æ˜¯å¶æ•°
+                        </div>
+                        <div class="formula-item">
+                            <strong>æŽ¨è®ºï¼š</strong>è¿žé€šå›¾æœ‰æ¬§æ‹‰è·¯å¾„ âŸº æ°æœ‰0ä¸ªæˆ–2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹
+                            <ul>
+                                <li>0ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ï¼šå­˜åœ¨æ¬§æ‹‰å›žè·¯</li>
+                                <li>2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ï¼šå­˜åœ¨æ¬§æ‹‰è·¯å¾„ï¼ˆèµ·ç‚¹å’Œç»ˆç‚¹æ˜¯è¿™ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ï¼‰</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ åˆ¤æ–­æŠ€å·§</h4>
+                        <ul>
+                            <li>å…ˆæ£€æŸ¥è¿žé€šæ€§</li>
+                            <li>å†æ•°å¥‡æ•°åº¦é¡¶ç‚¹çš„ä¸ªæ•°</li>
+                            <li>è®°ä½ï¼šå¶æ•°åº¦â†’å›žè·¯ï¼Œ2ä¸ªå¥‡æ•°åº¦â†’è·¯å¾„ï¼Œå…¶ä»–â†’ä¸å­˜åœ¨</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Eulerian tour existence -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp24.pdf - Q7(a)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯¹äºŽç»™å®šçš„å›¾ï¼Œéœ€è¦æ·»åŠ å“ªä¸€æ¡è¾¹ä½¿å…¶åŒ…å«æ¬§æ‹‰å›žè·¯ï¼Ÿ
+                            <br><br>
+                            <div style="text-align: center; margin: 20px 0;">
+                                <svg width="250" height="200" style="border: 1px solid #ddd;">
+                                    <circle cx="50" cy="50" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="55" text-anchor="middle" font-size="16">a</text>
+
+                                    <circle cx="125" cy="30" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="125" y="35" text-anchor="middle" font-size="16">b</text>
+
+                                    <circle cx="200" cy="50" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="200" y="55" text-anchor="middle" font-size="16">c</text>
+
+                                    <circle cx="50" cy="150" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="50" y="155" text-anchor="middle" font-size="16">f</text>
+
+                                    <circle cx="125" cy="120" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="125" y="125" text-anchor="middle" font-size="16">d</text>
+
+                                    <circle cx="200" cy="150" r="20" fill="lightblue" stroke="black" stroke-width="2"/>
+                                    <text x="200" y="155" text-anchor="middle" font-size="16">e</text>
+
+                                    <line x1="70" y1="50" x2="105" y2="30" stroke="black" stroke-width="2"/>
+                                    <line x1="145" y1="30" x2="180" y2="50" stroke="black" stroke-width="2"/>
+                                    <line x1="50" y1="70" x2="50" y2="130" stroke="black" stroke-width="2"/>
+                                    <line x1="70" y1="150" x2="105" y2="120" stroke="black" stroke-width="2"/>
+                                    <line x1="145" y1="120" x2="180" y2="150" stroke="black" stroke-width="2"/>
+                                    <line x1="200" y1="70" x2="200" y2="130" stroke="black" stroke-width="2"/>
+                                    <line x1="125" y1="50" x2="125" y2="100" stroke="black" stroke-width="2"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+                            <ol>
+                                <li><strong>åˆ†æžå½“å‰åº¦æ•°ï¼š</strong>
+                                    <ul>
+                                        <li>deg(a) = 2ï¼ˆå¶æ•°ï¼‰</li>
+                                        <li>deg(b) = 2ï¼ˆå¶æ•°ï¼‰</li>
+                                        <li>deg(c) = 2ï¼ˆå¶æ•°ï¼‰</li>
+                                        <li>deg(d) = 3ï¼ˆå¥‡æ•°ï¼‰</li>
+                                        <li>deg(e) = 2ï¼ˆå¶æ•°ï¼‰</li>
+                                        <li>deg(f) = 2ï¼ˆå¶æ•°ï¼‰</li>
+                                    </ul>
+                                </li>
+                                <li>åªæœ‰é¡¶ç‚¹dçš„åº¦æ•°æ˜¯å¥‡æ•°ï¼Œä½†éœ€è¦æ‰€æœ‰åº¦æ•°éƒ½æ˜¯å¶æ•°</li>
+                                <li>ç­‰ç­‰ï¼Œé‡æ–°æ•°ï¼šå›¾ä¸­æœ‰ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</li>
+                                <li><strong>éœ€è¦è¿žæŽ¥ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong>ä½¿å®ƒä»¬éƒ½å˜æˆå¶æ•°åº¦</li>
+                                <li><strong>ç­”æ¡ˆï¼š</strong>æ·»åŠ è¿žæŽ¥ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹çš„è¾¹</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02b Problem 3 - Eulerian Tour and Walk -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02b.pdf - Problem 3</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è€ƒè™‘ä»¥ä¸‹å›¾ï¼š
+                            <br><br>
+                            <pre>é¡¶ç‚¹ï¼š1, 2, 3, 4, 5, 6, 7
+è¾¹çš„æè¿°ï¼š
+  - 1è¿žæŽ¥2, 3, 4
+  - 2è¿žæŽ¥1, 3, 4, 5
+  - 3è¿žæŽ¥1, 2, 4
+  - 4è¿žæŽ¥1, 2, 3, 5, 6
+  - 5è¿žæŽ¥2, 4, 6, 7
+  - 6è¿žæŽ¥4, 5, 7
+  - 7è¿žæŽ¥5, 6</pre>
+                            <br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>å›¾ä¸­æ˜¯å¦å­˜åœ¨æ¬§æ‹‰å›žè·¯ï¼Ÿå¦‚æžœä¸å­˜åœ¨ï¼Œç»™å‡ºç†ç”±ã€‚å¦‚æžœå­˜åœ¨ï¼Œç»™å‡ºä¸€ä¸ªç¤ºä¾‹ã€‚</li>
+                                <li>å›¾ä¸­æ˜¯å¦å­˜åœ¨æ¬§æ‹‰è·¯å¾„ï¼Ÿï¼ˆæ¬§æ‹‰è·¯å¾„æ˜¯ç»è¿‡æ¯æ¡è¾¹æ°å¥½ä¸€æ¬¡çš„è·¯å¾„ï¼‰å¦‚æžœä¸å­˜åœ¨ï¼Œç»™å‡ºç†ç”±ã€‚å¦‚æžœå­˜åœ¨ï¼Œç»™å‡ºä¸€ä¸ªç¤ºä¾‹ã€‚</li>
+                                <li>æ— å‘å›¾ä¸­å­˜åœ¨æ¬§æ‹‰è·¯å¾„çš„æ¡ä»¶æ˜¯ä»€ä¹ˆï¼Ÿç®€è¦è¯´æ˜Žä½ çš„ç­”æ¡ˆã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+
+                            <p><strong>é¦–å…ˆåˆ†æžåº¦æ•°ï¼š</strong></p>
+                            <div class="example-box">
+                                <ul>
+                                    <li>deg(1) = 3 ï¼ˆå¥‡æ•°ï¼‰</li>
+                                    <li>deg(2) = 4 ï¼ˆå¶æ•°ï¼‰</li>
+                                    <li>deg(3) = 3 ï¼ˆå¥‡æ•°ï¼‰</li>
+                                    <li>deg(4) = 5 ï¼ˆå¥‡æ•°ï¼‰</li>
+                                    <li>deg(5) = 4 ï¼ˆå¶æ•°ï¼‰</li>
+                                    <li>deg(6) = 3 ï¼ˆå¥‡æ•°ï¼‰</li>
+                                    <li>deg(7) = 2 ï¼ˆå¶æ•°ï¼‰</li>
+                                </ul>
+                                <p><strong>å¥‡æ•°åº¦é¡¶ç‚¹ï¼š</strong>1, 3, 4, 6 ï¼ˆå…±4ä¸ªï¼‰</p>
+                            </div>
+
+                            <p><strong>(a) æ˜¯å¦å­˜åœ¨æ¬§æ‹‰å›žè·¯ï¼Ÿ - ä¸å­˜åœ¨</strong></p>
+                            <div class="proof-box">
+                                <p><strong>ç†ç”±ï¼š</strong></p>
+                                <ul>
+                                    <li>æ¬§æ‹‰å›žè·¯å­˜åœ¨çš„å……è¦æ¡ä»¶ï¼šå›¾è¿žé€šä¸”<strong>æ‰€æœ‰é¡¶ç‚¹åº¦æ•°éƒ½æ˜¯å¶æ•°</strong></li>
+                                    <li>è¿™ä¸ªå›¾æœ‰ <strong>4ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong>ï¼š1, 3, 4, 6</li>
+                                    <li>å› æ­¤<strong>ä¸å­˜åœ¨</strong>æ¬§æ‹‰å›žè·¯ã€‚</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(b) æ˜¯å¦å­˜åœ¨æ¬§æ‹‰è·¯å¾„ï¼Ÿ - ä¸å­˜åœ¨</strong></p>
+                            <div class="proof-box">
+                                <p><strong>ç†ç”±ï¼š</strong></p>
+                                <ul>
+                                    <li>æ¬§æ‹‰è·¯å¾„å­˜åœ¨çš„å……è¦æ¡ä»¶ï¼šå›¾è¿žé€šä¸”<strong>æ°æœ‰0ä¸ªæˆ–2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong></li>
+                                    <li>0ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ â‡’ å­˜åœ¨æ¬§æ‹‰å›žè·¯</li>
+                                    <li>2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ â‡’ å­˜åœ¨æ¬§æ‹‰è·¯å¾„ï¼ˆèµ·ç‚¹å’Œç»ˆç‚¹æ˜¯è¿™ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹ï¼‰</li>
+                                    <li>è¿™ä¸ªå›¾æœ‰ <strong>4ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong></li>
+                                    <li>å› æ­¤<strong>ä¸å­˜åœ¨</strong>æ¬§æ‹‰è·¯å¾„ã€‚</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(c) æ¬§æ‹‰è·¯å¾„å­˜åœ¨çš„æ¡ä»¶ï¼š</strong></p>
+                            <div class="formula-box">
+                                <p><strong>å®šç†ï¼š</strong></p>
+                                <p>è¿žé€šçš„æ— å‘å›¾å­˜åœ¨æ¬§æ‹‰è·¯å¾„å½“ä¸”ä»…å½“ï¼š</p>
+                                <ul>
+                                    <li><strong>å›¾æ˜¯è¿žé€šçš„</strong>ï¼Œä¸”</li>
+                                    <li><strong>æ°æœ‰0ä¸ªæˆ–2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong></li>
+                                </ul>
+                                <br>
+                                <p><strong>è¯¦ç»†åˆ†ç±»ï¼š</strong></p>
+                                <ul>
+                                    <li><strong>0ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong> â‡’ å­˜åœ¨æ¬§æ‹‰<strong>å›žè·¯</strong>ï¼ˆèµ·ç‚¹=ç»ˆç‚¹ï¼‰</li>
+                                    <li><strong>2ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</strong> â‡’ å­˜åœ¨æ¬§æ‹‰<strong>è·¯å¾„</strong>ï¼ˆä¸æ˜¯å›žè·¯ï¼‰
+                                        <ul>
+                                            <li>èµ·ç‚¹å’Œç»ˆç‚¹å¿…é¡»æ˜¯è¿™ä¸¤ä¸ªå¥‡æ•°åº¦é¡¶ç‚¹</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>å…¶ä»–æƒ…å†µ</strong>(å¥‡æ•°åº¦é¡¶ç‚¹ > 2) â‡’ ä¸å­˜åœ¨æ¬§æ‹‰è·¯å¾„</li>
+                                </ul>
+                                <br>
+                                <p><strong>ç›´è§‚ç†è§£ï¼š</strong></p>
+                                <ul>
+                                    <li>æ¯æ¬¡ç»è¿‡ä¸€ä¸ªé¡¶ç‚¹æ—¶ï¼Œæˆ‘ä»¬ä½¿ç”¨2æ¡è¾¹ï¼ˆä¸€è¿›ä¸€å‡ºï¼‰</li>
+                                    <li>æ‰€ä»¥ä¸­é—´é¡¶ç‚¹çš„åº¦æ•°å¿…é¡»æ˜¯å¶æ•°</li>
+                                    <li>åªæœ‰èµ·ç‚¹å’Œç»ˆç‚¹å¯ä»¥æ˜¯å¥‡æ•°åº¦ï¼ˆåªå‡º/åªè¿›ï¼‰</li>
+                                    <li>å¦‚æžœèµ·ç‚¹=ç»ˆç‚¹ï¼ˆå›žè·¯ï¼‰ï¼Œé‚£ä¹ˆæ‰€æœ‰é¡¶ç‚¹éƒ½æ˜¯å¶æ•°åº¦</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5.4 Planar Graphs -->
+            <div class="subsection" id="graphs-planar">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.4 å¹³é¢å›¾ï¼ˆPlanar Graphsï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>å¹³é¢å›¾æ˜¯å¯ä»¥åœ¨å¹³é¢ä¸Šç”»å‡ºä¸”è¾¹ä¸ç›¸äº¤çš„å›¾ã€‚</p>
+                        <ul>
+                            <li><strong>é¢ï¼ˆFaceï¼‰</strong>ï¼šå¹³é¢å›¾ä¸­è¢«è¾¹å›´æˆçš„åŒºåŸŸï¼ˆåŒ…æ‹¬å¤–éƒ¨æ— é™å¤§çš„åŒºåŸŸï¼‰</li>
+                            <li><strong>é¢çš„å¤§å°</strong>ï¼šå›´æˆè¯¥é¢çš„è¾¹æ•°</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ æ¬§æ‹‰å…¬å¼</h4>
+                        <div class="formula-item">
+                            <strong>æ¬§æ‹‰å…¬å¼ï¼ˆEuler's Formulaï¼‰ï¼š</strong>
+                            \[v - e + f = 2\]
+                            å…¶ä¸­ \(v\) = é¡¶ç‚¹æ•°ï¼Œ\(e\) = è¾¹æ•°ï¼Œ\(f\) = é¢æ•°
+                        </div>
+                        <div class="formula-item">
+                            <strong>è¾¹æ•°ä¸Šç•Œï¼š</strong>å¯¹äºŽç®€å•è¿žé€šå¹³é¢å›¾ï¼š
+                            \[e \leq 3v - 6\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>æ— ä¸‰è§’å½¢çš„å¹³é¢å›¾ï¼š</strong>å¦‚æžœå›¾çš„girthï¼ˆæœ€çŸ­çŽ¯é•¿åº¦ï¼‰â‰¥ 4ï¼š
+                            \[e \leq 2v - 4\]
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ åˆ¤æ–­å¹³é¢å›¾æŠ€å·§</h4>
+                        <ul>
+                            <li>æ£€æŸ¥ \(e \leq 3v - 6\) æ˜¯å¦æˆç«‹</li>
+                            <li>\(K_5\) å’Œ \(K_{3,3}\) ä¸æ˜¯å¹³é¢å›¾</li>
+                            <li>ä½¿ç”¨Kuratowskiå®šç†ï¼šåŒ…å« \(K_5\) æˆ– \(K_{3,3}\) çš„å­å›¾åˆ™ä¸æ˜¯å¹³é¢å›¾</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Planar graph with girth -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp24.pdf - Q7(d)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å›¾ \(G\) çš„girthæ˜¯æŒ‡ \(G\) ä¸­æœ€çŸ­çŽ¯çš„è¾¹æ•°ï¼ˆå¦‚æžœæ— çŽ¯åˆ™girth = âˆžï¼‰ã€‚
+                            <br>å‡è®¾ \(G\) è¿žé€šï¼Œæœ‰ \(n = 80\) ä¸ªé¡¶ç‚¹ï¼Œ\(e = 135\) æ¡è¾¹ï¼Œgirth = 5ã€‚
+                            <br>åˆ¤æ–­ \(G\) æ˜¯å¦ä¸ºå¹³é¢å›¾ï¼Ÿç»™å‡ºè¯¦ç»†è§£é‡Šã€‚
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+
+                            <p><strong>æ­¥éª¤1ï¼šä½¿ç”¨æ¬§æ‹‰å…¬å¼</strong></p>
+                            <ul>
+                                <li>å‡è®¾ \(G\) æ˜¯å¹³é¢å›¾</li>
+                                <li>ç”±æ¬§æ‹‰å…¬å¼ï¼š\(v - e + f = 2\)</li>
+                                <li>ä»£å…¥ï¼š\(80 - 135 + f = 2\)</li>
+                                <li>å¾—ï¼š\(f = 57\)</li>
+                            </ul>
+
+                            <p><strong>æ­¥éª¤2ï¼šè€ƒè™‘é¢çš„å¤§å°é™åˆ¶</strong></p>
+                            <ul>
+                                <li>å› ä¸ºgirth = 5ï¼Œæ‰€ä»¥æ¯ä¸ªé¢è‡³å°‘ç”±5æ¡è¾¹å›´æˆ</li>
+                                <li>æ¯æ¡è¾¹æœ€å¤šè¢«2ä¸ªé¢å…±äº«</li>
+                                <li>å› æ­¤ï¼š\(5f \leq 2e\)ï¼ˆæ¯ä¸ªé¢è‡³å°‘5æ¡è¾¹ï¼Œæ¯æ¡è¾¹è¢«è®¡ç®—2æ¬¡ï¼‰</li>
+                                <li>ä»£å…¥ï¼š\(5 \times 57 \leq 2 \times 135\)</li>
+                                <li>è®¡ç®—ï¼š\(285 \leq 270\)</li>
+                                <li><strong>çŸ›ç›¾ï¼</strong></li>
+                            </ul>
+
+                            <p><strong>ç»“è®ºï¼š</strong>\(G\) ä¸æ˜¯å¹³é¢å›¾ âœ“</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Face size -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q8.1</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è€ƒè™‘ç®€å•è¿žé€šå¹³é¢å›¾ï¼Œæœ‰ \(e\) æ¡è¾¹å’Œ \(v > 2\) ä¸ªé¡¶ç‚¹ã€‚
+                            <br>è¯æ˜Žï¼šå¦‚æžœ \(e < 3v - 6\)ï¼Œé‚£ä¹ˆå­˜åœ¨ä¸€ä¸ªå¤§å°è‡³å°‘ä¸º4çš„é¢ã€‚
+                            <br>ï¼ˆæç¤ºï¼šåœ¨ç®€å•å¹³é¢å›¾ä¸­ï¼Œæ¯ä¸ªé¢å¤§å°è‡³å°‘ä¸º3ï¼‰
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼ˆåè¯æ³•ï¼‰ï¼š</h4>
+
+                            <ol>
+                                <li><strong>å‡è®¾ï¼š</strong>æ‰€æœ‰é¢çš„å¤§å°éƒ½æ°å¥½ä¸º3</li>
+                                <li>ç”±æ¬§æ‹‰å…¬å¼ï¼š\(v - e + f = 2\)ï¼Œæ‰€ä»¥ \(f = 2 - v + e\)</li>
+                                <li>å› ä¸ºæ¯ä¸ªé¢æœ‰3æ¡è¾¹ï¼Œæ¯æ¡è¾¹è¢«2ä¸ªé¢å…±äº«ï¼š
+                                    \[3f = 2e\]
+                                </li>
+                                <li>ä»£å…¥ \(f = 2 - v + e\)ï¼š
+                                    \[3(2 - v + e) = 2e\]
+                                </li>
+                                <li>å±•å¼€ï¼š
+                                    \[6 - 3v + 3e = 2e\]
+                                </li>
+                                <li>æ•´ç†ï¼š
+                                    \[e = 3v - 6\]
+                                </li>
+                                <li>ä½†é¢˜ç›®ç»™å®š \(e < 3v - 6\)ï¼Œ<strong>çŸ›ç›¾ï¼</strong></li>
+                                <li>å› æ­¤å‡è®¾é”™è¯¯ï¼Œå¿…å®šå­˜åœ¨å¤§å° â‰¥ 4 çš„é¢ âœ“</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis03a Problem 1 - Always, Sometimes, or Never -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis03a.pdf - Problem 1</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åœ¨ä»¥ä¸‹æ¯ä¸ªéƒ¨åˆ†ä¸­ï¼Œä½ èŽ·å¾—äº†å…³äºŽå›¾ \(G\) çš„ä¸€äº›ä¿¡æ¯ã€‚ä»…ä½¿ç”¨å½“å‰éƒ¨åˆ†çš„ä¿¡æ¯ï¼Œåˆ¤æ–­ \(G\) æ˜¯<strong>æ€»æ˜¯</strong>å¹³é¢å›¾ã€<strong>æ€»æ˜¯</strong>éžå¹³é¢å›¾ï¼Œè¿˜æ˜¯<strong>å¯èƒ½ä¸¤è€…ä¹‹ä¸€</strong>ã€‚å¦‚æžœä½ è®¤ä¸ºæ€»æ˜¯å¹³é¢æˆ–æ€»æ˜¯éžå¹³é¢ï¼Œè¯·è¯æ˜Žã€‚å¦‚æžœå¯èƒ½ä¸¤è€…ä¹‹ä¸€ï¼Œè¯·ç»™å‡ºå¹³é¢å’Œéžå¹³é¢çš„ä¾‹å­ã€‚
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>\(G\) å¯ä»¥ç”¨ 4 ç§é¢œè‰²è¿›è¡Œé¡¶ç‚¹æŸ“è‰²ã€‚</li>
+                                <li>\(G\) éœ€è¦ 7 ç§é¢œè‰²æ‰èƒ½è¿›è¡Œé¡¶ç‚¹æŸ“è‰²ã€‚</li>
+                                <li>\(e \leq 3v-6\)ï¼Œå…¶ä¸­ \(e\) æ˜¯ \(G\) çš„è¾¹æ•°ï¼Œ\(v\) æ˜¯ \(G\) çš„é¡¶ç‚¹æ•°ã€‚</li>
+                                <li>\(G\) æ˜¯è¿žé€šçš„ï¼Œä¸”æ¯ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å¤šä¸º 2ã€‚</li>
+                                <li>æ¯ä¸ªé¡¶ç‚¹çš„åº¦æ•°è‡³å¤šä¸º 2ã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(a) å¯ä»¥ç”¨4è‰²æŸ“è‰² - å¯èƒ½ä¸¤è€…ä¹‹ä¸€</strong></p>
+                            <div class="example-box">
+                                <p><strong>åˆ†æžï¼š</strong></p>
+                                <ul>
+                                    <li>å››è‰²å®šç†è¯´ï¼šæ‰€æœ‰å¹³é¢å›¾éƒ½å¯ä»¥ç”¨4è‰²æŸ“è‰²</li>
+                                    <li>ä½†ä¸æ˜¯æ‰€æœ‰4è‰²å¯æŸ“è‰²çš„å›¾éƒ½æ˜¯å¹³é¢å›¾</li>
+                                </ul>
+                                <p><strong>å¹³é¢ä¾‹å­ï¼š</strong>ä»»ä½•æ ‘ï¼ˆ2-colorableï¼Œå› æ­¤ä¹Ÿæ˜¯4-colorableï¼‰</p>
+                                <p><strong>éžå¹³é¢ä¾‹å­ï¼š</strong>\(K_{3,3}\) ï¼ˆå®Œå…¨äºŒéƒ¨å›¾ï¼Œ2-colorableä½†ä¸æ˜¯å¹³é¢å›¾ï¼‰</p>
+                            </div>
+
+                            <p><strong>(b) éœ€è¦7è‰²æŸ“è‰² - æ€»æ˜¯éžå¹³é¢</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ul>
+                                    <li>ç”±å››è‰²å®šç†ï¼Œæ‰€æœ‰å¹³é¢å›¾éƒ½å¯ä»¥ç”¨4è‰²æŸ“è‰²</li>
+                                    <li>å¦‚æžœ \(G\) éœ€è¦7è‰²ï¼Œé‚£ä¹ˆå®ƒä¸èƒ½ç”¨4è‰²æŸ“è‰²</li>
+                                    <li>å› æ­¤ \(G\) <strong>ä¸æ˜¯å¹³é¢å›¾</strong> âœ“</li>
+                                </ul>
+                                <p><strong>ä¾‹å­ï¼š</strong>\(K_7\) ï¼ˆå®Œå…¨å›¾ï¼Œæœ‰7ä¸ªé¡¶ç‚¹ï¼Œéœ€è¦7è‰²ï¼‰</p>
+                            </div>
+
+                            <p><strong>(c) \(e \leq 3v-6\) - å¯èƒ½ä¸¤è€…ä¹‹ä¸€</strong></p>
+                            <div class="example-box">
+                                <p><strong>åˆ†æžï¼š</strong></p>
+                                <ul>
+                                    <li>è¿™æ˜¯å¹³é¢å›¾çš„<strong>å¿…è¦æ¡ä»¶</strong>ï¼Œä½†ä¸æ˜¯å……åˆ†æ¡ä»¶</li>
+                                    <li>æ»¡è¶³ \(e \leq 3v-6\) çš„å›¾å¯èƒ½æ˜¯å¹³é¢çš„ï¼Œä¹Ÿå¯èƒ½ä¸æ˜¯</li>
+                                </ul>
+                                <p><strong>å¹³é¢ä¾‹å­ï¼š</strong>\(K_4\) ï¼ˆ\(v=4, e=6, 6 \leq 3 \times 4 - 6 = 6\) âœ“ï¼‰</p>
+                                <p><strong>éžå¹³é¢ä¾‹å­ï¼š</strong>\(K_{3,3}\) ï¼ˆ\(v=6, e=9, 9 \leq 3 \times 6 - 6 = 12\) âœ“ï¼Œä½†ä¸æ˜¯å¹³é¢å›¾ï¼‰</p>
+                            </div>
+
+                            <p><strong>(d) è¿žé€šä¸”æ¯ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å¤šä¸º2 - æ€»æ˜¯å¹³é¢</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ul>
+                                    <li>å¦‚æžœè¿žé€šä¸”æ¯ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å¤šä¸º2ï¼Œé‚£ä¹ˆ \(G\) æ˜¯ä¸€æ¡<strong>è·¯å¾„</strong>æˆ–ä¸€ä¸ª<strong>çŽ¯</strong></li>
+                                    <li>è·¯å¾„å’ŒçŽ¯éƒ½å¯ä»¥åœ¨å¹³é¢ä¸Šç”»å‡ºä¸”æ— è¾¹äº¤å‰</li>
+                                    <li>å› æ­¤æ€»æ˜¯å¹³é¢å›¾ âœ“</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(e) æ¯ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å¤šä¸º2 - æ€»æ˜¯å¹³é¢</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ul>
+                                    <li>å¦‚æžœæ¯ä¸ªé¡¶ç‚¹åº¦æ•°è‡³å¤šä¸º2ï¼Œé‚£ä¹ˆ \(G\) æ˜¯<strong>ä¸€äº›è·¯å¾„å’ŒçŽ¯çš„ä¸ç›¸äº¤å¹¶é›†</strong></li>
+                                    <li>ï¼ˆä¸ä¸€å®šè¿žé€šï¼Œå¯èƒ½æœ‰å¤šä¸ªè¿žé€šåˆ†é‡ï¼‰</li>
+                                    <li>æ¯æ¡è·¯å¾„å’Œæ¯ä¸ªçŽ¯éƒ½æ˜¯å¹³é¢çš„</li>
+                                    <li>å¤šä¸ªå¹³é¢å›¾çš„ä¸ç›¸äº¤å¹¶é›†ä»æ˜¯å¹³é¢çš„ï¼ˆå¯ä»¥åˆ†å¼€ç”»ï¼‰</li>
+                                    <li>å› æ­¤æ€»æ˜¯å¹³é¢å›¾ âœ“</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis03a Problem 2 - Short Answers -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis03a.pdf - Problem 2</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åœ¨ä»¥ä¸‹æ¯ä¸ªéƒ¨åˆ†ä¸­ï¼Œç»™å‡ºæ•°å­—/å…¬å¼å’Œç®€çŸ­è¯´æ˜Žã€‚
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>ä¸€ä¸ªè¿žé€šçš„å¹³é¢ç®€å•å›¾æ¯”é¡¶ç‚¹æ•°å¤š5æ¡è¾¹ã€‚å®ƒæœ‹å¤šå°‘ä¸ªé¢ï¼Ÿ</li>
+                                <li>ä»Ž \(K_6\) ä¸­éœ€è¦åˆ é™¤å¤šå°‘æ¡è¾¹æ‰èƒ½å¾—åˆ°ä¸€æ£µæ ‘ï¼Ÿ</li>
+                                <li>æ¬§æ‹‰å…¬å¼ \(v-e+f=2\) è¦æ±‚å¹³é¢å›¾æ˜¯è¿žé€šçš„ã€‚å¯¹äºŽæœ‰ \(k\) ä¸ªè¿žé€šåˆ†é‡çš„å¹³é¢å›¾ï¼Œç±»ä¼¼çš„å…¬å¼æ˜¯ä»€ä¹ˆï¼Ÿ</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(a) è¾¹æ•°æ¯”é¡¶ç‚¹æ•°å¤š5ï¼Œæœ‰å¤šå°‘é¢ï¼Ÿ</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è§£ï¼š</strong></p>
+                                <ul>
+                                    <li>è®¾é¡¶ç‚¹æ•°ä¸º \(v\)ï¼Œè¾¹æ•°ä¸º \(e\)ï¼Œé¢æ•°ä¸º \(f\)</li>
+                                    <li>æ¡ä»¶ï¼š\(e = v + 5\)</li>
+                                    <li>ç”±æ¬§æ‹‰å…¬å¼ï¼š\(v - e + f = 2\)</li>
+                                    <li>ä»£å…¥ \(e = v + 5\)ï¼š\(v - (v+5) + f = 2\)</li>
+                                    <li>æ•´ç†ï¼š\(f = 7\)</li>
+                                </ul>
+                                <p><strong>ç­”æ¡ˆï¼š</strong>\(f = 7\) ä¸ªé¢</p>
+                            </div>
+
+                            <p><strong>(b) ä»Ž \(K_6\) åˆ é™¤å¤šå°‘è¾¹å¾—åˆ°æ ‘ï¼Ÿ</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è§£ï¼š</strong></p>
+                                <ul>
+                                    <li>\(K_6\) æœ‰ \(v = 6\) ä¸ªé¡¶ç‚¹</li>
+                                    <li>\(K_6\) çš„è¾¹æ•°ï¼š\(e = \binom{6}{2} = 15\)</li>
+                                    <li>æœ‰ \(v\) ä¸ªé¡¶ç‚¹çš„æ ‘æœ‰ \(v-1\) æ¡è¾¹</li>
+                                    <li>6ä¸ªé¡¶ç‚¹çš„æ ‘æœ‰ \(6-1 = 5\) æ¡è¾¹</li>
+                                    <li>éœ€è¦åˆ é™¤ï¼š\(15 - 5 = 10\) æ¡è¾¹</li>
+                                </ul>
+                                <p><strong>ç­”æ¡ˆï¼š</strong>éœ€è¦åˆ é™¤ 10 æ¡è¾¹</p>
+                            </div>
+
+                            <p><strong>(c) æœ‰ \(k\) ä¸ªè¿žé€šåˆ†é‡çš„å¹³é¢å›¾çš„æ¬§æ‹‰å…¬å¼ï¼Ÿ</strong></p>
+                            <div class="proof-box">
+                                <p><strong>æŽ¨å¯¼ï¼š</strong></p>
+                                <ul>
+                                    <li>å¯¹äºŽè¿žé€šçš„å¹³é¢å›¾ï¼š\(v - e + f = 2\)</li>
+                                    <li>å¦‚æžœæœ‰ \(k\) ä¸ªè¿žé€šåˆ†é‡ï¼Œæ¯ä¸ªåˆ†é‡æ»¡è¶³ï¼š\(v_i - e_i + f_i = 2\)</li>
+                                    <li>æ±‚å’Œï¼š\(\sum_{i=1}^{k} (v_i - e_i + f_i) = 2k\)</li>
+                                    <li>å³ï¼š\((\sum v_i) - (\sum e_i) + (\sum f_i) = 2k\)</li>
+                                    <li>ä½†æ³¨æ„ï¼š<strong>å¤–éƒ¨é¢è¢«è®¡ç®—äº† \(k\) æ¬¡</strong></li>
+                                    <li>å®žé™…é¢æ•°ï¼š\(f = (\sum f_i) - (k-1)\)</li>
+                                    <li>å› æ­¤ï¼š\(v - e + f = v - e + (\sum f_i) - (k-1) = 2k - (k-1) = k + 1\)</li>
+                                </ul>
+                                <p><strong>ç­”æ¡ˆï¼š</strong>\(v - e + f = k + 1\)</p>
+                                <p><strong>éªŒè¯ï¼š</strong></p>
+                                <ul>
+                                    <li>\(k=1\)ï¼š\(v - e + f = 2\) âœ“ ï¼ˆæ ‡å‡†æ¬§æ‹‰å…¬å¼ï¼‰</li>
+                                    <li>\(k=2\)ï¼š\(v - e + f = 3\) ï¼ˆä¸¤ä¸ªè¿žé€šåˆ†é‡ï¼Œå…±äº«ä¸€ä¸ªå¤–éƒ¨é¢ï¼‰</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5.5 Graph Coloring -->
+            <div class="subsection" id="graphs-coloring">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.5 å›¾æŸ“è‰²ï¼ˆGraph Coloringï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>ç»™å›¾çš„é¡¶ç‚¹æˆ–è¾¹åˆ†é…é¢œè‰²ï¼Œä½¿ç›¸é‚»å…ƒç´ é¢œè‰²ä¸åŒã€‚</p>
+                        <ul>
+                            <li><strong>é¡¶ç‚¹æŸ“è‰²</strong>ï¼šç›¸é‚»é¡¶ç‚¹é¢œè‰²ä¸åŒ</li>
+                            <li><strong>è¾¹æŸ“è‰²</strong>ï¼šå…±äº«é¡¶ç‚¹çš„è¾¹é¢œè‰²ä¸åŒ</li>
+                            <li><strong>è‰²æ•° Ï‡(G)</strong>ï¼šç»™å›¾ \(G\) æŸ“è‰²æ‰€éœ€çš„æœ€å°‘é¢œè‰²æ•°</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ æŸ“è‰²å®šç†</h4>
+                        <div class="formula-item">
+                            <strong>äºŒéƒ¨å›¾ï¼š</strong>å›¾æ˜¯äºŒéƒ¨å›¾ âŸº è‰²æ•° â‰¤ 2 âŸº æ— å¥‡æ•°é•¿åº¦çŽ¯
+                        </div>
+                        <div class="formula-item">
+                            <strong>è¾¹æŸ“è‰²ï¼š</strong>æœ€å¤§åº¦æ•°ä¸º \(d\) çš„å›¾å¯ä»¥ç”¨ \(d\) æˆ– \(d+1\) ç§é¢œè‰²è¾¹æŸ“è‰²
+                        </div>
+                        <div class="formula-item">
+                            <strong>å››è‰²å®šç†ï¼š</strong>ä»»ä½•å¹³é¢å›¾éƒ½å¯ä»¥ç”¨4ç§é¢œè‰²é¡¶ç‚¹æŸ“è‰²
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>çŽ¯ \(C_n\)ï¼šå¥‡æ•°é•¿åº¦éœ€è¦3è‰²ï¼Œå¶æ•°é•¿åº¦éœ€è¦2è‰²</li>
+                            <li>å®Œå…¨å›¾ \(K_n\)ï¼šéœ€è¦ \(n\) ç§é¢œè‰²</li>
+                            <li>æ ‘ï¼šæ€»æ˜¯2-colorableï¼ˆäºŒéƒ¨å›¾ï¼‰</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Edge coloring -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q7.3-7.4</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>
+                            <ol>
+                                <li>ä¸€ä¸ª \(d\) ç»´è¶…ç«‹æ–¹ä½“å¯ä»¥ç”¨å¤šå°‘ç§é¢œè‰²è¿›è¡Œè¾¹æŸ“è‰²ï¼Ÿï¼ˆç»™å‡ºç´§ç¡®ç•Œï¼‰</li>
+                                <li>ä¸€ä¸ªå¥‡æ•°é•¿åº¦çš„çŽ¯å¯ä»¥ç”¨å¤šå°‘ç§é¢œè‰²è¿›è¡Œè¾¹æŸ“è‰²ï¼Ÿï¼ˆç»™å‡ºç´§ç¡®ç•Œï¼‰</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(1) \(d\) ç»´è¶…ç«‹æ–¹ä½“ï¼š\(d\) ç§é¢œè‰²</strong></p>
+                            <ul>
+                                <li>è¶…ç«‹æ–¹ä½“æ˜¯ \(d\)-regularå›¾ï¼ˆæ¯ä¸ªé¡¶ç‚¹åº¦æ•°ä¸º \(d\)ï¼‰</li>
+                                <li>æ‰€ä»¥è‡³å°‘éœ€è¦ \(d\) ç§é¢œè‰²</li>
+                                <li>å¯ä»¥æž„é€ ï¼šæŒ‰ç…§è¾¹çš„"ç»´åº¦"æŸ“è‰²ï¼Œç¬¬ \(i\) ç»´çš„è¾¹ç”¨é¢œè‰² \(i\)</li>
+                                <li>å› æ­¤æ°å¥½éœ€è¦ \(d\) ç§é¢œè‰²</li>
+                            </ul>
+
+                            <p><strong>(2) å¥‡æ•°é•¿åº¦çŽ¯ï¼š3ç§é¢œè‰²</strong></p>
+                            <ul>
+                                <li>å¥‡æ•°é•¿åº¦çŽ¯ \(C_{2k+1}\) æœ‰é¡¶ç‚¹åº¦æ•°ä¸º2</li>
+                                <li>è‡³å°‘éœ€è¦2ç§é¢œè‰²</li>
+                                <li>ä½†2ç§é¢œè‰²ä¸å¤Ÿï¼šæ²¿çŽ¯èµ°ä¸€åœˆï¼Œé¢œè‰²äº¤æ›¿ï¼Œå¥‡æ•°é•¿åº¦å¯¼è‡´æœ€åŽä¸€æ¡è¾¹ä¸Žç¬¬ä¸€æ¡è¾¹é¢œè‰²å†²çª</li>
+                                <li>3ç§é¢œè‰²è¶³å¤Ÿï¼šç”¨é¢œè‰²1,2,1,2,...,1,2,3</li>
+                                <li>å› æ­¤æ°å¥½éœ€è¦3ç§é¢œè‰²</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis03a Problem 3 - Graph Coloring -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis03a.pdf - Problem 3</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è¯æ˜Žæœ€å¤§åº¦æ•°è‡³å¤šä¸º \(k\) çš„å›¾æ˜¯ \((k+1)\)-colorableã€‚
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼ˆå½’çº³æ³•ï¼‰ï¼š</h4>
+
+                            <p><strong>å¯¹é¡¶ç‚¹æ•° \(n\) è¿›è¡Œå½’çº³ï¼š</strong></p>
+
+                            <div class="proof-box">
+                                <p><strong>Base Case (\(n = 1\))ï¼š</strong></p>
+                                <ul>
+                                    <li>ä¸€ä¸ªé¡¶ç‚¹çš„å›¾åªéœ€è¦1ç§é¢œè‰²</li>
+                                    <li>ç”±äºŽ \(k \geq 0\)ï¼Œ\(1 \leq k+1\) âœ“</li>
+                                </ul>
+
+                                <p><strong>Inductive Hypothesisï¼š</strong></p>
+                                <ul>
+                                    <li>å‡è®¾å¯¹äºŽæ‰€æœ‰æœ‰ \(n\) ä¸ªé¡¶ç‚¹ä¸”æœ€å¤§åº¦æ•°è‡³å¤šä¸º \(k\) çš„å›¾ï¼Œéƒ½æ˜¯ \((k+1)\)-colorableã€‚</li>
+                                </ul>
+
+                                <p><strong>Inductive Stepï¼š</strong></p>
+                                <ol>
+                                    <li>è€ƒè™‘ä¸€ä¸ªæœ‰ \(n+1\) ä¸ªé¡¶ç‚¹ä¸”æœ€å¤§åº¦æ•°è‡³å¤šä¸º \(k\) çš„å›¾ \(G\)ã€‚</li>
+                                    <li>ä»Ž \(G\) ä¸­åˆ é™¤ä¸€ä¸ªé¡¶ç‚¹ \(v\)ï¼Œå¾—åˆ°å›¾ \(G'\)ã€‚</li>
+                                    <li>\(G'\) æœ‰ \(n\) ä¸ªé¡¶ç‚¹ï¼Œæœ€å¤§åº¦æ•°è‡³å¤šä¸º \(k\)ï¼ˆåˆ é™¤é¡¶ç‚¹ä¸ä¼šå¢žåŠ åº¦æ•°ï¼‰ã€‚</li>
+                                    <li>ç”±å½’çº³å‡è®¾ï¼Œ\(G'\) å¯ä»¥ç”¨ \(k+1\) ç§é¢œè‰²æŸ“è‰²ã€‚</li>
+                                    <li>çŽ°åœ¨éœ€è¦ç»™é¡¶ç‚¹ \(v\) åˆ†é…é¢œè‰²ï¼š
+                                        <ul>
+                                            <li>é¡¶ç‚¹ \(v\) çš„åº¦æ•°è‡³å¤šä¸º \(k\)</li>
+                                            <li>æ‰€ä»¥ \(v\) è‡³å¤šæœ‰ \(k\) ä¸ªé‚»å±…</li>
+                                            <li>è¿™ \(k\) ä¸ªé‚»å±…æœ€å¤šä½¿ç”¨ \(k\) ç§é¢œè‰²</li>
+                                            <li>æˆ‘ä»¬æœ‰ \(k+1\) ç§é¢œè‰²å¯ç”¨</li>
+                                            <li>å› æ­¤è‡³å°‘æœ‰<strong>1ç§é¢œè‰²</strong>æœªè¢«é‚»å±…ä½¿ç”¨</li>
+                                            <li>ç»™ \(v\) åˆ†é…è¿™ä¸ªæœªä½¿ç”¨çš„é¢œè‰²</li>
+                                        </ul>
+                                    </li>
+                                    <li>çŽ°åœ¨ \(G\) ä¸­æ‰€æœ‰é¡¶ç‚¹éƒ½è¢«æŸ“è‰²ï¼Œä¸”ç›¸é‚»é¡¶ç‚¹é¢œè‰²ä¸åŒã€‚</li>
+                                    <li>å› æ­¤ \(G\) æ˜¯ \((k+1)\)-colorable âœ“</li>
+                                </ol>
+
+                                <p><strong>ç»“è®ºï¼š</strong></p>
+                                <p>ç”±æ•°å­¦å½’çº³æ³•ï¼Œæ‰€æœ‰æœ€å¤§åº¦æ•°è‡³å¤šä¸º \(k\) çš„å›¾éƒ½æ˜¯ \((k+1)\)-colorableã€‚</p>
+                            </div>
+
+                            <p><strong>å…³é”®è§‚å¯Ÿï¼š</strong></p>
+                            <div class="tips-box">
+                                <ul>
+                                    <li>è¿™ä¸ªè¯æ˜Žä½¿ç”¨äº†<strong>è´ªå¿ƒç®—æ³•</strong>çš„æ€æƒ³ï¼šé€ä¸ªç»™é¡¶ç‚¹æŸ“è‰²</li>
+                                    <li>å…³é”®æ˜¯ï¼šå¦‚æžœé¡¶ç‚¹åº¦æ•° â‰¤ \(k\)ï¼Œé‚£ä¹ˆåœ¨ \(k+1\) ç§é¢œè‰²ä¸­æ€»æœ‰ä¸€ç§å¯ç”¨</li>
+                                    <li>è¿™ä¸ªç•Œæ˜¯<strong>ç´§çš„</strong>ï¼šå®Œå…¨å›¾ \(K_{k+1}\) éœ€è¦æ°å¥½ \(k+1\) ç§é¢œè‰²</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>å¦ä¸€ç§è¯æ˜Žæ–¹æ³•ï¼ˆç›´æŽ¥æž„é€ ï¼‰ï¼š</strong></p>
+                            <div class="proof-box">
+                                <ol>
+                                    <li>å°†é¡¶ç‚¹æŒ‰ä»»æ„é¡ºåºæŽ’åˆ—ï¼š\(v_1, v_2, ..., v_n\)</li>
+                                    <li>ä¾æ¬¡ç»™æ¯ä¸ªé¡¶ç‚¹æŸ“è‰²ï¼š
+                                        <ul>
+                                            <li>å½“ç»™ \(v_i\) æŸ“è‰²æ—¶ï¼Œå®ƒçš„é‚»å±…ä¸­è‡³å¤šæœ‰ \(k\) ä¸ªå·²è¢«æŸ“è‰²</li>
+                                            <li>è¿™äº›é‚»å±…æœ€å¤šä½¿ç”¨ \(k\) ç§é¢œè‰²</li>
+                                            <li>åœ¨ \(k+1\) ç§é¢œè‰²ä¸­é€‰æ‹©ä¸€ä¸ªæœªè¢«é‚»å±…ä½¿ç”¨çš„é¢œè‰² âœ“</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5.6 Hypercubes -->
+            <div class="subsection" id="graphs-hypercube">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    5.6 è¶…ç«‹æ–¹ä½“ï¼ˆHypercubesï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>\(d\) ç»´è¶…ç«‹æ–¹ä½“æ˜¯ä¸€ä¸ªç‰¹æ®Šçš„å›¾ç»“æž„ã€‚</p>
+                        <ul>
+                            <li><strong>é¡¶ç‚¹</strong>ï¼šæ‰€æœ‰é•¿åº¦ä¸º \(d\) çš„äºŒè¿›åˆ¶ä¸²</li>
+                            <li><strong>è¾¹</strong>ï¼šä¸¤ä¸ªä¸²æ°å¥½æœ‰1ä½ä¸åŒæ—¶è¿žè¾¹</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ è¶…ç«‹æ–¹ä½“æ€§è´¨</h4>
+                        <div class="formula-item">
+                            <strong>é¡¶ç‚¹æ•°ï¼š</strong>\(n = 2^d\)
+                        </div>
+                        <div class="formula-item">
+                            <strong>è¾¹æ•°ï¼š</strong>\(m = d \cdot 2^{d-1}\)
+                            <br>ï¼ˆæ¯ä¸ªé¡¶ç‚¹åº¦æ•°ä¸º \(d\)ï¼Œæ€»åº¦æ•° = \(d \cdot 2^d\)ï¼Œè¾¹æ•° = åº¦æ•°å’Œ/2ï¼‰
+                        </div>
+                        <div class="formula-item">
+                            <strong>æ€§è´¨ï¼š</strong>
+                            <ul>
+                                <li>\(d\)-regularï¼šæ¯ä¸ªé¡¶ç‚¹åº¦æ•°éƒ½æ˜¯ \(d\)</li>
+                                <li>äºŒéƒ¨å›¾ï¼šæŒ‰ç…§äºŒè¿›åˆ¶ä¸²ä¸­1çš„ä¸ªæ•°å¥‡å¶æ€§åˆ†ç»„</li>
+                                <li>é«˜åº¦å¯¹ç§°</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Hypercube edges -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q7(d)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¦‚æžœ \(G\) æ˜¯è¶…ç«‹æ–¹ä½“ï¼Œé‚£ä¹ˆ \(m\) ç”¨ \(n\) è¡¨ç¤ºæ˜¯å¤šå°‘ï¼Ÿ
+                            <br>ï¼ˆå¯ä»¥ä½¿ç”¨ \(\log_2 n\)ï¼‰
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+                            <ul>
+                                <li>è®¾è¶…ç«‹æ–¹ä½“ç»´åº¦ä¸º \(d\)</li>
+                                <li>é¡¶ç‚¹æ•°ï¼š\(n = 2^d\)ï¼Œæ‰€ä»¥ \(d = \log_2 n\)</li>
+                                <li>è¾¹æ•°ï¼š\(m = d \cdot 2^{d-1} = d \cdot \frac{n}{2}\)</li>
+                                <li>ä»£å…¥ \(d = \log_2 n\)ï¼š
+                                    \[m = \frac{n \log_2 n}{2}\]
+                                </li>
+                                <li><strong>ç­”æ¡ˆï¼š</strong>\(m = \frac{n \log_2 n}{2}\)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis03a Problem 4 - Hypercubes -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis03a.pdf - Problem 4</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>\(n\) ç»´è¶…ç«‹æ–¹ä½“ \(G = (V,E)\) çš„é¡¶ç‚¹é›†ç”± \(V = \{0,1\}^n\) ç»™å‡ºï¼ˆå³æ‰€æœ‰ \(n\) ä½äºŒè¿›åˆ¶ä¸²ï¼‰ã€‚å½“ä¸”ä»…å½“é¡¶ç‚¹ \(x\) å’Œ \(y\) æ°å¥½åœ¨ä¸€ä¸ªä½ä¸Šä¸åŒæ—¶ï¼Œå®ƒä»¬ä¹‹é—´æœ‰ä¸€æ¡è¾¹ã€‚
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>ç”»å‡º 1ã€2ã€3 ç»´è¶…ç«‹æ–¹ä½“ï¼Œå¹¶ä½¿ç”¨å¯¹åº”çš„äºŒè¿›åˆ¶ä¸²æ ‡è®°é¡¶ç‚¹ã€‚</li>
+                                <li>è¯æ˜Žï¼š\(n\) ç»´è¶…ç«‹æ–¹ä½“çš„è¾¹å¯ä»¥ç”¨ \(n\) ç§é¢œè‰²æŸ“è‰²ï¼Œä½¿å¾—å…±äº«ä¸€ä¸ªé¡¶ç‚¹çš„è¾¹æ²¡æœ‰ç›¸åŒçš„é¢œè‰²ã€‚</li>
+                                <li>è¯æ˜Žï¼šå¯¹äºŽä»»æ„ \(n \geq 1\)ï¼Œ\(n\) ç»´è¶…ç«‹æ–¹ä½“æ˜¯äºŒéƒ¨å›¾ã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(a) ç”»å‡º 1ã€2ã€3 ç»´è¶…ç«‹æ–¹ä½“ï¼š</strong></p>
+                            <div class="example-box">
+                                <p><strong>1ç»´è¶…ç«‹æ–¹ä½“ï¼š</strong>ä¸¤ä¸ªé¡¶ç‚¹è¿žä¸€æ¡è¾¹</p>
+                                <pre>0 -------- 1</pre>
+                                
+                                <p><strong>2ç»´è¶…ç«‹æ–¹ä½“ï¼š</strong>æ­£æ–¹å½¢</p>
+                                <pre>00 -------- 10
+ |          |
+ |          |
+01 -------- 11</pre>
+                                
+                                <p><strong>3ç»´è¶…ç«‹æ–¹ä½“ï¼š</strong>æ­£æ–¹ä½“</p>
+                                <pre>    000 -------- 100
+     /|          /|
+    / |         / |
+  001-|------101 |
+   |  010-----|--110
+   | /        | /
+   |/         |/
+  011 ------ 111</pre>
+                            </div>
+
+                            <p><strong>(b) è¾¹å¯ä»¥ç”¨ \(n\) ç§é¢œè‰²æŸ“è‰²ï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ol>
+                                    <li>å¯¹äºŽæ¯æ¡è¾¹ \((x,y)\)ï¼Œ\(x\) å’Œ \(y\) æ°å¥½åœ¨ä¸€ä¸ªä½ä¸Šä¸åŒã€‚</li>
+                                    <li>è®¾å®ƒä»¬åœ¨ç¬¬ \(i\) ä½ä¸åŒï¼ˆ\(1 \leq i \leq n\)ï¼‰ã€‚</li>
+                                    <li>ç»™è¿™æ¡è¾¹åˆ†é…é¢œè‰² \(i\)ã€‚</li>
+                                    <li><strong>éªŒè¯æ— å†²çªï¼š</strong>
+                                        <ul>
+                                            <li>è€ƒè™‘ä»»æ„é¡¶ç‚¹ \(v\)</li>
+                                            <li>ä¸Ž \(v\) ç›¸è¿žçš„è¾¹å¯¹åº”äºŽ \(v\) çš„ \(n\) ä¸ªä½ç½®ä¸­æ¯ä¸ªçš„ç¿»è½¬</li>
+                                            <li>æ¯æ¡è¾¹å¯¹åº”ä¸åŒçš„ä½ç½®ï¼Œå› æ­¤æœ‰ä¸åŒçš„é¢œè‰²</li>
+                                            <li>æ‰€ä»¥ä¸Ž \(v\) ç›¸è¿žçš„ \(n\) æ¡è¾¹æœ‰ \(n\) ç§ä¸åŒçš„é¢œè‰² âœ“</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <p><strong>ç»“è®ºï¼š</strong>\(n\) ç§é¢œè‰²è¶³å¤Ÿï¼Œä¸”æ˜¯æœ€å°‘çš„ï¼ˆå› ä¸ºåº¦æ•°ä¸º \(n\)ï¼‰ã€‚</p>
+                            </div>
+
+                            <p><strong>(c) \(n\) ç»´è¶…ç«‹æ–¹ä½“æ˜¯äºŒéƒ¨å›¾ï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ol>
+                                    <li>å°†é¡¶ç‚¹åˆ†æˆä¸¤ç»„ï¼š
+                                        <ul>
+                                            <li>\(A = \{x \in \{0,1\}^n : x \text{ ä¸­1çš„ä¸ªæ•°æ˜¯å¶æ•°}\}\)</li>
+                                            <li>\(B = \{x \in \{0,1\}^n : x \text{ ä¸­1çš„ä¸ªæ•°æ˜¯å¥‡æ•°}\}\)</li>
+                                        </ul>
+                                    </li>
+                                    <li>éœ€è¦è¯æ˜Žï¼šæ¯æ¡è¾¹è¿žæŽ¥ \(A\) å’Œ \(B\) ä¸­çš„é¡¶ç‚¹ã€‚</li>
+                                    <li>è€ƒè™‘ä»»æ„è¾¹ \((x,y)\)ï¼š
+                                        <ul>
+                                            <li>\(x\) å’Œ \(y\) æ°å¥½åœ¨ä¸€ä¸ªä½ä¸Šä¸åŒ</li>
+                                            <li>è®¾åœ¨ç¬¬ \(i\) ä½ä¸åŒ</li>
+                                            <li>å¦‚æžœ \(x[i] = 0, y[i] = 1\)ï¼Œé‚£ä¹ˆ \(y\) ä¸­1çš„ä¸ªæ•°æ¯” \(x\) å¤š1</li>
+                                            <li>å¦‚æžœ \(x[i] = 1, y[i] = 0\)ï¼Œé‚£ä¹ˆ \(y\) ä¸­1çš„ä¸ªæ•°æ¯” \(x\) å°‘1</li>
+                                            <li>åœ¨ä¸¤ç§æƒ…å†µä¸‹ï¼Œ\(x\) å’Œ \(y\) ä¸­1çš„ä¸ªæ•°å¥‡å¶æ€§<strong>ä¸åŒ</strong></li>
+                                            <li>å› æ­¤ \(x \in A, y \in B\) æˆ– \(x \in B, y \in A\) âœ“</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <p><strong>ç»“è®ºï¼š</strong>æ‰€æœ‰è¾¹éƒ½è¿žæŽ¥ä¸¤ç»„ä¹‹é—´ï¼Œæ‰€ä»¥æ˜¯äºŒéƒ¨å›¾ã€‚</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis07a Problem 3 - Graph Complement -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis07a.pdf - Problem 3</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è®¾ \(G = (V,E)\) æ˜¯ä¸€ä¸ªæ— è‡ªçŽ¯çš„ä¸è¿žé€šå›¾ã€‚è¯æ˜Žå…¶è¡¥å›¾ \(\overline{G} = (V,\overline{E})\) æ˜¯è¿žé€šçš„ã€‚
+                            <br>ï¼ˆå›žé¡¾ï¼šè¡¥å›¾å®šä¹‰ä¸ºï¼šå¯¹äºŽ \(u,v \in V\)ï¼Œ\((u,v) \in \overline{E}\) å½“ä¸”ä»…å½“ \((u,v) \notin E\)ï¼‰
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼š</h4>
+
+                            <div class="proof-box">
+                                <p><strong>è®¾ç½®ï¼š</strong></p>
+                                <ul>
+                                    <li>ç”±äºŽ \(G\) ä¸è¿žé€šï¼Œå®ƒè‡³å°‘æœ‰2ä¸ªè¿žé€šåˆ†é‡ã€‚</li>
+                                    <li>è®¾è¿™äº›è¿žé€šåˆ†é‡ä¸º \(C_1, C_2, ..., C_k\)ï¼Œå…¶ä¸­ \(k \geq 2\)ã€‚</li>
+                                </ul>
+
+                                <p><strong>è¦è¯ï¼š</strong>å¯¹äºŽ \(\overline{G}\) ä¸­ä»»æ„ä¸¤ä¸ªé¡¶ç‚¹ \(u, v\)ï¼Œå­˜åœ¨åœ¨ \(\overline{G}\) ä¸­ä»Ž \(u\) åˆ° \(v\) çš„è·¯å¾„ã€‚</li>
+
+                                <p><strong>åˆ†æƒ…å†µè®¨è®ºï¼š</strong></p>
+                                
+                                <p><strong>Case 1ï¼š\(u\) å’Œ \(v\) åœ¨ \(G\) çš„<em>ä¸åŒ</em>è¿žé€šåˆ†é‡ä¸­</strong></p>
+                                <ul>
+                                    <li>è®¾ \(u \in C_i, v \in C_j\)ï¼Œå…¶ä¸­ \(i \neq j\)</li>
+                                    <li>ç”±äºŽå®ƒä»¬åœ¨ä¸åŒçš„è¿žé€šåˆ†é‡ä¸­ï¼Œåœ¨ \(G\) ä¸­ \((u,v) \notin E\)</li>
+                                    <li>å› æ­¤åœ¨ \(\overline{G}\) ä¸­ \((u,v) \in \overline{E}\)</li>
+                                    <li>æ‰€ä»¥åœ¨ \(\overline{G}\) ä¸­å­˜åœ¨ç›´æŽ¥è¿žæŽ¥ \(u\) å’Œ \(v\) çš„è¾¹ âœ“</li>
+                                </ul>
+
+                                <p><strong>Case 2ï¼š\(u\) å’Œ \(v\) åœ¨ \(G\) çš„<em>åŒä¸€</em>è¿žé€šåˆ†é‡ä¸­</strong></p>
+                                <ul>
+                                    <li>è®¾ \(u, v \in C_i\)</li>
+                                    <li>ç”±äºŽ \(k \geq 2\)ï¼Œå­˜åœ¨å¦ä¸€ä¸ªè¿žé€šåˆ†é‡ \(C_j\)  \((j \neq i)\)</li>
+                                    <li>ä»Ž \(C_j\) ä¸­é€‰æ‹©ä»»æ„é¡¶ç‚¹ \(w\)</li>
+                                    <li>ç”±äºŽ \(u \in C_i, w \in C_j\) ä¸” \(i \neq j\)ï¼Œåœ¨ \(G\) ä¸­ \((u,w) \notin E\)</li>
+                                    <li>å› æ­¤åœ¨ \(\overline{G}\) ä¸­ \((u,w) \in \overline{E}\)</li>
+                                    <li>åŒç†ï¼Œåœ¨ \(\overline{G}\) ä¸­ \((w,v) \in \overline{E}\)</li>
+                                    <li>å› æ­¤åœ¨ \(\overline{G}\) ä¸­å­˜åœ¨è·¯å¾„ \(u \to w \to v\) âœ“</li>
+                                </ul>
+
+                                <p><strong>ç»“è®ºï¼š</strong></p>
+                                <p>åœ¨ä¸¤ç§æƒ…å†µä¸‹ï¼Œ\(\overline{G}\) ä¸­ä»»æ„ä¸¤ä¸ªé¡¶ç‚¹ä¹‹é—´éƒ½æœ‰è·¯å¾„ï¼Œå› æ­¤ \(\overline{G}\) æ˜¯è¿žé€šçš„ã€‚</p>
+                            </div>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong></p>
+                            <div class="tips-box">
+                                <ul>
+                                    <li>ä¸è¿žé€šå›¾æœ‰å¤šä¸ªè¿žé€šåˆ†é‡</li>
+                                    <li>åœ¨è¡¥å›¾ä¸­ï¼Œä¸åŒè¿žé€šåˆ†é‡ä¹‹é—´çš„é¡¶ç‚¹<strong>éƒ½ç›¸è¿ž</strong></li>
+                                    <li>è¿™äº›â€œè·¨åˆ†é‡â€çš„è¿žæŽ¥ä½¿å¾—è¡¥å›¾è¿žé€š</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  </main>
+  <button class="back-to-top" id="backToTop">↑</button>
+</body>
+</html>

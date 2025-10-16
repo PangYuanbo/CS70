@@ -1,0 +1,681 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 70 综合学习指南 - 稳定匹配</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/mathjax-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 CS 70 综合学习指南</h1>
+    <div class="header-controls">
+      <input type="text" class="search-box" placeholder="搜索知识点或题目..." id="searchBox">
+      <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+    </div>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="nav-item" href="logic.html#logic">1. Propositional Logic</a>
+    <a class="nav-item" href="proofs.html#proofs">2. Proof Techniques</a>
+    <a class="nav-item" href="induction.html#induction">3. Induction</a>
+    <a class="nav-item" href="matching.html#matching">4. Stable Matching</a>
+    <a class="nav-item" href="graphs.html#graphs">5. Graph Theory</a>
+    <a class="nav-item" href="modular.html#section6">6. Modular Arithmetic</a>
+    <a class="nav-item" href="polynomials.html#section7">7. Polynomials</a>
+    <a class="nav-item" href="counting.html#counting">8. Counting</a>
+  </nav>
+  <main class="main-content"><section class="section" id="matching">
+            <h2 class="section-title">4. Stable Matchingï¼ˆç¨³å®šåŒ¹é…ï¼‰</h2>
+
+            <!-- 4.1 Algorithm -->
+            <div class="subsection" id="matching-algorithm">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    4.1 Propose-and-Rejectç®—æ³•
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>ç¨³å®šåŒ¹é…é—®é¢˜ï¼šç»™å®šnä¸ªå·¥ä½œå’Œnä¸ªå€™é€‰äººï¼Œæ¯ä¸ªäººéƒ½æœ‰åå¥½åˆ—è¡¨ï¼Œç›®æ ‡æ˜¯æ‰¾åˆ°ä¸€ä¸ªæ²¡æœ‰rogue coupleçš„åŒ¹é…ã€‚</p>
+                        <ul>
+                            <li><strong>Rogue Coupleï¼ˆä¸ç¨³å®šå¯¹ï¼‰</strong>ï¼šä¸€å¯¹(j, c)ä¸åœ¨å½“å‰åŒ¹é…ä¸­ï¼Œä½†ä»–ä»¬äº’ç›¸æ›´å–œæ¬¢å¯¹æ–¹è€Œä¸æ˜¯å½“å‰åŒ¹é…</li>
+                            <li><strong>Stable Matchingï¼ˆç¨³å®šåŒ¹é…ï¼‰</strong>ï¼šæ²¡æœ‰rogue coupleçš„åŒ¹é…</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ Propose-and-Rejectç®—æ³•æ­¥éª¤</h4>
+                        <div class="formula-item">
+                            <strong>æ¯å¤©çš„æµç¨‹ï¼š</strong>
+                            <ol>
+                                <li><strong>ä¸Šåˆ</strong>ï¼šæ¯ä¸ªå·¥ä½œå‘è¿˜æœªæ‹’ç»è‡ªå·±çš„æœ€ä¼˜å€™é€‰äººæ±‚å©š</li>
+                                <li><strong>ä¸‹åˆ</strong>ï¼šæ¯ä¸ªå€™é€‰äººå¯¹æ”¶åˆ°çš„æ‰€æœ‰æ±‚å©šä¸­é€‰æ‹©æœ€ä¼˜çš„ä¿ç•™ï¼ˆ"on a string"ï¼‰ï¼Œæ‹’ç»å…¶ä½™</li>
+                                <li><strong>æ™šä¸Š</strong>ï¼šè¢«æ‹’ç»çš„å·¥ä½œå°†è¯¥å€™é€‰äººä»Žåˆ—è¡¨ä¸­åˆ’æŽ‰</li>
+                            </ol>
+                        </div>
+                        <div class="formula-item">
+                            <strong>ç»ˆæ­¢æ¡ä»¶ï¼š</strong>å½“æŸä¸€å¤©æ²¡æœ‰æ‹’ç»å‘ç”Ÿæ—¶ï¼Œç®—æ³•ç»ˆæ­¢ï¼Œæ‰€æœ‰å€™é€‰äººæŽ¥å—å½“å‰ä¿ç•™çš„æ±‚å©š
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ ç®—æ³•æ€§è´¨</h4>
+                        <ul>
+                            <li><strong>å¿…å®šç»ˆæ­¢</strong>ï¼šæœ€å¤š \(n^2\) å¤©ï¼ˆæ¯ä¸ªå·¥ä½œæœ€å¤šå‘nä¸ªå€™é€‰äººæ±‚å©šï¼‰</li>
+                            <li><strong>äº§ç”ŸåŒ¹é…</strong>ï¼šæ¯ä¸ªäººéƒ½ä¼šè¢«é…å¯¹</li>
+                            <li><strong>ç»“æžœç¨³å®š</strong>ï¼šäº§ç”Ÿçš„åŒ¹é…ä¸€å®šæ˜¯ç¨³å®šåŒ¹é…</li>
+                            <li><strong>å·¥ä½œæœ€ä¼˜</strong>ï¼šæ¯ä¸ªå·¥ä½œå¾—åˆ°æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­å¯¹è‡ªå·±æœ€å¥½çš„å€™é€‰äºº</li>
+                            <li><strong>å€™é€‰äººæœ€å·®</strong>ï¼šæ¯ä¸ªå€™é€‰äººå¾—åˆ°æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­å¯¹è‡ªå·±æœ€å·®çš„å·¥ä½œ</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: dis02a Problem 1 - Run algorithm -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02a.pdf - Problem 1</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯¹ä»¥ä¸‹å®žä¾‹è¿è¡Œä¼ ç»Ÿçš„propose-and-rejectç®—æ³•ã€‚éœ€è¦å¤šå°‘å¤©ï¼Ÿæœ€ç»ˆçš„é…å¯¹æ˜¯ä»€ä¹ˆï¼Ÿï¼ˆå±•ç¤ºä½ çš„å·¥ä½œè¿‡ç¨‹ï¼‰
+                            <br><br>
+                            <table style="border-collapse: collapse; margin: 10px 0;">
+                                <tr>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A > B > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">2 > 1 > 3</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">2</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">B > A > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">B</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1 > 3 > 2</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">3</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A > B > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1 > 2 > 3</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+                            
+                            <p><strong>æ‰§è¡Œè¿‡ç¨‹ï¼š</strong></p>
+                            <ul>
+                                <li><strong>Day 1ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’A, 2â†’B, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAæ”¶åˆ°{1,3}ï¼Œä¿ç•™3ï¼ˆAåå¥½ï¼š2>1>3ï¼Œä½†åªæ”¶åˆ°1å’Œ3ï¼Œé€‰3ï¼‰ï¼Œæ‹’ç»1ï¼›Bæ”¶åˆ°{2}ï¼Œä¿ç•™2</li>
+                                        <li>æ™šä¸Šï¼š1åˆ’æŽ‰A</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 2ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’B, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAæ”¶åˆ°{3}ï¼Œä¿ç•™3ï¼›Bæ”¶åˆ°{1,2}ï¼Œä¿ç•™1ï¼ˆBåå¥½ï¼š1>3>2ï¼‰ï¼Œæ‹’ç»2</li>
+                                        <li>æ™šä¸Šï¼š2åˆ’æŽ‰B</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 3ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAæ”¶åˆ°{2,3}ï¼Œä¿ç•™2ï¼ˆAåå¥½ï¼š2>1>3ï¼‰ï¼Œæ‹’ç»3ï¼›Bæ”¶åˆ°{1}ï¼Œä¿ç•™1</li>
+                                        <li>æ™šä¸Šï¼š3åˆ’æŽ‰A</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 4ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’B</li>
+                                        <li>ä¸‹åˆï¼šAæ”¶åˆ°{2}ï¼Œä¿ç•™2ï¼›Bæ”¶åˆ°{1,3}ï¼Œä¿ç•™1ï¼ˆBåå¥½ï¼š1>3>2ï¼‰ï¼Œæ‹’ç»3</li>
+                                        <li>æ™šä¸Šï¼š3åˆ’æŽ‰B</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 5ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’C</li>
+                                        <li>ä¸‹åˆï¼šAä¿ç•™2ï¼ŒBä¿ç•™1ï¼ŒCä¿ç•™3ï¼›æ— æ‹’ç»å‘ç”Ÿ</li>
+                                        <li><strong>ç®—æ³•ç»ˆæ­¢</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <p><strong>ç»“æžœï¼š</strong></p>
+                            <ul>
+                                <li>ç”¨æ—¶ï¼š<strong>5å¤©</strong></li>
+                                <li>æœ€ç»ˆé…å¯¹ï¼š<strong>(1,B), (2,A), (3,C)</strong></li>
+                                <li>è¿™æ˜¯job-optimalä¸”candidate-pessimalçš„ç¨³å®šåŒ¹é…</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: midterm example -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q6</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯¹ä»¥ä¸‹å®žä¾‹è¿è¡Œpropose-and-rejectç®—æ³•ï¼ˆå·¥ä½œæ±‚å©šï¼‰ï¼š
+                            <br><br>
+                            <table style="border-collapse: collapse; margin: 10px 0;">
+                                <tr>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A > B > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">2 > 1 > 3</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">2</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">B > A > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">B</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1 > 3 > 2</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">3</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">A > B > C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">1 > 2 > 3</td>
+                                </tr>
+                            </table>
+                            <br>
+                            (a) æ±‚å‡ºjob-optimalé…å¯¹<br>
+                            (b) æ±‚å‡ºcandidate-optimalé…å¯¹<br>
+                            (c) æ˜¯å¦å­˜åœ¨å…¶ä»–ç¨³å®šåŒ¹é…ï¼Ÿ
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è§£ç­”ï¼š</h4>
+
+                            <p><strong>(a) Job-Optimalé…å¯¹ï¼ˆå·¥ä½œæ±‚å©šï¼‰ï¼š</strong></p>
+                            <ul>
+                                <li><strong>Day 1ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’A, 2â†’B, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAä¿ç•™3ï¼ˆæ›´å–œæ¬¢3ï¼‰ï¼Œæ‹’ç»1ï¼›Bä¿ç•™2</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 2ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’B, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAä¿ç•™3ï¼›Bä¿ç•™1ï¼ˆ1>3>2ï¼‰ï¼Œæ‹’ç»2</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 3ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’A</li>
+                                        <li>ä¸‹åˆï¼šAä¿ç•™2ï¼ˆ2>1>3ï¼‰ï¼Œæ‹’ç»3ï¼›Bä¿ç•™1</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 4ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’B</li>
+                                        <li>ä¸‹åˆï¼šAä¿ç•™2ï¼›Bä¿ç•™1ï¼ˆ1>3>2ï¼‰ï¼Œæ‹’ç»3</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Day 5ï¼š</strong>
+                                    <ul>
+                                        <li>ä¸Šåˆï¼š1â†’B, 2â†’A, 3â†’C</li>
+                                        <li>ä¸‹åˆï¼šæ— æ‹’ç»ï¼Œç®—æ³•ç»ˆæ­¢</li>
+                                    </ul>
+                                </li>
+                                <li><strong>ç»“æžœ</strong>ï¼š(1,B), (2,A), (3,C)</li>
+                            </ul>
+
+                            <p><strong>(b) Candidate-Optimalé…å¯¹ï¼ˆå€™é€‰äººæ±‚å©šï¼‰ï¼š</strong></p>
+                            <ul>
+                                <li>è¿è¡Œå€™é€‰äººæ±‚å©šç‰ˆæœ¬çš„ç®—æ³•</li>
+                                <li><strong>ç»“æžœ</strong>ï¼š(1,C), (2,A), (3,B)</li>
+                            </ul>
+
+                            <p><strong>(c) å…¶ä»–ç¨³å®šåŒ¹é…ï¼š</strong></p>
+                            <ul>
+                                <li>å­˜åœ¨ç¬¬ä¸‰ä¸ªç¨³å®šåŒ¹é…ï¼š(1,A), (2,B), (3,C)</li>
+                                <li>éªŒè¯ï¼šæ£€æŸ¥æ‰€æœ‰å¯èƒ½çš„rogue coupleéƒ½ä¸æˆç«‹</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.2 Improvement Lemma -->
+            <div class="subsection" id="matching-improvement">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    4.2 æ”¹è¿›å¼•ç†ï¼ˆImprovement Lemmaï¼‰
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+                        <p>æ”¹è¿›å¼•ç†æè¿°äº†ç®—æ³•æ‰§è¡Œè¿‡ç¨‹ä¸­çš„å•è°ƒæ€§ã€‚</p>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ æ”¹è¿›å¼•ç†</h4>
+                        <div class="formula-item">
+                            <strong>å¯¹äºŽå€™é€‰äººï¼š</strong>åœ¨ç®—æ³•æ‰§è¡Œè¿‡ç¨‹ä¸­ï¼Œæ¯ä¸ªå€™é€‰äººæ‰‹ä¸­çš„å·¥ä½œåªä¼šè¶Šæ¥è¶Šå¥½ï¼ˆæ ¹æ®ä»–ä»¬çš„åå¥½ï¼‰
+                        </div>
+                        <div class="formula-item">
+                            <strong>å¯¹äºŽå·¥ä½œï¼š</strong>åœ¨ç®—æ³•æ‰§è¡Œè¿‡ç¨‹ä¸­ï¼Œæ¯ä¸ªå·¥ä½œæ±‚å©šçš„å€™é€‰äººåªä¼šè¶Šæ¥è¶Šå·®ï¼ˆæ ¹æ®ä»–ä»¬çš„åå¥½ï¼‰
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ æŽ¨è®º</h4>
+                        <ul>
+                            <li>å€™é€‰äººä¸€æ—¦æ”¶åˆ°æ±‚å©šï¼Œä¹‹åŽæ¯å¤©éƒ½ä¼šæ”¶åˆ°æ±‚å©š</li>
+                            <li>ç®—æ³•äº§ç”Ÿçš„æ˜¯å·¥ä½œæœ€ä¼˜ã€å€™é€‰äººæœ€å·®çš„ç¨³å®šåŒ¹é…</li>
+                            <li>å¦‚æžœå€™é€‰äººåœ¨ç®—æ³•æŸå¤©æ‹’ç»æŸä¸ªå·¥ä½œï¼Œä»–ä»¬æ°¸è¿œä¸ä¼šåœ¨ä»»ä½•ç¨³å®šåŒ¹é…ä¸­é…å¯¹</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: dis02a Problem 2 - Propose-and-Reject Proofs -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02a.pdf - Problem 2</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è¯æ˜Žå…³äºŽä¼ ç»Ÿçš„propose-and-rejectç®—æ³•çš„ä»¥ä¸‹é™ˆè¿°ï¼š
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>åœ¨ç®—æ³•çš„ä»»ä½•æ‰§è¡Œä¸­ï¼Œå¦‚æžœå€™é€‰äººåœ¨ç¬¬ \(i\) å¤©æ”¶åˆ°ä¸€ä¸ªæ±‚å©šï¼Œé‚£ä¹ˆä»–ä»¬åœ¨ä¹‹åŽçš„æ¯ä¸€å¤©ç›´åˆ°ç®—æ³•ç»ˆæ­¢éƒ½ä¼šæ”¶åˆ°æŸä¸ªæ±‚å©šã€‚</li>
+                                <li>åœ¨ç®—æ³•çš„ä»»ä½•æ‰§è¡Œä¸­ï¼Œå¦‚æžœå€™é€‰äººåœ¨ç¬¬ \(i\) å¤©æ²¡æœ‰æ”¶åˆ°æ±‚å©šï¼Œé‚£ä¹ˆä»–ä»¬åœ¨ä»»ä½•ä¹‹å‰çš„ç¬¬ \(j\) å¤© \((1 \leq j < i)\) ä¹Ÿæ²¡æœ‰æ”¶åˆ°æ±‚å©šã€‚</li>
+                                <li>åœ¨ç®—æ³•çš„ä»»ä½•æ‰§è¡Œä¸­ï¼Œè‡³å°‘æœ‰ä¸€ä¸ªå€™é€‰äººåªæ”¶åˆ°ä¸€ä¸ªæ±‚å©šã€‚ï¼ˆæç¤ºï¼šä½¿ç”¨ä¸Šé¢çš„éƒ¨åˆ†ï¼ï¼‰</li>
+                                <li>å¯¹äºŽ \(n > 1\)ï¼Œä¸å­˜åœ¨è¿™æ ·çš„ç¨³å®šåŒ¹é…å®žä¾‹ï¼šåœ¨å·¥ä½œæ±‚å©šçš„ç¨³å®šåŒ¹é…ç®—æ³•ä¸­ï¼Œæ¯ä¸ªå·¥ä½œéƒ½å¾—åˆ°å…¶æœ€ä¸å–œæ¬¢çš„å€™é€‰äººã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… è¯æ˜Žï¼š</h4>
+
+                            <p><strong>(a) å€™é€‰äººä¸€æ—¦æ”¶åˆ°æ±‚å©šï¼Œä¹‹åŽæ¯å¤©éƒ½ä¼šæ”¶åˆ°æ±‚å©šï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼ˆå½’çº³æ³•ï¼‰ï¼š</strong></p>
+                                <ol>
+                                    <li><strong>åŸºç¡€æƒ…å†µï¼š</strong>åœ¨ç¬¬ \(i\) å¤©ï¼Œå€™é€‰äºº \(C\) æ”¶åˆ°è‡³å°‘ä¸€ä¸ªæ±‚å©šã€‚æ ¹æ®ç®—æ³•ï¼Œ\(C\) ä¼šä¿ç•™æœ€å¥½çš„å·¥ä½œã€‚</li>
+                                    <li><strong>å½’çº³æ­¥éª¤ï¼š</strong>å‡è®¾åœ¨ç¬¬ \(k\) å¤©ï¼ˆ\(k \geq i\)ï¼‰ï¼Œ\(C\) æ‰‹ä¸­æœ‰å·¥ä½œ \(J\)ã€‚åœ¨ç¬¬ \(k+1\) å¤©ï¼š
+                                        <ul>
+                                            <li>å·¥ä½œ \(J\) ä¸ä¼šä¸»åŠ¨æ’¤å›žæ±‚å©šï¼ˆé™¤éžè¢«æ‹’ç»ï¼‰</li>
+                                            <li>æ ¹æ®ç®—æ³•ï¼Œ\(J\) ä¼šç»§ç»­å‘ \(C\) æ±‚å©šï¼ˆå› ä¸ºä¸Šä¸€å¤©æ²¡æœ‰è¢«æ‹’ç»ï¼‰</li>
+                                            <li>å› æ­¤ \(C\) åœ¨ç¬¬ \(k+1\) å¤©è‡³å°‘æ”¶åˆ° \(J\) çš„æ±‚å©š</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>ç»“è®ºï¼š</strong>ç”±å½’çº³æ³•ï¼Œ\(C\) åœ¨ç¬¬ \(i\) å¤©ä¹‹åŽçš„æ¯ä¸€å¤©éƒ½ä¼šæ”¶åˆ°æ±‚å©šã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>(b) å¦‚æžœç¬¬ \(i\) å¤©æ²¡æ”¶åˆ°æ±‚å©šï¼Œä¹‹å‰ä¹Ÿä¸ä¼šæœ‰ï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼ˆåè¯æ³•ï¼‰ï¼š</strong></p>
+                                <ol>
+                                    <li>å‡è®¾å€™é€‰äºº \(C\) åœ¨ç¬¬ \(i\) å¤©æ²¡æœ‰æ”¶åˆ°æ±‚å©šï¼Œä½†åœ¨æŸä¸ªä¹‹å‰çš„ç¬¬ \(j\) å¤© \((j < i)\) æ”¶åˆ°äº†æ±‚å©šã€‚</li>
+                                    <li>æ ¹æ®éƒ¨åˆ†(a)ï¼Œå¦‚æžœ \(C\) åœ¨ç¬¬ \(j\) å¤©æ”¶åˆ°æ±‚å©šï¼Œé‚£ä¹ˆåœ¨ä¹‹åŽçš„æ¯ä¸€å¤©éƒ½ä¼šæ”¶åˆ°æ±‚å©šã€‚</li>
+                                    <li>ç‰¹åˆ«åœ°ï¼Œ\(C\) åœ¨ç¬¬ \(i\) å¤©ä¹Ÿåº”è¯¥æ”¶åˆ°æ±‚å©šã€‚</li>
+                                    <li>è¿™ä¸Žå‡è®¾çŸ›ç›¾ï¼</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>å¦‚æžœç¬¬ \(i\) å¤©æ²¡æœ‰æ±‚å©šï¼Œé‚£ä¹ˆä¹‹å‰ä¹Ÿä¸ä¼šæœ‰ã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>(c) è‡³å°‘æœ‰ä¸€ä¸ªå€™é€‰äººåªæ”¶åˆ°ä¸€ä¸ªæ±‚å©šï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ol>
+                                    <li>è€ƒè™‘ç®—æ³•ç»ˆæ­¢æ—¶çš„æƒ…å†µã€‚è®¾ç®—æ³•åœ¨ç¬¬ \(T\) å¤©ç»ˆæ­¢ã€‚</li>
+                                    <li>åœ¨ç¬¬ \(T\) å¤©ï¼Œæ¯ä¸ªå€™é€‰äººæ‰‹ä¸­éƒ½æœ‰ä¸€ä¸ªå·¥ä½œï¼ˆå› ä¸ºç®—æ³•äº§ç”Ÿå®Œç¾ŽåŒ¹é…ï¼‰ã€‚</li>
+                                    <li>è€ƒè™‘<strong>æœ€åŽä¸€ä¸ªç¬¬ä¸€æ¬¡æ”¶åˆ°æ±‚å©šçš„å€™é€‰äºº</strong> \(C\)ã€‚è®¾ \(C\) åœ¨ç¬¬ \(t\) å¤©ç¬¬ä¸€æ¬¡æ”¶åˆ°æ±‚å©šã€‚</li>
+                                    <li>æ ¹æ® \(C\) çš„å®šä¹‰ï¼Œåœ¨ç¬¬ \(t-1\) å¤©åŠä¹‹å‰ï¼Œæ‰€æœ‰å…¶ä»–å€™é€‰äººéƒ½å·²ç»æ”¶åˆ°è¿‡æ±‚å©šã€‚</li>
+                                    <li>è¿™æ„å‘³ç€åœ¨ç¬¬ \(t\) å¤©ï¼Œæ‰€æœ‰ \(n-1\) ä¸ªå…¶ä»–å€™é€‰äººæ‰‹ä¸­éƒ½æœ‰å·¥ä½œã€‚</li>
+                                    <li>å› æ­¤åªæœ‰<strong>ä¸€ä¸ªå·¥ä½œ</strong>å¯ä»¥å‘ \(C\) æ±‚å©šï¼ˆå‰©ä½™çš„é‚£ä¸ªï¼‰ã€‚</li>
+                                    <li>æ ¹æ®éƒ¨åˆ†(a)ï¼Œ\(C\) ä¹‹åŽæ¯å¤©éƒ½ä¼šæ”¶åˆ°è¿™ä¸ªå·¥ä½œçš„æ±‚å©šï¼Œä¸ä¼šæœ‰å…¶ä»–å·¥ä½œã€‚</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>\(C\) åªæ”¶åˆ°ä¸€ä¸ªæ±‚å©šã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>(d) ä¸å¯èƒ½æ‰€æœ‰å·¥ä½œéƒ½å¾—åˆ°æœ€å·®å€™é€‰äººï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼ˆåè¯æ³•ï¼‰ï¼š</strong></p>
+                                <ol>
+                                    <li>å‡è®¾å­˜åœ¨è¿™æ ·çš„å®žä¾‹ï¼Œä½¿å¾—æ¯ä¸ªå·¥ä½œéƒ½å¾—åˆ°å…¶æœ€ä¸å–œæ¬¢çš„å€™é€‰äººï¼ˆåœ¨å¶å¥½åˆ—è¡¨ä¸­æŽ’åæœ€åŽï¼‰ã€‚</li>
+                                    <li>æ ¹æ®éƒ¨åˆ†(c)ï¼Œè‡³å°‘æœ‰ä¸€ä¸ªå€™é€‰äºº \(C\) åªæ”¶åˆ°ä¸€ä¸ªæ±‚å©šã€‚</li>
+                                    <li>è®¾å‘ \(C\) æ±‚å©šçš„å·¥ä½œä¸º \(J\)ã€‚é‚£ä¹ˆ \(C\) æ˜¯ \(J\) çš„ç¬¬ä¸€é€‰æ‹©ï¼ˆå› ä¸º \(J\) æ²¡æœ‰è¢«æ‹’ç»è¿‡ï¼‰ã€‚</li>
+                                    <li>ä½†å‡è®¾è¯´ \(J\) å¾—åˆ°äº†å…¶æœ€ä¸å–œæ¬¢çš„å€™é€‰äººï¼Œå³ \(C\) æ˜¯ \(J\) çš„æœ€åŽä¸€ä¸ªé€‰æ‹©ã€‚</li>
+                                    <li>è¿™ä¸Ž \(C\) æ˜¯ \(J\) çš„ç¬¬ä¸€é€‰æ‹©çŸ›ç›¾ï¼ï¼ˆå¯¹äºŽ \(n > 1\)ï¼‰</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>ä¸å­˜åœ¨è¿™æ ·çš„å®žä¾‹ã€‚âœ“</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4.3 Optimality Theorems -->
+            <div class="subsection" id="matching-optimal">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    4.3 æœ€ä¼˜æ€§å®šç†
+                </h3>
+                <div class="collapsible-content">
+                    <div class="formula-box">
+                        <h4>ðŸ“ é‡è¦å®šç†</h4>
+                        <div class="formula-item">
+                            <strong>å®šç†1ï¼š</strong>å¦‚æžœå·¥ä½œJå’Œå€™é€‰äººCåœ¨job-optimalå’Œcandidate-optimalåŒ¹é…ä¸­éƒ½é…å¯¹ï¼Œé‚£ä¹ˆä»–ä»¬åœ¨<em>æ‰€æœ‰</em>ç¨³å®šåŒ¹é…ä¸­éƒ½é…å¯¹ã€‚
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šç†2ï¼š</strong>å¦‚æžœå·¥ä½œJåœ¨job-optimalåŒ¹é…ä¸­å¾—åˆ°æœ€å·®å€™é€‰äººï¼Œé‚£ä¹ˆJæ˜¯æ‰€æœ‰å€™é€‰äººçš„æœ€å·®å·¥ä½œã€‚
+                        </div>
+                        <div class="formula-item">
+                            <strong>å®šç†3ï¼š</strong>å¦‚æžœå·¥ä½œJå’Œå€™é€‰äººCäº’ä¸ºæœ€ä¼˜é€‰æ‹©ï¼ˆJæ˜¯Cçš„ç¬¬ä¸€é€‰æ‹©ï¼ŒCæ˜¯Jçš„ç¬¬ä¸€é€‰æ‹©ï¼‰ï¼Œé‚£ä¹ˆä»–ä»¬åœ¨æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­éƒ½é…å¯¹ã€‚
+                        </div>
+                    </div>
+
+                    <!-- Problem: True/False -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_fa24.pdf - Q6.2-6.5</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åˆ¤æ–­ä»¥ä¸‹é™ˆè¿°çš„çœŸå‡ï¼š
+                            <br><br>
+                            <ol>
+                                <li>å¦‚æžœå·¥ä½œåœ¨job-optimalåŒ¹é…ä¸­å¾—åˆ°æœ€å·®å€™é€‰äººï¼Œé‚£ä¹ˆå®ƒæ˜¯æ‰€æœ‰å€™é€‰äººçš„æœ€å·®å·¥ä½œã€‚</li>
+                                <li>å¦‚æžœå·¥ä½œåœ¨æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­éƒ½ä¸ŽåŒä¸€ä¸ªå€™é€‰äººé…å¯¹ï¼Œé‚£ä¹ˆè¯¥å€™é€‰äººæ˜¯å·¥ä½œåå¥½åˆ—è¡¨çš„ç¬¬ä¸€åã€‚</li>
+                                <li>å¦‚æžœå€™é€‰äººåœ¨æŸå¤©æ„å¤–æ‹’ç»äº†ä¸€ä¸ªä»–ä»¬æ›´å–œæ¬¢çš„å·¥ä½œï¼Œç®—æ³•ä»ç„¶ä¼šäº§ç”Ÿä¸€ä¸ªåŒ¹é…ã€‚</li>
+                                <li>å¦‚æžœå·¥ä½œJå’Œå€™é€‰äººCåœ¨job-optimalå’Œcandidate-optimalåŒ¹é…ä¸­éƒ½é…å¯¹ï¼Œé‚£ä¹ˆä»–ä»¬åœ¨æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­éƒ½é…å¯¹ã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+                            <ol>
+                                <li><strong>True</strong> - è¿™æ˜¯å®šç†ã€‚å¦‚æžœå·¥ä½œåœ¨æœ€ä¼˜æƒ…å†µä¸‹åªèƒ½å¾—åˆ°æœ€å·®å€™é€‰äººï¼Œè¯´æ˜Žæ‰€æœ‰å€™é€‰äººéƒ½ä¸æ„¿æ„ä¸Žå®ƒé…å¯¹ã€‚</li>
+                                <li><strong>False</strong> - åä¾‹ï¼šå·¥ä½œå¯èƒ½ä¸Žç¬¬äºŒæˆ–ç¬¬ä¸‰é€‰æ‹©åœ¨æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­é…å¯¹ï¼Œå¦‚æžœç¬¬ä¸€é€‰æ‹©ä¸Žå…¶ä»–å·¥ä½œå½¢æˆäº†å¿…é¡»çš„ç¨³å®šå¯¹ã€‚</li>
+                                <li><strong>True</strong> - ç®—æ³•çš„é²æ£’æ€§ä¿è¯å³ä½¿æœ‰é”™è¯¯æ‹’ç»ï¼Œæœ€ç»ˆä»ä¼šäº§ç”ŸåŒ¹é…ï¼ˆè™½ç„¶å¯èƒ½ä¸æ˜¯æœ€ä¼˜çš„ï¼‰ã€‚</li>
+                                <li><strong>True</strong> - è¿™æ˜¯ä¸€ä¸ªé‡è¦å®šç†ã€‚å¦‚æžœåœ¨ä¸¤ä¸ªæžç«¯æƒ…å†µä¸‹éƒ½é…å¯¹ï¼Œè¯´æ˜Žæ²¡æœ‰å…¶ä»–å¯èƒ½ã€‚</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02a Problem 3 - Be a Judge -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02a.pdf - Problem 3</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯¹ä»¥ä¸‹æ¯ä¸ªé™ˆè¿°ï¼ŒæŒ‡å‡ºæ˜¯ True è¿˜æ˜¯ Falseï¼Œå¹¶ç”¨ 2-3 è¡Œç®€çŸ­è§£é‡Šè¯´æ˜Žï¼š
+                            <br><br>
+                            <ol style="list-style-type: lower-alpha;">
+                                <li>åœ¨ç¨³å®šåŒ¹é…å®žä¾‹ä¸­ï¼Œå¦‚æžœå·¥ä½œ \(J\) å’Œå€™é€‰äºº \(C\) äº’ç›¸æŠŠå¯¹æ–¹æ”¾åœ¨å„è‡ªåå¥½åˆ—è¡¨çš„é¦–ä½ï¼Œé‚£ä¹ˆ \(J\) å¿…é¡»åœ¨<strong>æ¯ä¸ª</strong>ç¨³å®šé…å¯¹ä¸­ä¸Ž \(C\) é…å¯¹ã€‚</li>
+                                <li>åœ¨è‡³å°‘æœ‰ä¸¤ä¸ªå·¥ä½œå’Œä¸¤ä¸ªå€™é€‰äººçš„ç¨³å®šåŒ¹é…å®žä¾‹ä¸­ï¼Œå¦‚æžœå·¥ä½œ \(J\) å’Œå€™é€‰äºº \(C\) äº’ç›¸æŠŠå¯¹æ–¹æ”¾åœ¨å„è‡ªåå¥½åˆ—è¡¨çš„æœ«å°¾ï¼Œé‚£ä¹ˆ \(J\) ä¸å¯èƒ½åœ¨ä»»ä½•ç¨³å®šé…å¯¹ä¸­ä¸Ž \(C\) é…å¯¹ã€‚</li>
+                                <li>å¯¹äºŽä»»æ„ \(n > 1\)ï¼Œå­˜åœ¨ä¸€ä¸ªæœ‰ \(n\) ä¸ªå·¥ä½œå’Œ \(n\) ä¸ªå€™é€‰äººçš„ç¨³å®šåŒ¹é…å®žä¾‹ï¼Œå…¶ä¸­å­˜åœ¨ä¸€ä¸ª<strong>ä¸ç¨³å®š</strong>çš„é…å¯¹ï¼Œä½¿å¾—æ¯ä¸€å¯¹æœªé…å¯¹çš„å·¥ä½œ-å€™é€‰äººéƒ½æ˜¯rogue coupleã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(a) True - äº’ä¸ºç¬¬ä¸€é€‰æ‹©å¿…åœ¨æ‰€æœ‰ç¨³å®šåŒ¹é…ä¸­é…å¯¹ï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼ˆåè¯æ³•ï¼‰ï¼š</strong></p>
+                                <ol>
+                                    <li>å‡è®¾å­˜åœ¨ä¸€ä¸ªç¨³å®šåŒ¹é… \(M\)ï¼Œå…¶ä¸­ \(J\) ä¸Ž \(C'\) é…å¯¹ï¼Œ\(C\) ä¸Ž \(J'\) é…å¯¹ã€‚</li>
+                                    <li>ç”±äºŽ \(C\) æ˜¯ \(J\) çš„ç¬¬ä¸€é€‰æ‹©ï¼Œæ‰€ä»¥ \(J\) åå¥½ \(C\) èƒœè¿‡ \(C'\)ã€‚</li>
+                                    <li>ç”±äºŽ \(J\) æ˜¯ \(C\) çš„ç¬¬ä¸€é€‰æ‹©ï¼Œæ‰€ä»¥ \(C\) åå¥½ \(J\) èƒœè¿‡ \(J'\)ã€‚</li>
+                                    <li>å› æ­¤ \((J, C)\) å½¢æˆä¸€ä¸ª rogue coupleï¼šä»–ä»¬äº’ç›¸åå¥½å¯¹æ–¹èƒœè¿‡å½“å‰åŒ¹é…ã€‚</li>
+                                    <li>è¿™ä¸Ž \(M\) æ˜¯ç¨³å®šåŒ¹é…çŸ›ç›¾ï¼</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>\(J\) å’Œ \(C\) å¿…é¡»åœ¨æ¯ä¸ªç¨³å®šåŒ¹é…ä¸­é…å¯¹ã€‚âœ“</li>
+                                </ol>
+                            </div>
+
+                            <p><strong>(b) False - äº’ä¸ºæœ€åŽé€‰æ‹©ä¸ä¸€å®šä¸èƒ½é…å¯¹ï¼š</strong></p>
+                            <div class="example-box">
+                                <p><strong>åä¾‹ï¼ˆn=2ï¼‰ï¼š</strong></p>
+                                <table style="border-collapse: collapse; margin: 10px 0;">
+                                    <tr>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1 > C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1 > J2</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1 > C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1 > J2</td>
+                                    </tr>
+                                </table>
+                                <p>åœ¨è¿™ä¸ªä¾‹å­ä¸­ï¼ŒJ2 å’Œ C2 äº’ä¸ºæœ€åŽé€‰æ‹©ã€‚ä½†å”¯ä¸€çš„ç¨³å®šåŒ¹é…æ˜¯ (J1,C1), (J2,C2)ã€‚</p>
+                                <p>å¦‚æžœå°è¯• (J1,C2), (J2,C1)ï¼Œé‚£ä¹ˆ (J1,C1) ä¼šæ˜¯ rogue coupleï¼ˆä¸¤äººéƒ½æ›´å–œæ¬¢å¯¹æ–¹ï¼‰ã€‚</p>
+                                <p><strong>ç»“è®ºï¼š</strong>äº’ä¸ºæœ€åŽé€‰æ‹©çš„å·¥ä½œå’Œå€™é€‰äºº<strong>å¯èƒ½</strong>åœ¨ç¨³å®šåŒ¹é…ä¸­é…å¯¹ã€‚</p>
+                            </div>
+
+                            <p><strong>(c) True - å­˜åœ¨æ‰€æœ‰æœªé…å¯¹éƒ½æ˜¯rogue coupleçš„ä¸ç¨³å®šåŒ¹é…ï¼š</strong></p>
+                            <div class="example-box">
+                                <p><strong>æž„é€ ï¼ˆn=2ï¼‰ï¼š</strong></p>
+                                <table style="border-collapse: collapse; margin: 10px 0;">
+                                    <tr>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1 > C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J2 > J1</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C2 > C1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1 > J2</td>
+                                    </tr>
+                                </table>
+                                <p><strong>è€ƒè™‘ä¸ç¨³å®šé…å¯¹ï¼š</strong>(J1,C2), (J2,C1)</p>
+                                <ul>
+                                    <li>æœªé…å¯¹çš„å¯¹ï¼š(J1,C1) å’Œ (J2,C2)</li>
+                                    <li>æ£€éªŒ (J1,C1)ï¼šJ1 åå¥½ C1 > C2ï¼ŒC1 åå¥½ J2 > J1 â†’ <strong>ä¸æ˜¯</strong> rogue couple</li>
+                                    <li>æ£€éªŒ (J2,C2)ï¼šJ2 åå¥½ C2 > C1ï¼ŒC2 åå¥½ J1 > J2 â†’ <strong>ä¸æ˜¯</strong> rogue couple</li>
+                                </ul>
+                                <p>è¿™ä¸ªåä¾‹è¯´æ˜ŽåŽŸé¢˜æ˜¯é”™è¯¯çš„ã€‚</p>
+                                
+                                <p><strong>æ­£ç¡®çš„æž„é€ ï¼š</strong></p>
+                                <table style="border-collapse: collapse; margin: 10px 0;">
+                                    <tr>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C2 > C1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J2 > J1</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C1 > C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">C2</td>
+                                        <td style="border: 1px solid #ccc; padding: 8px;">J1 > J2</td>
+                                    </tr>
+                                </table>
+                                <p><strong>è€ƒè™‘ä¸ç¨³å®šé…å¯¹ï¼š</strong>(J1,C1), (J2,C2)</p>
+                                <ul>
+                                    <li>æœªé…å¯¹çš„å¯¹ï¼š(J1,C2) å’Œ (J2,C1)</li>
+                                    <li>æ£€éªŒ (J1,C2)ï¼šJ1 åå¥½ C2 > C1ï¼ŒC2 åå¥½ J1 > J2 â†’ <strong>rogue couple!</strong></li>
+                                    <li>æ£€éªŒ (J2,C1)ï¼šJ2 åå¥½ C1 > C2ï¼ŒC1 åå¥½ J2 > J1 â†’ <strong>rogue couple!</strong></li>
+                                </ul>
+                                <p><strong>ç»“è®ºï¼š</strong>æ‰€æœ‰æœªé…å¯¹éƒ½æ˜¯ rogue coupleï¼è¿™ä¸ªå®žä¾‹æ»¡è¶³æ¡ä»¶ã€‚âœ“</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis02a Problem 4(a) - True/False -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02a.pdf - Problem 4(a)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åˆ¤æ–­ä»¥ä¸‹é™ˆè¿°çš„çœŸå‡ï¼š
+                            <br><br>
+                            <ol style="list-style-type: lower-roman;">
+                                <li>å¦‚æžœå€™é€‰äººæ„å¤–åœ°åœ¨æŸä¸€å¤©æ‹’ç»äº†ä»–ä»¬æ›´å–œæ¬¢çš„å·¥ä½œï¼Œç®—æ³•ä»ç„¶æ€»æ˜¯ä»¥ä¸€ä¸ªåŒ¹é…ç»“æŸã€‚</li>
+                                <li>Propose-and-Reject ç®—æ³•ä»Žä¸ä¼šäº§ç”Ÿå€™é€‰äººæœ€ä¼˜çš„åŒ¹é…ã€‚</li>
+                                <li>å¦‚æžœåŒä¸€ä¸ªå·¥ä½œåœ¨æ¯ä¸ªå€™é€‰äººçš„åå¥½åˆ—è¡¨ä¸­éƒ½æŽ’åœ¨æœ€åŽï¼Œé‚£ä¹ˆè¯¥å·¥ä½œå¿…é¡»å¾—åˆ°å…¶æœ€ä¸å–œæ¬¢çš„å€™é€‰äººã€‚</li>
+                            </ol>
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… ç­”æ¡ˆï¼š</h4>
+
+                            <p><strong>(i) True - ç®—æ³•çš„é²æ£’æ€§ï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è§£é‡Šï¼š</strong></p>
+                                <ul>
+                                    <li>ç®—æ³•ä»…ä¾èµ–äºŽç»“æž„æ€§çš„æ€§è´¨ï¼š\(n\) ä¸ªå·¥ä½œå’Œ \(n\) ä¸ªå€™é€‰äººã€‚</li>
+                                    <li>å³ä½¿å€™é€‰äººåšå‡ºé”™è¯¯çš„æ‹’ç»å†³å®šï¼Œç®—æ³•ä»ç„¶ä¼šç»§ç»­è¿è¡Œã€‚</li>
+                                    <li>å·¥ä½œä¼šç»§ç»­å‘å…¶åˆ—è¡¨ä¸­çš„ä¸‹ä¸€ä¸ªå€™é€‰äººæ±‚å©šã€‚</li>
+                                    <li>æœ€ç»ˆï¼Œæ¯ä¸ªå·¥ä½œéƒ½ä¼šæ‰¾åˆ°ä¸€ä¸ªå€™é€‰äººï¼Œæ¯ä¸ªå€™é€‰äººéƒ½ä¼šæ‰¾åˆ°ä¸€ä¸ªå·¥ä½œã€‚</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>ç®—æ³•ä»ç„¶ä¼šäº§ç”Ÿä¸€ä¸ªåŒ¹é…ï¼ˆè™½ç„¶å¯èƒ½ä¸æ˜¯ç¨³å®šçš„æˆ–æœ€ä¼˜çš„ï¼‰ã€‚âœ“</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(ii) False - ç®—æ³•å¯èƒ½äº§ç”Ÿå€™é€‰äººæœ€ä¼˜åŒ¹é…ï¼š</strong></p>
+                            <div class="example-box">
+                                <p><strong>åä¾‹ï¼š</strong></p>
+                                <ul>
+                                    <li>å¦‚æžœå€™é€‰äººæ±‚å©šè€Œä¸æ˜¯å·¥ä½œæ±‚å©šï¼Œé‚£ä¹ˆç®—æ³•ä¼šäº§ç”Ÿ<strong>å€™é€‰äººæœ€ä¼˜</strong>çš„åŒ¹é…ã€‚</li>
+                                    <li>æ›´å…·ä½“åœ°ï¼Œå¦‚æžœåªæœ‰ä¸€ä¸ªç¨³å®šåŒ¹é…ï¼Œé‚£ä¹ˆæ— è®ºå“ªä¸€æ–¹æ±‚å©šï¼Œç®—æ³•éƒ½ä¼šäº§ç”ŸåŒä¸€ä¸ªåŒ¹é…ï¼ˆå³æ˜¯å€™é€‰äººæœ€ä¼˜çš„ï¼‰ã€‚</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>é¢˜ç›®ä¸­çš„â€œä»Žä¸â€å¤ªç»å¯¹ï¼Œæ‰€ä»¥æ˜¯ Falseã€‚</li>
+                                </ul>
+                            </div>
+
+                            <p><strong>(iii) True - æ‰€æœ‰äººçš„æœ€åŽé€‰æ‹©å¾—åˆ°æœ€å·®å€™é€‰äººï¼š</strong></p>
+                            <div class="proof-box">
+                                <p><strong>è¯æ˜Žï¼š</strong></p>
+                                <ol>
+                                    <li>è®¾å·¥ä½œ \(J\) æ˜¯æ¯ä¸ªå€™é€‰äººåå¥½åˆ—è¡¨ä¸­çš„æœ€åŽä¸€ä¸ªã€‚</li>
+                                    <li>åœ¨ job-proposing ç®—æ³•ä¸­ï¼Œ\(J\) åªæœ‰åœ¨å…¶æ‰€æœ‰å…¶ä»–é€‰æ‹©éƒ½è¢«æ‹’ç»åŽæ‰ä¼šè¢«å€™é€‰äººæŽ¥å—ã€‚</li>
+                                    <li>ç”±äºŽæ¯ä¸ªå€™é€‰äººéƒ½æŠŠ \(J\) æŽ’åœ¨æœ€åŽï¼Œ\(J\) åœ¨ä»»ä½•ç¨³å®šåŒ¹é…ä¸­éƒ½ä¸ä¼šè¢«ä¼˜å…ˆé€‰æ‹©ã€‚</li>
+                                    <li>å› æ­¤ï¼Œ\(J\) åœ¨ job-optimal åŒ¹é…ä¸­å¾—åˆ°çš„å€™é€‰äººå¿…ç„¶æ˜¯å…¶æœ€ä¸å–œæ¬¢çš„ã€‚</li>
+                                    <li>æ ¹æ®å®šç†ï¼šå¦‚æžœå·¥ä½œåœ¨ job-optimal åŒ¹é…ä¸­å¾—åˆ°æœ€å·®å€™é€‰äººï¼Œé‚£ä¹ˆè¯¥å·¥ä½œæ˜¯æ‰€æœ‰å€™é€‰äººçš„æœ€å·®é€‰æ‹©ã€‚</li>
+                                    <li><strong>ç»“è®ºï¼š</strong>è¯¥é™ˆè¿°ä¸ºçœŸã€‚âœ“</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Strategic behavior (dis02a Problem 4b) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis02a.pdf - Problem 4(b)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>è¯æ˜Žï¼šå¯¹äºŽä»»æ„ \(n \geq 2\)ï¼Œå­˜åœ¨ä¸€ä¸ªç¨³å®šåŒ¹é…å®žä¾‹ï¼Œå…¶ä¸­æŸä¸ªå€™é€‰äººé€šè¿‡ç­–ç•¥æ€§åœ°æ‹’ç»ä¸€ä¸ªæ±‚å©šï¼ˆå³ä½¿è¿™ä¸ªå·¥ä½œæ¯”æ‰‹ä¸­çš„æ›´å¥½ï¼‰ï¼Œå¯ä»¥è®©<em>æ‰€æœ‰</em>å€™é€‰äººéƒ½å¾—åˆ°æ›´å¥½çš„ç»“æžœã€‚
+                        </div>
+                        <div class="problem-actions">
+                            <button class="btn btn-primary" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <h4>âœ… æž„é€ ï¼ˆä»¥n=2ä¸ºä¾‹ï¼‰ï¼š</h4>
+                            <table style="border-collapse: collapse; margin: 10px 0;">
+                                <tr>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Jobs</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Candidates</th>
+                                    <th style="border: 1px solid #ccc; padding: 8px;">Preferences</th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">J1</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C1 > C2</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C1</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">J2 > J1</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">J2</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C2 > C1</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">C2</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">J1 > J2</td>
+                                </tr>
+                            </table>
+
+                            <p><strong>æ­£å¸¸è¿è¡Œï¼š</strong></p>
+                            <ul>
+                                <li>Day 1: J1â†’C1, J2â†’C2ï¼›ç»“æžœï¼š(J1,C1), (J2,C2)</li>
+                                <li>è¿™æ˜¯å€™é€‰äººæœ€å·®çš„ç¨³å®šåŒ¹é…</li>
+                            </ul>
+
+                            <p><strong>ç­–ç•¥æ€§æ‹’ç»ï¼š</strong></p>
+                            <ul>
+                                <li>Day 1: å½“J1å‘C1æ±‚å©šæ—¶ï¼ŒC1ç­–ç•¥æ€§åœ°æ‹’ç»ï¼ˆå³ä½¿æ‰‹ä¸­æ²¡æœ‰å·¥ä½œï¼‰</li>
+                                <li>Day 2: J1â†’C2, J2â†’C2ï¼›C2ä¿ç•™J1ï¼Œæ‹’ç»J2</li>
+                                <li>Day 3: J1â†’C2, J2â†’C1ï¼›ç»“æžœï¼š(J1,C2), (J2,C1)</li>
+                                <li>çŽ°åœ¨ä¸¤ä¸ªå€™é€‰äººéƒ½å¾—åˆ°äº†ç¬¬ä¸€é€‰æ‹©ï¼</li>
+                            </ul>
+
+                            <p><strong>ç»“è®ºï¼š</strong>ç®—æ³•ä¸æ˜¯strategy-proofï¼Œå€™é€‰äººå¯ä»¥é€šè¿‡æ’’è°Žï¼ˆç­–ç•¥æ€§æ‹’ç»ï¼‰èŽ·ç›Šã€‚</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  </main>
+  <button class="back-to-top" id="backToTop">↑</button>
+</body>
+</html>

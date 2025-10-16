@@ -1,0 +1,1534 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 70 综合学习指南 - 计数</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/mathjax-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 CS 70 综合学习指南</h1>
+    <div class="header-controls">
+      <input type="text" class="search-box" placeholder="搜索知识点或题目..." id="searchBox">
+      <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+    </div>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="nav-item" href="logic.html#logic">1. Propositional Logic</a>
+    <a class="nav-item" href="proofs.html#proofs">2. Proof Techniques</a>
+    <a class="nav-item" href="induction.html#induction">3. Induction</a>
+    <a class="nav-item" href="matching.html#matching">4. Stable Matching</a>
+    <a class="nav-item" href="graphs.html#graphs">5. Graph Theory</a>
+    <a class="nav-item" href="modular.html#section6">6. Modular Arithmetic</a>
+    <a class="nav-item" href="polynomials.html#section7">7. Polynomials</a>
+    <a class="nav-item" href="counting.html#counting">8. Counting</a>
+  </nav>
+  <main class="main-content"><section class="section" id="counting">
+            <h2 class="section-title">8. Counting (è®¡æ•°)</h2>
+
+            <!-- 8.1 åŸºæœ¬è®¡æ•°åŽŸç† -->
+            <div class="subsection" id="section8-1">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    8.1 åŸºæœ¬è®¡æ•°åŽŸç† (Basic Counting Principles)
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+
+                        <p><strong>åŠ æ³•åŽŸç† (Sum Rule)ï¼š</strong>å¦‚æžœæœ‰ \(n\) ç§æ–¹å¼åšäº‹æƒ… Aï¼Œ\(m\) ç§æ–¹å¼åšäº‹æƒ… Bï¼Œä¸”ä¸¤è€…ä¸èƒ½åŒæ—¶å‘ç”Ÿï¼Œåˆ™æœ‰ \(n + m\) ç§æ–¹å¼åš A æˆ– Bã€‚</p>
+
+                        <p><strong>ä¹˜æ³•åŽŸç† (Product Rule)ï¼š</strong>å¦‚æžœæœ‰ \(n\) ç§æ–¹å¼åšäº‹æƒ… Aï¼Œæ¯ç§æ–¹å¼åŽæœ‰ \(m\) ç§æ–¹å¼åšäº‹æƒ… Bï¼Œåˆ™æœ‰ \(n \times m\) ç§æ–¹å¼ä¾æ¬¡åš A å’Œ Bã€‚</p>
+
+                        <p><strong>å®¹æ–¥åŽŸç† (Inclusion-Exclusion Principle)ï¼š</strong></p>
+                        <ul>
+                            <li>ä¸¤ä¸ªé›†åˆï¼š\(|A \cup B| = |A| + |B| - |A \cap B|\)</li>
+                            <li>ä¸‰ä¸ªé›†åˆï¼š\(|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|\)</li>
+                        </ul>
+
+                        <p><strong>è¡¥é›†è®¡æ•° (Complement Counting)ï¼š</strong>å¦‚æžœç›´æŽ¥è®¡æ•°å›°éš¾ï¼Œå¯ä»¥è®¡ç®—è¡¥é›†ï¼š</p>
+                        <ul>
+                            <li>\(|\text{æ»¡è¶³æ¡ä»¶çš„}| = |\text{æ€»æ•°}| - |\text{ä¸æ»¡è¶³æ¡ä»¶çš„}|\)</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ é‡è¦å…¬å¼</h4>
+                        <div class="formula-item">
+                            <strong>å®¹æ–¥åŽŸç†ï¼ˆä¸€èˆ¬å½¢å¼ï¼‰ï¼š</strong>
+                            \[|A_1 \cup A_2 \cup \cdots \cup A_n| = \sum_{i} |A_i| - \sum_{i<j} |A_i \cap A_j| + \sum_{i<j<k} |A_i \cap A_j \cap A_k| - \cdots\]
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>é€‰æ‹©åŠ æ³•è¿˜æ˜¯ä¹˜æ³•ï¼šé—®"æˆ–"ç”¨åŠ æ³•ï¼Œé—®"ç„¶åŽ"ç”¨ä¹˜æ³•</li>
+                            <li>ä½¿ç”¨è¡¥é›†ï¼šå½“"ä¸æ»¡è¶³æ¡ä»¶"çš„æƒ…å†µæ›´ç®€å•æ—¶</li>
+                            <li>å®¹æ–¥åŽŸç†ï¼šå½“æœ‰é‡å æƒ…å†µæ—¶</li>
+                            <li>åˆ†ç±»è®¨è®ºï¼šæŒ‰ç…§ä¸åŒæƒ…å†µåˆ†ç±»ï¼Œç„¶åŽç›¸åŠ </li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Counting Passwords -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å¯†ç ç”± 6 ä½æ•°å­—ç»„æˆã€‚é—®ï¼š
+                            <br><br>
+                            (a) æœ‰å¤šå°‘ç§ä¸åŒçš„å¯†ç ï¼Ÿ<br>
+                            (b) æœ‰å¤šå°‘ç§å¯†ç ä¸åŒ…å«æ•°å­— 0ï¼Ÿ<br>
+                            (c) æœ‰å¤šå°‘ç§å¯†ç è‡³å°‘åŒ…å«ä¸€ä¸ª 0ï¼Ÿ<br>
+                            (d) æœ‰å¤šå°‘ç§å¯†ç æ°å¥½åŒ…å«ä¸€ä¸ª 0ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) æ€»å…±æœ‰å¤šå°‘ç§å¯†ç ï¼Ÿ</strong></p>
+                            <p>æ¯ä¸€ä½éƒ½æœ‰ 10 ç§é€‰æ‹©ï¼ˆ0-9ï¼‰ï¼Œå…± 6 ä½ï¼š</p>
+                            \[10^6 = 1,000,000\]
+                            <p><strong>ç­”æ¡ˆï¼š1,000,000 ç§</strong></p>
+
+                            <p><strong>(b) ä¸åŒ…å« 0 çš„å¯†ç æ•°é‡ï¼Ÿ</strong></p>
+                            <p>æ¯ä¸€ä½éƒ½æœ‰ 9 ç§é€‰æ‹©ï¼ˆ1-9ï¼‰ï¼Œå…± 6 ä½ï¼š</p>
+                            \[9^6 = 531,441\]
+                            <p><strong>ç­”æ¡ˆï¼š531,441 ç§</strong></p>
+
+                            <p><strong>(c) è‡³å°‘åŒ…å«ä¸€ä¸ª 0 çš„å¯†ç æ•°é‡ï¼Ÿ</strong></p>
+                            <p>ä½¿ç”¨è¡¥é›†è®¡æ•°ï¼š</p>
+                            \[\text{è‡³å°‘ä¸€ä¸ª 0} = \text{æ€»æ•°} - \text{æ²¡æœ‰ 0} = 10^6 - 9^6 = 1,000,000 - 531,441 = 468,559\]
+                            <p><strong>ç­”æ¡ˆï¼š468,559 ç§</strong></p>
+
+                            <p><strong>(d) æ°å¥½åŒ…å«ä¸€ä¸ª 0 çš„å¯†ç æ•°é‡ï¼Ÿ</strong></p>
+                            <p>é€‰æ‹©å“ªä¸€ä½æ˜¯ 0ï¼š\(\binom{6}{1} = 6\) ç§æ–¹å¼</p>
+                            <p>å…¶ä½™ 5 ä½ä¸æ˜¯ 0ï¼š\(9^5\) ç§æ–¹å¼</p>
+                            \[6 \times 9^5 = 6 \times 59,049 = 354,294\]
+                            <p><strong>ç­”æ¡ˆï¼š354,294 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Derangements -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>\(n\) ä¸ªäººå‚åŠ èšä¼šï¼Œæ¯äººå¸¦ä¸€ä¸ªç¤¼ç‰©ã€‚éšæœºåˆ†é…ç¤¼ç‰©ï¼Œé—®æ²¡æœ‰äººå¾—åˆ°è‡ªå·±ç¤¼ç‰©çš„æ¦‚çŽ‡æ˜¯å¤šå°‘ï¼Ÿï¼ˆè¿™å«åšé”™ä½æŽ’åˆ— Derangementï¼‰
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p>è®¾ \(A_i\) ä¸ºç¬¬ \(i\) ä¸ªäººå¾—åˆ°è‡ªå·±ç¤¼ç‰©çš„äº‹ä»¶ã€‚æˆ‘ä»¬è¦æ±‚ \(P(\overline{A_1 \cup A_2 \cup \cdots \cup A_n})\)ã€‚</p>
+
+                            <p><strong>ä½¿ç”¨å®¹æ–¥åŽŸç†ï¼š</strong></p>
+                            \[|A_1 \cup A_2 \cup \cdots \cup A_n| = \sum_{i} |A_i| - \sum_{i<j} |A_i \cap A_j| + \cdots\]
+
+                            <p><strong>è®¡ç®—å„é¡¹ï¼š</strong></p>
+                            <ul>
+                                <li>\(|A_i|\)ï¼šç¬¬ \(i\) ä¸ªäººå¾—åˆ°è‡ªå·±ç¤¼ç‰©ï¼Œå…¶ä½™ \(n-1\) ä¸ªäººéšæ„æŽ’åˆ—ï¼š\((n-1)!\)</li>
+                                <li>æœ‰ \(n\) ä¸ªè¿™æ ·çš„é¡¹ï¼Œæ€»å’Œï¼š\(n \cdot (n-1)! = n!\)</li>
+                                <li>\(|A_i \cap A_j|\)ï¼šç¬¬ \(i\) å’Œç¬¬ \(j\) ä¸ªäººéƒ½å¾—åˆ°è‡ªå·±ç¤¼ç‰©ï¼š\((n-2)!\)</li>
+                                <li>æœ‰ \(\binom{n}{2}\) ä¸ªè¿™æ ·çš„é¡¹ï¼Œæ€»å’Œï¼š\(\binom{n}{2} \cdot (n-2)! = \frac{n!}{2!}\)</li>
+                                <li>ä¸€èˆ¬åœ°ï¼Œ\(k\) ä¸ªäººå¾—åˆ°è‡ªå·±ç¤¼ç‰©ï¼š\(\binom{n}{k} \cdot (n-k)! = \frac{n!}{k!}\)</li>
+                            </ul>
+
+                            <p><strong>å®¹æ–¥å…¬å¼ï¼š</strong></p>
+                            \[|A_1 \cup \cdots \cup A_n| = \frac{n!}{1!} - \frac{n!}{2!} + \frac{n!}{3!} - \cdots + (-1)^{n-1} \frac{n!}{n!}\]
+
+                            <p><strong>é”™ä½æŽ’åˆ—æ•°é‡ï¼š</strong></p>
+                            \[\begin{align}
+                            D_n &= n! - |A_1 \cup \cdots \cup A_n| \\
+                            &= n! - \left(\frac{n!}{1!} - \frac{n!}{2!} + \frac{n!}{3!} - \cdots\right) \\
+                            &= n! \left(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n \frac{1}{n!}\right)
+                            \end{align}\]
+
+                            <p><strong>æ¦‚çŽ‡ï¼š</strong></p>
+                            \[P(\text{é”™ä½æŽ’åˆ—}) = \frac{D_n}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \approx \frac{1}{e} \approx 0.368\]
+
+                            <p><strong>ç­”æ¡ˆï¼š</strong>å½“ \(n\) è¾ƒå¤§æ—¶ï¼Œæ¦‚çŽ‡çº¦ä¸º \(\frac{1}{e} \approx 36.8\%\)</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Inclusion and Exclusion (dis06b) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06b.pdf - Problem 1</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ±‚å°äºŽ 100 ä¸”ä¸Ž 100 äº’è´¨çš„æ­£æ•´æ•°ä¸ªæ•°ã€‚
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>ä¸Ž 100 äº’è´¨æ„å‘³ç€ \(\gcd(n, 100) = 1\)ã€‚</p>
+
+                            <p><strong>100 çš„è´¨å› æ•°åˆ†è§£ï¼š</strong>\(100 = 2^2 \times 5^2\)</p>
+
+                            <p>ä¸Ž 100 ä¸äº’è´¨çš„æ•°æ˜¯ 2 æˆ– 5 çš„å€æ•°ã€‚</p>
+
+                            <p><strong>ä½¿ç”¨å®¹æ–¥åŽŸç†ï¼š</strong></p>
+                            <ul>
+                                <li>è®¾ \(A\) = å°äºŽ 100 çš„ 2 çš„å€æ•°é›†åˆ</li>
+                                <li>è®¾ \(B\) = å°äºŽ 100 çš„ 5 çš„å€æ•°é›†åˆ</li>
+                                <li>æˆ‘ä»¬è¦æ±‚ \(|\overline{A \cup B}|\)</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—å„é›†åˆå¤§å°ï¼š</strong></p>
+                            <ul>
+                                <li>\(|A| = \lfloor \frac{99}{2} \rfloor = 49\)ï¼ˆ2, 4, 6, ..., 98ï¼‰</li>
+                                <li>\(|B| = \lfloor \frac{99}{5} \rfloor = 19\)ï¼ˆ5, 10, 15, ..., 95ï¼‰</li>
+                                <li>\(|A \cap B| = \lfloor \frac{99}{10} \rfloor = 9\)ï¼ˆ10 çš„å€æ•°ï¼š10, 20, ..., 90ï¼‰</li>
+                            </ul>
+
+                            <p><strong>åº”ç”¨å®¹æ–¥åŽŸç†ï¼š</strong></p>
+                            \[|A \cup B| = |A| + |B| - |A \cap B| = 49 + 19 - 9 = 59\]
+
+                            <p><strong>ä¸Ž 100 äº’è´¨çš„æ•°ï¼š</strong></p>
+                            \[99 - |A \cup B| = 99 - 59 = 40\]
+
+                            <p><strong>ç­”æ¡ˆï¼š40 ä¸ª</strong></p>
+
+                            <p><strong>éªŒè¯ï¼š</strong>è¿™ä¹Ÿæ˜¯æ¬§æ‹‰å‡½æ•° \(\phi(100)\) çš„å€¼ã€‚</p>
+                            \[\phi(100) = 100 \times \left(1 - \frac{1}{2}\right) \times \left(1 - \frac{1}{5}\right) = 100 \times \frac{1}{2} \times \frac{4}{5} = 40\]
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 1(b) - US Phone Numbers -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 1(b)</span>
+                                <span class="difficulty">â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ç¾Žå›½ç”µè¯å·ç ç”±ä»¥ä¸‹éƒ¨åˆ†ç»„æˆï¼š
+                            <ul>
+                                <li>å›½å®¶ä»£ç ï¼šæ€»æ˜¯ "+1"ï¼ˆå›ºå®šï¼‰</li>
+                                <li>åœ°åŒºç ï¼š3 ä½æ•°å­—ï¼ˆä»»æ„ï¼‰</li>
+                                <li>ç”µè¯å‰ç¼€ï¼š3 ä½æ•°å­—ï¼ˆä»»æ„ï¼‰</li>
+                                <li>çº¿è·¯å·ï¼š4 ä½æ•°å­—ï¼ˆä»»æ„ï¼‰</li>
+                            </ul>
+                            æœ‰å¤šå°‘ç§ä¸åŒçš„ç¾Žå›½ç”µè¯å·ç ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>è¿™æ˜¯ä¸€ä¸ªä¹˜æ³•åŽŸç†é—®é¢˜ï¼Œéœ€è¦ä¾æ¬¡åšå†³å®šã€‚</p>
+
+                            <p><strong>åˆ†è§£è®¡ç®—ï¼š</strong></p>
+                            <ul>
+                                <li><strong>å›½å®¶ä»£ç ï¼š</strong>1 ç§é€‰æ‹©ï¼ˆå›ºå®šä¸º "+1"ï¼‰</li>
+                                <li><strong>åœ°åŒºç ï¼š</strong>3 ä½æ•°å­—ï¼Œæ¯ä½æœ‰ 10 ç§é€‰æ‹©ï¼ˆ0-9ï¼‰ï¼š\(10^3 = 1,000\) ç§</li>
+                                <li><strong>ç”µè¯å‰ç¼€ï¼š</strong>3 ä½æ•°å­—ï¼Œæ¯ä½æœ‰ 10 ç§é€‰æ‹©ï¼š\(10^3 = 1,000\) ç§</li>
+                                <li><strong>çº¿è·¯å·ï¼š</strong>4 ä½æ•°å­—ï¼Œæ¯ä½æœ‰ 10 ç§é€‰æ‹©ï¼š\(10^4 = 10,000\) ç§</li>
+                            </ul>
+
+                            <p><strong>ä½¿ç”¨ä¹˜æ³•åŽŸç†ï¼š</strong></p>
+                            \[\text{æ€»æ•°} = 1 \times 10^3 \times 10^3 \times 10^4 = 10^{10} = 10,000,000,000\]
+
+                            <p><strong>ç­”æ¡ˆï¼š10,000,000,000 ç§ï¼ˆ100 äº¿ï¼‰</strong></p>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong>å½“éœ€è¦åšä¸€ç³»åˆ—ç‹¬ç«‹å†³å®šæ—¶ï¼Œæ€»çš„æ–¹æ³•æ•°æ˜¯æ¯ä¸ªæ­¥éª¤æ–¹æ³•æ•°çš„ä¹˜ç§¯ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 3(c) - Password with Consecutive Zeros -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 3(c)</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>The Count æƒ³åˆ¶ä½œä¸€ä¸ª 10 ä½æ•°å­—çš„å¯†ç ä¿æŠ¤ä»–çš„æ‰‹æœºã€‚å¯†ç å¿…é¡»ï¼š
+                            <ul>
+                                <li>é•¿åº¦æ°å¥½æ˜¯ 10 ä½</li>
+                                <li>åªèƒ½åŒ…å«æ•°å­— 0 å’Œ 1</li>
+                                <li>è‡³å°‘åŒ…å« 5 ä¸ªè¿žç»­çš„ 0</li>
+                            </ul>
+                            æœ‰å¤šå°‘ç§å¯èƒ½çš„å¯†ç ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>æ–¹æ³•ï¼šè¡¥é›†è®¡æ•°</strong></p>
+
+                            <p><strong>æ€»æ•°ï¼š</strong>10 ä½æ•°å­—ï¼Œæ¯ä½å¯ä»¥æ˜¯ 0 æˆ– 1ï¼š</p>
+                            \[2^{10} = 1,024\]
+
+                            <p><strong>è¡¥é›†ï¼š</strong>ä¸åŒ…å« 5 ä¸ªè¿žç»­ 0 çš„å¯†ç æ•°é‡ã€‚</p>
+
+                            <p><strong>è®¡ç®—è¡¥é›†ï¼ˆä½¿ç”¨é€’æŽ¨ï¼‰ï¼š</strong></p>
+                            <p>è®¾ \(a_n\) ä¸ºé•¿åº¦ä¸º \(n\) ä¸”ä¸åŒ…å« 5 ä¸ªè¿žç»­ 0 çš„äºŒè¿›åˆ¶åºåˆ—æ•°é‡ã€‚</p>
+
+                            <p><strong>é€’æŽ¨å…³ç³»ï¼š</strong>æŒ‰ç…§æœ€åŽå‡ ä½åˆ†ç±»ï¼š</p>
+                            <ul>
+                                <li>æœ€åŽä¸€ä½æ˜¯ 1ï¼šå‰ \(n-1\) ä½ä»»æ„åˆæ³•åºåˆ—ï¼š\(a_{n-1}\)</li>
+                                <li>æœ€åŽä¸€ä½æ˜¯ 0ï¼šå‰é¢ä¸èƒ½æœ‰ 4 ä¸ªè¿žç»­ 0
+                                    <ul>
+                                        <li>æœ€åŽä¸¤ä½æ˜¯ 10ï¼š\(a_{n-2}\)</li>
+                                        <li>æœ€åŽä¸‰ä½æ˜¯ 100ï¼š\(a_{n-3}\)</li>
+                                        <li>æœ€åŽå››ä½æ˜¯ 1000ï¼š\(a_{n-4}\)</li>
+                                        <li>æœ€åŽäº”ä½æ˜¯ 10000ï¼š\(a_{n-5}\)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p><strong>é€’æŽ¨å…¬å¼ï¼š</strong></p>
+                            \[a_n = a_{n-1} + a_{n-2} + a_{n-3} + a_{n-4} + a_{n-5}\]
+
+                            <p><strong>åˆå§‹å€¼ï¼š</strong></p>
+                            <ul>
+                                <li>\(a_1 = 2\) (0, 1)</li>
+                                <li>\(a_2 = 4\) (00, 01, 10, 11)</li>
+                                <li>\(a_3 = 8\) (æ‰€æœ‰ 3 ä½äºŒè¿›åˆ¶)</li>
+                                <li>\(a_4 = 16\) (æ‰€æœ‰ 4 ä½äºŒè¿›åˆ¶)</li>
+                                <li>\(a_5 = 31\) (é™¤åŽ» 00000ï¼Œå…¶ä»–éƒ½å¯ä»¥ï¼‰</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®— \(a_6\) åˆ° \(a_{10}\)ï¼š</strong></p>
+                            <ul>
+                                <li>\(a_6 = 2 + 4 + 8 + 16 + 31 = 61\)</li>
+                                <li>\(a_7 = 4 + 8 + 16 + 31 + 61 = 120\)</li>
+                                <li>\(a_8 = 8 + 16 + 31 + 61 + 120 = 236\)</li>
+                                <li>\(a_9 = 16 + 31 + 61 + 120 + 236 = 464\)</li>
+                                <li>\(a_{10} = 31 + 61 + 120 + 236 + 464 = 912\)</li>
+                            </ul>
+
+                            <p><strong>è‡³å°‘åŒ…å« 5 ä¸ªè¿žç»­ 0 çš„å¯†ç ï¼š</strong></p>
+                            \[2^{10} - a_{10} = 1,024 - 912 = 112\]
+
+                            <p><strong>ç­”æ¡ˆï¼š112 ç§</strong></p>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong></p>
+                            <ul>
+                                <li>å¯¹äºŽ"è‡³å°‘"ç±»åž‹çš„é—®é¢˜ï¼Œè€ƒè™‘ä½¿ç”¨è¡¥é›†è®¡æ•°</li>
+                                <li>å¯¹äºŽæœ‰è¿žç»­æ¡ä»¶é™åˆ¶çš„é—®é¢˜ï¼Œå¯ä»¥ä½¿ç”¨é€’æŽ¨å…³ç³»</li>
+                                <li>é€’æŽ¨å…³ç³»çš„æž„é€ è¦æŒ‰ç…§"æœ€åŽå‡ ä½"åˆ†ç±»ï¼Œç¡®ä¿ä¸é‡ä¸æ¼</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8.2 æŽ’åˆ— -->
+            <div class="subsection" id="section8-2">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    8.2 æŽ’åˆ— (Permutations)
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+
+                        <p><strong>æŽ’åˆ—ï¼š</strong>ä»Ž \(n\) ä¸ªä¸åŒå…ƒç´ ä¸­å–å‡º \(k\) ä¸ªå…ƒç´ ï¼ŒæŒ‰ç…§ä¸€å®šé¡ºåºæŽ’åˆ—ï¼Œé¡ºåºä¸åŒç®—ä½œä¸åŒçš„æŽ’åˆ—ã€‚</p>
+
+                        <p><strong>æŽ’åˆ—æ•°å…¬å¼ï¼š</strong></p>
+                        \[P(n, k) = \frac{n!}{(n-k)!} = n \times (n-1) \times (n-2) \times \cdots \times (n-k+1)\]
+
+                        <p><strong>ç‰¹æ®Šæƒ…å†µï¼š</strong></p>
+                        <ul>
+                            <li><strong>å…¨æŽ’åˆ—ï¼š</strong>\(P(n, n) = n!\)</li>
+                            <li><strong>æœ‰é‡å¤å…ƒç´ çš„æŽ’åˆ—ï¼š</strong>å¦‚æžœæœ‰ \(n_1\) ä¸ªç›¸åŒå…ƒç´ 1ï¼Œ\(n_2\) ä¸ªç›¸åŒå…ƒç´ 2ï¼Œ...ï¼Œ\(n_k\) ä¸ªç›¸åŒå…ƒç´ kï¼Œæ€»å…± \(n = n_1 + n_2 + \cdots + n_k\) ä¸ªå…ƒç´ ï¼Œåˆ™æŽ’åˆ—æ•°ä¸ºï¼š</li>
+                        </ul>
+                        \[\frac{n!}{n_1! \cdot n_2! \cdot \cdots \cdot n_k!}\]
+
+                        <p><strong>åœ†å½¢æŽ’åˆ—ï¼š</strong>\(n\) ä¸ªä¸åŒå…ƒç´ æŽ’æˆä¸€ä¸ªåœ†åœˆï¼Œæ—‹è½¬åŽç›¸åŒçš„ç®—ä½œåŒä¸€ç§æŽ’åˆ—ï¼š</p>
+                        \[\frac{n!}{n} = (n-1)!\]
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ é‡è¦å…¬å¼</h4>
+                        <div class="formula-item">
+                            <strong>æŽ’åˆ—æ•°ï¼š</strong>
+                            \[P(n, k) = \frac{n!}{(n-k)!}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>å¤šé‡é›†æŽ’åˆ—ï¼ˆæœ‰é‡å¤å…ƒç´ ï¼‰ï¼š</strong>
+                            \[\frac{n!}{n_1! \cdot n_2! \cdot \cdots \cdot n_k!}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>åœ†å½¢æŽ’åˆ—ï¼š</strong>
+                            \[(n-1)!\]
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>åŒºåˆ†æŽ’åˆ—å’Œç»„åˆï¼šé¡ºåºé‡è¦ç”¨æŽ’åˆ—ï¼Œé¡ºåºä¸é‡è¦ç”¨ç»„åˆ</li>
+                            <li>æœ‰é‡å¤å…ƒç´ ï¼šé™¤ä»¥é‡å¤å…ƒç´ çš„é˜¶ä¹˜</li>
+                            <li>åœ†å½¢æŽ’åˆ—ï¼šå›ºå®šä¸€ä¸ªå…ƒç´ çš„ä½ç½®ï¼Œå‰©ä½™å…ƒç´ æŽ’åˆ—</li>
+                            <li>é™åˆ¶æ¡ä»¶ï¼šå¯ä»¥å…ˆå®‰æŽ’æœ‰é™åˆ¶çš„å…ƒç´ ï¼Œå†å®‰æŽ’å…¶ä»–å…ƒç´ </li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Anagrams -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å•è¯ "MISSISSIPPI" æœ‰å¤šå°‘ç§ä¸åŒçš„å­—æ¯æŽ’åˆ—ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžå­—æ¯é¢‘çŽ‡ï¼š</strong></p>
+                            <ul>
+                                <li>M: 1 ä¸ª</li>
+                                <li>I: 4 ä¸ª</li>
+                                <li>S: 4 ä¸ª</li>
+                                <li>P: 2 ä¸ª</li>
+                                <li>æ€»å…±ï¼š11 ä¸ªå­—æ¯</li>
+                            </ul>
+
+                            <p><strong>ä½¿ç”¨å¤šé‡é›†æŽ’åˆ—å…¬å¼ï¼š</strong></p>
+                            \[\frac{11!}{1! \cdot 4! \cdot 4! \cdot 2!} = \frac{39,916,800}{1 \times 24 \times 24 \times 2} = \frac{39,916,800}{1,152} = 34,650\]
+
+                            <p><strong>ç­”æ¡ˆï¼š34,650 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Seating Arrangement -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>5 ä¸ªäººååœ¨åœ†æ¡Œæ—ã€‚
+                            <br><br>
+                            (a) æœ‰å¤šå°‘ç§ä¸åŒçš„åæ³•ï¼Ÿ<br>
+                            (b) å¦‚æžœ 2 ä¸ªç‰¹å®šçš„äººå¿…é¡»ååœ¨ä¸€èµ·ï¼Œæœ‰å¤šå°‘ç§åæ³•ï¼Ÿ<br>
+                            (c) å¦‚æžœ 2 ä¸ªç‰¹å®šçš„äººä¸èƒ½ååœ¨ä¸€èµ·ï¼Œæœ‰å¤šå°‘ç§åæ³•ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) åœ†å½¢æŽ’åˆ—ï¼Œæ€»åæ³•æ•°ï¼š</strong></p>
+                            \[(5-1)! = 4! = 24\]
+                            <p><strong>ç­”æ¡ˆï¼š24 ç§</strong></p>
+
+                            <p><strong>(b) ä¸¤äººå¿…é¡»ååœ¨ä¸€èµ·ï¼š</strong></p>
+                            <p>å°†ä¸¤äººçœ‹ä½œä¸€ä¸ªæ•´ä½“ï¼Œæœ‰ 4 ä¸ª"å…ƒç´ "å›´åœ†æ¡Œï¼š\((4-1)! = 3! = 6\)</p>
+                            <p>ä¸¤äººå†…éƒ¨å¯ä»¥äº¤æ¢ä½ç½®ï¼š\(2! = 2\)</p>
+                            \[6 \times 2 = 12\]
+                            <p><strong>ç­”æ¡ˆï¼š12 ç§</strong></p>
+
+                            <p><strong>(c) ä¸¤äººä¸èƒ½ååœ¨ä¸€èµ·ï¼š</strong></p>
+                            <p>ä½¿ç”¨è¡¥é›†è®¡æ•°ï¼š</p>
+                            \[\text{ä¸ç›¸é‚»} = \text{æ€»æ•°} - \text{ç›¸é‚»} = 24 - 12 = 12\]
+                            <p><strong>ç­”æ¡ˆï¼š12 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Password Permutations -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»Ž 10 ä¸ªä¸åŒå­—æ¯ä¸­é€‰ 5 ä¸ªæŽ’æˆå¯†ç ï¼Œæœ‰å¤šå°‘ç§ä¸åŒçš„å¯†ç ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>è¿™æ˜¯ä¸€ä¸ªæŽ’åˆ—é—®é¢˜ï¼š</strong>ä»Ž 10 ä¸ªå…ƒç´ ä¸­é€‰ 5 ä¸ªï¼Œé¡ºåºé‡è¦</p>
+                            \[P(10, 5) = \frac{10!}{(10-5)!} = \frac{10!}{5!} = 10 \times 9 \times 8 \times 7 \times 6 = 30,240\]
+
+                            <p><strong>ç­”æ¡ˆï¼š30,240 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 1(c) - Anagrams -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 1(c)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å•è¯ "COUNT" å’Œ "BERKELEY" å„æœ‰å¤šå°‘ç§å­—æ¯é‡æ–°æŽ’åˆ—ï¼ˆanagramï¼‰ï¼Ÿ
+                            <br><br>
+                            <em>ï¼ˆanagram æ˜¯å¯¹ä¸€ä¸ªå•è¯çš„å­—æ¯è¿›è¡Œé‡æ–°æŽ’åˆ—ï¼Œä¾‹å¦‚ "CTONU" å’Œ "TNUOC" éƒ½æ˜¯ "COUNT" çš„ anagramï¼‰</em>
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(1) "COUNT" çš„ anagram æ•°é‡ï¼š</strong></p>
+
+                            <p><strong>åˆ†æžå­—æ¯é¢‘çŽ‡ï¼š</strong></p>
+                            <ul>
+                                <li>C: 1 ä¸ª</li>
+                                <li>O: 1 ä¸ª</li>
+                                <li>U: 1 ä¸ª</li>
+                                <li>N: 1 ä¸ª</li>
+                                <li>T: 1 ä¸ª</li>
+                                <li>æ€»å…±ï¼š5 ä¸ªä¸åŒå­—æ¯</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—ï¼š</strong>æ‰€æœ‰å­—æ¯éƒ½ä¸åŒï¼Œç›´æŽ¥å…¨æŽ’åˆ—</p>
+                            \[5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\]
+
+                            <p><strong>ç­”æ¡ˆï¼š120 ç§</strong></p>
+
+                            <hr>
+
+                            <p><strong>(2) "BERKELEY" çš„ anagram æ•°é‡ï¼š</strong></p>
+
+                            <p><strong>åˆ†æžå­—æ¯é¢‘çŽ‡ï¼š</strong></p>
+                            <ul>
+                                <li>B: 1 ä¸ª</li>
+                                <li>E: 3 ä¸ª  â† <strong>æœ‰é‡å¤</strong></li>
+                                <li>R: 1 ä¸ª</li>
+                                <li>K: 1 ä¸ª</li>
+                                <li>L: 1 ä¸ª</li>
+                                <li>Y: 1 ä¸ª</li>
+                                <li>æ€»å…±ï¼š8 ä¸ªå­—æ¯ï¼Œå…¶ä¸­ E å‡ºçŽ° 3 æ¬¡</li>
+                            </ul>
+
+                            <p><strong>ä½¿ç”¨å¤šé‡é›†æŽ’åˆ—å…¬å¼ï¼š</strong></p>
+                            <p>ç”±äºŽæœ‰ 3 ä¸ªç›¸åŒçš„ Eï¼Œéœ€è¦é™¤ä»¥ \(3!\) æ¥åŽ»é™¤é‡å¤è®¡æ•°ï¼š</p>
+                            \[\frac{8!}{3!} = \frac{40,320}{6} = 6,720\]
+
+                            <p><strong>ç­”æ¡ˆï¼š6,720 ç§</strong></p>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong></p>
+                            <ul>
+                                <li>å¦‚æžœæ‰€æœ‰å…ƒç´ éƒ½ä¸åŒï¼Œç”¨ \(n!\)</li>
+                                <li>å¦‚æžœæœ‰é‡å¤å…ƒç´ ï¼Œéœ€è¦é™¤ä»¥æ¯ä¸ªé‡å¤å…ƒç´ çš„é¢‘çŽ‡çš„é˜¶ä¹˜</li>
+                                <li>å…¬å¼ï¼š\(\frac{n!}{n_1! \cdot n_2! \cdot \cdots \cdot n_k!}\)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: BAA Arrangements (midterm_sp25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_sp25.pdf - Q12.1</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å•è¯ "BAA" æœ‰å¤šå°‘ç§ä¸åŒçš„å­—æ¯æŽ’åˆ—ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>å…± 3 ä¸ªå­—æ¯ï¼Œå…¶ä¸­ A é‡å¤ 2 æ¬¡ã€‚</p>
+
+                            <p><strong>ä½¿ç”¨å¤šé‡é›†æŽ’åˆ—å…¬å¼ï¼š</strong></p>
+                            \[\frac{3!}{2!} = \frac{6}{2} = 3\]
+
+                            <p><strong>æžšä¸¾éªŒè¯ï¼š</strong></p>
+                            <ul>
+                                <li>BAA</li>
+                                <li>ABA</li>
+                                <li>AAB</li>
+                            </ul>
+
+                            <p><strong>ç­”æ¡ˆï¼š3 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: ADDED and AARDVARK (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q12.3, Q12.4</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ±‚ä»¥ä¸‹å•è¯çš„å­—æ¯æŽ’åˆ—ï¼ˆanagramï¼‰æ•°é‡ï¼š
+                            <br><br>
+                            (a) "ADDED"<br>
+                            (b) "AARDVARK"
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) "ADDED" çš„æŽ’åˆ—æ•°ï¼š</strong></p>
+
+                            <p><strong>å­—æ¯ç»Ÿè®¡ï¼š</strong></p>
+                            <ul>
+                                <li>A: 1 ä¸ª</li>
+                                <li>D: 3 ä¸ª â† <strong>æœ‰é‡å¤</strong></li>
+                                <li>E: 1 ä¸ª</li>
+                                <li>æ€»å…±ï¼š5 ä¸ªå­—æ¯</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\frac{5!}{3!} = \frac{120}{6} = 20\]
+
+                            <p><strong>ç­”æ¡ˆï¼š20 ç§</strong></p>
+
+                            <hr>
+
+                            <p><strong>(b) "AARDVARK" çš„æŽ’åˆ—æ•°ï¼š</strong></p>
+
+                            <p><strong>å­—æ¯ç»Ÿè®¡ï¼š</strong></p>
+                            <ul>
+                                <li>A: 3 ä¸ª â† <strong>æœ‰é‡å¤</strong></li>
+                                <li>R: 2 ä¸ª â† <strong>æœ‰é‡å¤</strong></li>
+                                <li>D: 1 ä¸ª</li>
+                                <li>V: 1 ä¸ª</li>
+                                <li>K: 1 ä¸ª</li>
+                                <li>æ€»å…±ï¼š8 ä¸ªå­—æ¯</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—ï¼š</strong>æœ‰å¤šä¸ªé‡å¤å­—æ¯</p>
+                            \[\frac{8!}{3! \cdot 2!} = \frac{40,320}{6 \times 2} = \frac{40,320}{12} = 3,360\]
+
+                            <p><strong>ç­”æ¡ˆï¼š3,360 ç§</strong></p>
+
+                            <p><strong>æŠ€å·§æç¤ºï¼š</strong>å½“æœ‰å¤šç»„é‡å¤å…ƒç´ æ—¶ï¼Œåˆ†æ¯æ˜¯å„ç»„é‡å¤å…ƒç´ çš„é˜¶ä¹˜ä¹‹ç§¯ã€‚</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8.3 ç»„åˆ -->
+            <div class="subsection" id="section8-3">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    8.3 ç»„åˆ (Combinations)
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+
+                        <p><strong>ç»„åˆï¼š</strong>ä»Ž \(n\) ä¸ªä¸åŒå…ƒç´ ä¸­å–å‡º \(k\) ä¸ªå…ƒç´ ï¼Œä¸è€ƒè™‘é¡ºåºï¼Œåªå…³å¿ƒé€‰ä¸­å“ªäº›å…ƒç´ ã€‚</p>
+
+                        <p><strong>ç»„åˆæ•°å…¬å¼ï¼š</strong></p>
+                        \[\binom{n}{k} = C(n, k) = \frac{n!}{k!(n-k)!} = \frac{P(n, k)}{k!}\]
+
+                        <p><strong>é‡è¦æ€§è´¨ï¼š</strong></p>
+                        <ul>
+                            <li><strong>å¯¹ç§°æ€§ï¼š</strong>\(\binom{n}{k} = \binom{n}{n-k}\)</li>
+                            <li><strong>å¸•æ–¯å¡æ’ç­‰å¼ï¼š</strong>\(\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\)</li>
+                            <li><strong>äºŒé¡¹å¼å®šç†ï¼š</strong>\((x+y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}\)</li>
+                            <li><strong>ç‰¹æ®Šå€¼ï¼š</strong>\(\binom{n}{0} = \binom{n}{n} = 1\)</li>
+                            <li><strong>ç»„åˆå’Œï¼š</strong>\(\sum_{k=0}^{n} \binom{n}{k} = 2^n\)</li>
+                        </ul>
+
+                        <p><strong>å¤šé‡ç»„åˆï¼ˆå¯é‡å¤é€‰æ‹©ï¼‰ï¼š</strong>ä»Ž \(n\) ç§å…ƒç´ ä¸­é€‰ \(k\) ä¸ªï¼ˆå¯é‡å¤ï¼‰ï¼š</p>
+                        \[\binom{n+k-1}{k} = \binom{n+k-1}{n-1}\]
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ é‡è¦å…¬å¼</h4>
+                        <div class="formula-item">
+                            <strong>ç»„åˆæ•°ï¼š</strong>
+                            \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>äºŒé¡¹å¼å®šç†ï¼š</strong>
+                            \[(x+y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>èŒƒå¾·è’™å¾·æ’ç­‰å¼ (Vandermonde's Identity)ï¼š</strong>
+                            \[\binom{m+n}{r} = \sum_{k=0}^{r} \binom{m}{k} \binom{n}{r-k}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>å¤šé‡ç»„åˆï¼ˆé‡å¤ç»„åˆï¼‰ï¼š</strong>
+                            \[\binom{n+k-1}{k}\]
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>æŽ’åˆ— vs ç»„åˆï¼šé¡ºåºé‡è¦ç”¨æŽ’åˆ—ï¼Œé¡ºåºä¸é‡è¦ç”¨ç»„åˆ</li>
+                            <li>ä½¿ç”¨å¯¹ç§°æ€§ï¼š\(\binom{n}{k} = \binom{n}{n-k}\)ï¼Œé€‰æ‹©è¾ƒå°çš„æ•°è®¡ç®—</li>
+                            <li>å¸•æ–¯å¡æ’ç­‰å¼ï¼šå¯ä»¥é€’å½’è®¡ç®—ç»„åˆæ•°</li>
+                            <li>äºŒé¡¹å¼å®šç†ï¼šå±•å¼€ \((x+y)^n\) æˆ–æ±‚å’Œ</li>
+                            <li>å¤šé‡ç»„åˆï¼šç”¨ Stars and Bars æ–¹æ³•</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Committee Selection -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»Ž 12 ä¸ªäººä¸­é€‰ 5 ä¸ªäººç»„æˆå§”å‘˜ä¼šï¼Œæœ‰å¤šå°‘ç§é€‰æ³•ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>è¿™æ˜¯ç»„åˆé—®é¢˜ï¼š</strong>é¡ºåºä¸é‡è¦ï¼Œåªå…³å¿ƒé€‰ä¸­å“ª5ä¸ªäºº</p>
+                            \[\binom{12}{5} = \frac{12!}{5! \cdot 7!} = \frac{12 \times 11 \times 10 \times 9 \times 8}{5 \times 4 \times 3 \times 2 \times 1} = \frac{95,040}{120} = 792\]
+
+                            <p><strong>ç­”æ¡ˆï¼š792 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Binomial Theorem -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>
+                            <br><br>
+                            (a) å±•å¼€ \((x+y)^4\)<br>
+                            (b) æ±‚ \((2+3)^4\) ä¸­ \(2^2 \cdot 3^2\) é¡¹çš„ç³»æ•°<br>
+                            (c) è¯æ˜Ž \(\sum_{k=0}^{n} \binom{n}{k} = 2^n\)
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) å±•å¼€ \((x+y)^4\)ï¼š</strong></p>
+                            \[\begin{align}
+                            (x+y)^4 &= \sum_{k=0}^{4} \binom{4}{k} x^k y^{4-k} \\
+                            &= \binom{4}{0}y^4 + \binom{4}{1}xy^3 + \binom{4}{2}x^2y^2 + \binom{4}{3}x^3y + \binom{4}{4}x^4 \\
+                            &= y^4 + 4xy^3 + 6x^2y^2 + 4x^3y + x^4
+                            \end{align}\]
+
+                            <p><strong>(b) æ±‚ \(2^2 \cdot 3^2\) é¡¹çš„ç³»æ•°ï¼š</strong></p>
+                            <p>åœ¨å±•å¼€å¼ä¸­ï¼Œ\(x^2y^2\) é¡¹çš„ç³»æ•°æ˜¯ \(\binom{4}{2} = 6\)</p>
+                            <p>ä»£å…¥ \(x=2, y=3\)ï¼šç³»æ•°ä»ä¸º 6</p>
+                            <p><strong>ç­”æ¡ˆï¼š6</strong></p>
+
+                            <p><strong>(c) è¯æ˜Žç»„åˆå’Œå…¬å¼ï¼š</strong></p>
+                            <p>åœ¨äºŒé¡¹å¼å®šç†ä¸­ä»¤ \(x = y = 1\)ï¼š</p>
+                            \[\begin{align}
+                            (1+1)^n &= \sum_{k=0}^{n} \binom{n}{k} 1^k \cdot 1^{n-k} \\
+                            2^n &= \sum_{k=0}^{n} \binom{n}{k}
+                            \end{align}\]
+
+                            <p><strong>ç»„åˆå­¦è§£é‡Šï¼š</strong>\(2^n\) æ˜¯ \(n\) ä¸ªå…ƒç´ é›†åˆçš„æ‰€æœ‰å­é›†æ•°é‡ï¼Œ\(\binom{n}{k}\) æ˜¯å¤§å°ä¸º \(k\) çš„å­é›†æ•°é‡ï¼Œæ±‚å’Œå³å¾—åˆ°æ‰€æœ‰å­é›†ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Poker Hand -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ ‡å‡†æ‰‘å…‹ç‰Œ 52 å¼ ï¼ˆ4 ç§èŠ±è‰²ï¼Œæ¯ç§ 13 å¼ ï¼‰ã€‚ä»Žä¸­æŠ½ 5 å¼ ç‰Œï¼Œé—®ï¼š
+                            <br><br>
+                            (a) æ€»å…±æœ‰å¤šå°‘ç§ä¸åŒçš„ç‰Œåž‹ï¼Ÿ<br>
+                            (b) æœ‰å¤šå°‘ç§"åŒèŠ±é¡º"ï¼ˆ5 å¼ åŒèŠ±è‰²ä¸”è¿žç»­ï¼‰ï¼Ÿ<br>
+                            (c) æœ‰å¤šå°‘ç§"å››æ¡"ï¼ˆ4 å¼ åŒç‚¹æ•° + 1 å¼ å…¶ä»–ï¼‰ï¼Ÿ<br>
+                            (d) æœ‰å¤šå°‘ç§"è‘«èŠ¦"ï¼ˆ3 å¼ åŒç‚¹æ•° + 2 å¼ åŒç‚¹æ•°ï¼‰ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) æ€»ç‰Œåž‹æ•°ï¼š</strong></p>
+                            \[\binom{52}{5} = \frac{52!}{5! \cdot 47!} = 2,598,960\]
+                            <p><strong>ç­”æ¡ˆï¼š2,598,960 ç§</strong></p>
+
+                            <p><strong>(b) åŒèŠ±é¡ºï¼š</strong></p>
+                            <ul>
+                                <li>é€‰æ‹©èŠ±è‰²ï¼š4 ç§</li>
+                                <li>é€‰æ‹©èµ·å§‹ç‚¹æ•°ï¼šA-2-3-4-5, 2-3-4-5-6, ..., 10-J-Q-K-Aï¼Œå…± 10 ç§ï¼ˆæ³¨æ„ A å¯ä»¥åœ¨å¼€å¤´æˆ–ç»“å°¾ï¼‰</li>
+                            </ul>
+                            \[4 \times 10 = 40\]
+                            <p><strong>ç­”æ¡ˆï¼š40 ç§</strong></p>
+
+                            <p><strong>(c) å››æ¡ï¼š</strong></p>
+                            <ul>
+                                <li>é€‰æ‹©ç‚¹æ•°ï¼ˆå››æ¡ï¼‰ï¼š13 ç§</li>
+                                <li>è¯¥ç‚¹æ•°çš„ 4 å¼ ç‰Œéƒ½è¦ï¼š1 ç§</li>
+                                <li>é€‰æ‹©ç¬¬ 5 å¼ ç‰Œçš„ç‚¹æ•°ï¼š12 ç§</li>
+                                <li>é€‰æ‹©ç¬¬ 5 å¼ ç‰Œçš„èŠ±è‰²ï¼š4 ç§</li>
+                            </ul>
+                            \[13 \times 1 \times 12 \times 4 = 624\]
+                            <p><strong>ç­”æ¡ˆï¼š624 ç§</strong></p>
+
+                            <p><strong>(d) è‘«èŠ¦ï¼ˆFull Houseï¼‰ï¼š</strong></p>
+                            <ul>
+                                <li>é€‰æ‹©ä¸‰æ¡çš„ç‚¹æ•°ï¼š13 ç§</li>
+                                <li>ä»Žè¯¥ç‚¹æ•°çš„ 4 å¼ ç‰Œä¸­é€‰ 3 å¼ ï¼š\(\binom{4}{3} = 4\) ç§</li>
+                                <li>é€‰æ‹©å¯¹å­çš„ç‚¹æ•°ï¼š12 ç§ï¼ˆä¸èƒ½ä¸Žä¸‰æ¡ç›¸åŒï¼‰</li>
+                                <li>ä»Žè¯¥ç‚¹æ•°çš„ 4 å¼ ç‰Œä¸­é€‰ 2 å¼ ï¼š\(\binom{4}{2} = 6\) ç§</li>
+                            </ul>
+                            \[13 \times 4 \times 12 \times 6 = 3,744\]
+                            <p><strong>ç­”æ¡ˆï¼š3,744 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Vandermonde Identity -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ç”¨ç»„åˆå­¦æ–¹æ³•è¯æ˜ŽèŒƒå¾·è’™å¾·æ’ç­‰å¼ï¼š
+                            \[\binom{m+n}{r} = \sum_{k=0}^{r} \binom{m}{k} \binom{n}{r-k}\]
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>ç»„åˆå­¦è¯æ˜Žï¼š</strong></p>
+
+                            <p><strong>é—®é¢˜è®¾å®šï¼š</strong>æœ‰ \(m\) ä¸ªç”·ç”Ÿå’Œ \(n\) ä¸ªå¥³ç”Ÿï¼Œä»Žä¸­é€‰ \(r\) ä¸ªäººã€‚</p>
+
+                            <p><strong>å·¦è¾¹ï¼š</strong>\(\binom{m+n}{r}\) è¡¨ç¤ºä»Ž \(m+n\) ä¸ªäººä¸­ç›´æŽ¥é€‰ \(r\) ä¸ªäººã€‚</p>
+
+                            <p><strong>å³è¾¹ï¼š</strong>æŒ‰ç…§é€‰ä¸­çš„ç”·ç”Ÿæ•°é‡åˆ†ç±»ï¼š</p>
+                            <ul>
+                                <li>é€‰ \(k\) ä¸ªç”·ç”Ÿï¼Œ\(r-k\) ä¸ªå¥³ç”Ÿï¼š\(\binom{m}{k} \binom{n}{r-k}\)</li>
+                                <li>\(k\) å¯ä»¥ä»Ž 0 åˆ° \(r\)ï¼ˆä½†ä¸èƒ½è¶…è¿‡ \(m\) æˆ–ä½¿å¾— \(r-k > n\)ï¼‰</li>
+                                <li>å¯¹æ‰€æœ‰å¯èƒ½çš„ \(k\) æ±‚å’Œï¼š\(\sum_{k=0}^{r} \binom{m}{k} \binom{n}{r-k}\)</li>
+                            </ul>
+
+                            <p><strong>ç»“è®ºï¼š</strong>ä¸¤ç§è®¡æ•°æ–¹å¼è®¡ç®—çš„æ˜¯åŒä¸€ä»¶äº‹ï¼Œå› æ­¤ç›¸ç­‰ã€‚</p>
+
+                            <p><strong>ç‰¹ä¾‹éªŒè¯ï¼š</strong>ä»¤ \(m = n = r = 2\)ï¼š</p>
+                            \[\begin{align}
+                            \text{å·¦è¾¹ï¼š} & \binom{4}{2} = 6 \\
+                            \text{å³è¾¹ï¼š} & \binom{2}{0}\binom{2}{2} + \binom{2}{1}\binom{2}{1} + \binom{2}{2}\binom{2}{0} \\
+                            &= 1 \cdot 1 + 2 \cdot 2 + 1 \cdot 1 = 6 \quad âœ“
+                            \end{align}\]
+                        </div>
+                    </div>
+
+                    <!-- Problem: CS70 The Musical (dis06b) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06b.pdf - Problem 2</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>CS70: The Musical - ç»„åˆæ’ç­‰å¼çš„ç»„åˆè¯æ˜Ž
+                            <br><br>
+                            ä½¿ç”¨ç»„åˆè®ºè¯ï¼ˆcounting argumentï¼‰è¯æ˜Žä»¥ä¸‹æ’ç­‰å¼ï¼š
+                            <br><br>
+                            (a) \(\binom{2n}{2} = 2\binom{n}{2} + n^2\)<br>
+                            (b) \(\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\)ï¼ˆå¸•æ–¯å¡æ’ç­‰å¼ï¼‰<br>
+                            (c) \(\sum_{k=1}^{n} k\binom{n}{k} = n \cdot 2^{n-1}\)<br>
+                            (d) \(\sum_{k=j}^{n} \binom{n}{k}\binom{k}{j} = 2^{n-j}\binom{n}{j}\)
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) è¯æ˜Ž \(\binom{2n}{2} = 2\binom{n}{2} + n^2\)ï¼š</strong></p>
+
+                            <p><strong>ç»„åˆè§£é‡Šï¼š</strong>æœ‰ \(2n\) ä¸ªäººï¼Œå…¶ä¸­å‰ \(n\) ä¸ªæ˜¯ A ç»„ï¼ŒåŽ \(n\) ä¸ªæ˜¯ B ç»„ã€‚ä»Žä¸­é€‰ 2 ä¸ªäººæœ‰å¤šå°‘ç§æ–¹æ³•ï¼Ÿ</p>
+
+                            <ul>
+                                <li><strong>å·¦è¾¹ï¼š</strong>\(\binom{2n}{2}\) ç›´æŽ¥ä»Ž \(2n\) äººä¸­é€‰ 2 äºº</li>
+                                <li><strong>å³è¾¹ï¼š</strong>æŒ‰ç…§ä¸¤äººæ¥è‡ªå“ªä¸ªç»„åˆ†ç±»ï¼š
+                                    <ul>
+                                        <li>éƒ½æ¥è‡ª A ç»„ï¼š\(\binom{n}{2}\)</li>
+                                        <li>éƒ½æ¥è‡ª B ç»„ï¼š\(\binom{n}{2}\)</li>
+                                        <li>ä¸€ä¸ªæ¥è‡ª Aï¼Œä¸€ä¸ªæ¥è‡ª Bï¼š\(n \times n = n^2\)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            \[\text{æ€»æ•°} = \binom{n}{2} + \binom{n}{2} + n^2 = 2\binom{n}{2} + n^2\]
+
+                            <p><strong>(b) è¯æ˜Žå¸•æ–¯å¡æ’ç­‰å¼ \(\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\)ï¼š</strong></p>
+
+                            <p><strong>ç»„åˆè§£é‡Šï¼š</strong>ä»Ž \(n\) ä¸ªäººä¸­é€‰ \(k\) ä¸ªäººã€‚å‡è®¾å…¶ä¸­æœ‰ä¸€ä¸ªç‰¹å®šçš„äººï¼ˆæ¯”å¦‚ Edwardï¼‰ã€‚</p>
+
+                            <ul>
+                                <li><strong>å·¦è¾¹ï¼š</strong>\(\binom{n}{k}\) ç›´æŽ¥ä»Ž \(n\) äººä¸­é€‰ \(k\) äºº</li>
+                                <li><strong>å³è¾¹ï¼š</strong>æŒ‰ç…§æ˜¯å¦é€‰ä¸­ Edward åˆ†ç±»ï¼š
+                                    <ul>
+                                        <li>é€‰ä¸­ Edwardï¼šè¿˜éœ€ä»Žå‰©ä½™ \(n-1\) äººä¸­é€‰ \(k-1\) äººï¼š\(\binom{n-1}{k-1}\)</li>
+                                        <li>ä¸é€‰ Edwardï¼šä»Žå‰©ä½™ \(n-1\) äººä¸­é€‰ \(k\) äººï¼š\(\binom{n-1}{k}\)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p><strong>(c) è¯æ˜Ž \(\sum_{k=1}^{n} k\binom{n}{k} = n \cdot 2^{n-1}\)ï¼š</strong></p>
+
+                            <p><strong>ç»„åˆè§£é‡Šï¼š</strong>ä»Ž \(n\) ä¸ªæ¼”å‘˜ä¸­é€‰è‹¥å¹²äººï¼ˆè‡³å°‘ 1 äººï¼‰ï¼Œå¹¶æŒ‡å®šå…¶ä¸­ä¸€äººä¸ºä¸»è§’ï¼Œæœ‰å¤šå°‘ç§æ–¹æ³•ï¼Ÿ</p>
+
+                            <ul>
+                                <li><strong>å·¦è¾¹ï¼š</strong>å…ˆé€‰ \(k\) ä¸ªäººï¼ˆ\(\binom{n}{k}\) ç§ï¼‰ï¼Œå†ä»Žè¿™ \(k\) äººä¸­é€‰ 1 äººåšä¸»è§’ï¼ˆ\(k\) ç§ï¼‰ï¼š
+                                    \[\sum_{k=1}^{n} k\binom{n}{k}\]
+                                </li>
+                                <li><strong>å³è¾¹ï¼š</strong>å…ˆé€‰ä¸»è§’ï¼ˆ\(n\) ç§ï¼‰ï¼Œå‰©ä½™ \(n-1\) äººæ¯äººå¯é€‰å¯ä¸é€‰ï¼ˆ\(2^{n-1}\) ç§ï¼‰ï¼š
+                                    \[n \cdot 2^{n-1}\]
+                                </li>
+                            </ul>
+
+                            <p><strong>(d) è¯æ˜Ž \(\sum_{k=j}^{n} \binom{n}{k}\binom{k}{j} = 2^{n-j}\binom{n}{j}\)ï¼š</strong></p>
+
+                            <p><strong>ç»„åˆè§£é‡Šï¼š</strong>ä»Ž \(n\) ä¸ªäººä¸­å…ˆé€‰ä¸€ä¸ª \(j\) äººæ ¸å¿ƒç»„ï¼Œå†ä»Žå‰©ä½™äººä¸­é€‰è‹¥å¹²äººåŠ å…¥æ‰©å±•ç»„ã€‚</p>
+
+                            <ul>
+                                <li><strong>å·¦è¾¹ï¼š</strong>å…ˆé€‰ \(k\) ä¸ªäººï¼ˆ\(\binom{n}{k}\)ï¼‰ï¼Œå†ä»Žè¿™ \(k\) äººä¸­é€‰ \(j\) äººåšæ ¸å¿ƒï¼ˆ\(\binom{k}{j}\)ï¼‰ï¼š
+                                    \[\sum_{k=j}^{n} \binom{n}{k}\binom{k}{j}\]
+                                </li>
+                                <li><strong>å³è¾¹ï¼š</strong>å…ˆé€‰ \(j\) äººæ ¸å¿ƒç»„ï¼ˆ\(\binom{n}{j}\)ï¼‰ï¼Œå‰©ä½™ \(n-j\) äººæ¯äººå¯é€‰å¯ä¸é€‰ï¼ˆ\(2^{n-j}\)ï¼‰ï¼š
+                                    \[2^{n-j}\binom{n}{j}\]
+                                </li>
+                            </ul>
+
+                            <p><strong>å…³é”®æ€æƒ³ï¼š</strong>ä¸¤ç§è®¡æ•°æ–¹å¼éƒ½åœ¨è®¡ç®—ç›¸åŒçš„å¯¹è±¡é›†åˆï¼Œå› æ­¤æ•°é‡ç›¸ç­‰ã€‚è¿™ç§è¯æ˜Žæ–¹æ³•å«åš"åŒé‡è®¡æ•°"ï¼ˆdouble countingï¼‰æˆ–"ç»„åˆè¯æ˜Ž"ï¼ˆcombinatorial proofï¼‰ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 1(a) - Card Hands -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 1(a)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»Žæ ‡å‡† 52 å¼ æ‰‘å…‹ç‰Œä¸­æŠ½å– 4 å¼ ç‰Œï¼Œæœ‰å¤šå°‘ç§ä¸åŒçš„æ‰‹ç‰Œï¼Ÿï¼ˆæ‰‹ç‰Œä¸­çš„ç‰Œçš„é¡ºåºä¸é‡è¦ï¼‰
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>è¿™æ˜¯ä¸€ä¸ªç»„åˆé—®é¢˜ï¼Œå› ä¸ºæ‰‹ç‰Œä¸­çš„ç‰Œçš„é¡ºåºä¸é‡è¦ã€‚</p>
+
+                            <p><strong>å…¬å¼ï¼š</strong>ä»Ž \(n\) ä¸ªä¸åŒå…ƒç´ ä¸­é€‰ \(k\) ä¸ªï¼ˆä¸è€ƒè™‘é¡ºåºï¼‰ï¼š</p>
+                            \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\begin{align}
+                            \binom{52}{4} &= \frac{52!}{4! \cdot 48!} \\
+                            &= \frac{52 \times 51 \times 50 \times 49}{4 \times 3 \times 2 \times 1} \\
+                            &= \frac{52 \times 51 \times 50 \times 49}{24} \\
+                            &= \frac{6,497,400}{24} \\
+                            &= 270,725
+                            \end{align}\]
+
+                            <p><strong>ç­”æ¡ˆï¼š270,725 ç§</strong></p>
+
+                            <p><strong>æç¤ºï¼š</strong>å¦‚æžœé¡ºåºé‡è¦ï¼ˆæŽ’åˆ—ï¼‰ï¼Œç­”æ¡ˆå°†æ˜¯ \(P(52, 4) = \frac{52!}{48!} = 52 \times 51 \times 50 \times 49 = 6,497,400\)ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 3(a) - Non-increasing Phone Number -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 3(a)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>The Count æƒ³é€‰æ‹©ä¸€ä¸ª 7 ä½æ•°çš„ç”µè¯å·ç ï¼Œè¦æ±‚æ•°å­—ä»Žå·¦åˆ°å³éžé€’å¢žï¼ˆnon-increasingï¼‰ã€‚ä¾‹å¦‚ 9973220 æ˜¯æœ‰æ•ˆçš„ï¼Œä½† 9876545 ä¸æ˜¯ã€‚æœ‰å¤šå°‘ç§é€‰æ‹©ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>å…³é”®è§‚å¯Ÿï¼š</strong>éžé€’å¢žåºåˆ—å¯ä»¥çœ‹ä½œæ˜¯ä»Ž 10 ä¸ªæ•°å­—ï¼ˆ0-9ï¼‰ä¸­é€‰æ‹© 7 ä¸ªï¼ˆå…è®¸é‡å¤ï¼‰ï¼Œç„¶åŽæŒ‰é™åºæŽ’åˆ—ã€‚</p>
+
+                            <p><strong>åŒå°„è¯æ˜Žï¼š</strong></p>
+                            <ul>
+                                <li>æ¯ä¸ªéžé€’å¢žåºåˆ—å”¯ä¸€å¯¹åº”ä¸€ä¸ªå¤šé‡é›†ï¼ˆmultisetï¼‰</li>
+                                <li>ä¾‹å¦‚ï¼Œ9973220 å¯¹åº”å¤šé‡é›† {9, 9, 7, 3, 2, 2, 0}</li>
+                                <li>åä¹‹ï¼Œæ¯ä¸ªå¤šé‡é›†éƒ½å¯ä»¥æŒ‰é™åºæŽ’åˆ—æˆä¸€ä¸ªéžé€’å¢žåºåˆ—</li>
+                            </ul>
+
+                            <p><strong>é—®é¢˜è½¬åŒ–ï¼š</strong>ä»Ž 10 ç§æ•°å­—ä¸­é€‰æ‹© 7 ä¸ªï¼ˆå…è®¸é‡å¤ï¼‰çš„æ–¹æ³•æ•°ã€‚</p>
+
+                            <p><strong>ä½¿ç”¨ Stars and Bars å…¬å¼ï¼š</strong></p>
+                            \[\binom{n + k - 1}{k} = \binom{10 + 7 - 1}{7} = \binom{16}{7}\]
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\begin{align}
+                            \binom{16}{7} &= \binom{16}{9} \quad (\text{å¯¹ç§°æ€§}) \\
+                            &= \frac{16!}{7! \cdot 9!} \\
+                            &= \frac{16 \times 15 \times 14 \times 13 \times 12 \times 11 \times 10}{7 \times 6 \times 5 \times 4 \times 3 \times 2 \times 1} \\
+                            &= 11,440
+                            \end{align}\]
+
+                            <p><strong>ç­”æ¡ˆï¼š11,440 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 3(b) - Strictly Decreasing Phone Number -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 3(b)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>çŽ°åœ¨è¦æ±‚æ•°å­—ä»Žå·¦åˆ°å³ä¸¥æ ¼é€’å‡ï¼ˆstrictly decreasingï¼‰ã€‚ä¾‹å¦‚ 9983220 ä¸å†æœ‰æ•ˆï¼Œä½† 9753210 æœ‰æ•ˆã€‚æœ‰å¤šå°‘ç§é€‰æ‹©ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>å…³é”®è§‚å¯Ÿï¼š</strong>ä¸¥æ ¼é€’å‡æ„å‘³ç€æ‰€æœ‰æ•°å­—éƒ½ä¸åŒã€‚</p>
+
+                            <p><strong>é—®é¢˜è½¬åŒ–ï¼š</strong>ä»Ž 10 ä¸ªä¸åŒçš„æ•°å­—ï¼ˆ0-9ï¼‰ä¸­é€‰æ‹© 7 ä¸ªï¼ˆä¸å…è®¸é‡å¤ï¼‰ï¼Œç„¶åŽæŒ‰é™åºæŽ’åˆ—ã€‚</p>
+
+                            <p><strong>åŒå°„è¯æ˜Žï¼š</strong></p>
+                            <ul>
+                                <li>æ¯ä¸ª 7 ä½ä¸¥æ ¼é€’å‡åºåˆ—å”¯ä¸€å¯¹åº”ä¸€ä¸ª 7 å…ƒç´ å­é›†</li>
+                                <li>ä¾‹å¦‚ï¼Œ9753210 å¯¹åº”é›†åˆ {9, 7, 5, 3, 2, 1, 0}</li>
+                                <li>åä¹‹ï¼Œæ¯ä¸ª 7 å…ƒç´ å­é›†éƒ½å¯ä»¥æŒ‰é™åºæŽ’åˆ—æˆä¸€ä¸ªä¸¥æ ¼é€’å‡åºåˆ—</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—ï¼š</strong>ä»Ž 10 ä¸ªæ•°å­—ä¸­é€‰ 7 ä¸ªçš„ç»„åˆæ•°ï¼š</p>
+                            \[\begin{align}
+                            \binom{10}{7} &= \binom{10}{3} \quad (\text{å¯¹ç§°æ€§}) \\
+                            &= \frac{10 \times 9 \times 8}{3 \times 2 \times 1} \\
+                            &= \frac{720}{6} \\
+                            &= 120
+                            \end{align}\]
+
+                            <p><strong>ç­”æ¡ˆï¼š120 ç§</strong></p>
+
+                            <p><strong>æ¯”è¾ƒï¼š</strong></p>
+                            <ul>
+                                <li>éžé€’å¢žï¼ˆå…è®¸é‡å¤ï¼‰ï¼š11,440 ç§</li>
+                                <li>ä¸¥æ ¼é€’å‡ï¼ˆä¸å…è®¸é‡å¤ï¼‰ï¼š120 ç§</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Rummy Hands (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q12.2</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»Žæ ‡å‡† 52 å¼ æ‰‘å…‹ç‰Œä¸­å‘ 7 å¼ ç‰Œä½œä¸º Rummy æ‰‹ç‰Œã€‚æœ‰å¤šå°‘ç§ä¸åŒçš„æ‰‹ç‰Œï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>é—®é¢˜åˆ†æžï¼š</strong>ä»Ž 52 å¼ ç‰Œä¸­é€‰ 7 å¼ ï¼Œé¡ºåºä¸é‡è¦ã€‚</p>
+
+                            <p><strong>è¿™æ˜¯ç»„åˆé—®é¢˜ï¼š</strong></p>
+                            \[\binom{52}{7} = \frac{52!}{7! \cdot 45!} = \frac{52 \times 51 \times 50 \times 49 \times 48 \times 47 \times 46}{7 \times 6 \times 5 \times 4 \times 3 \times 2 \times 1}\]
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\binom{52}{7} = 133,784,560\]
+
+                            <p><strong>ç­”æ¡ˆï¼š133,784,560 ç§</strong></p>
+
+                            <p><strong>è¯´æ˜Žï¼š</strong>è¿™ä¸ªæ•°å­—è¿œå¤§äºŽæ‰‘å…‹ç‰Œçš„ 5 å¼ ç‰Œç»„åˆæ•° \(\binom{52}{5} = 2,598,960\)ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Grid Paths (midterm_su25) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">midterm_su25.pdf - Q12.1</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>åœ¨ 7Ã—7 çš„ç½‘æ ¼ä¸Šï¼Œä»Žå·¦ä¸‹è§’èµ°åˆ°å³ä¸Šè§’ï¼Œæ¯æ­¥åªèƒ½å‘å³æˆ–å‘ä¸Šç§»åŠ¨ä¸€æ ¼ã€‚æœ‰å¤šå°‘ç§ä¸åŒçš„è·¯å¾„ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>é—®é¢˜åˆ†æžï¼š</strong></p>
+                            <ul>
+                                <li>ä»Žå·¦ä¸‹è§’ (0,0) åˆ°å³ä¸Šè§’ (7,7)</li>
+                                <li>éœ€è¦å‘å³èµ° 7 æ­¥ï¼ˆRï¼‰ï¼Œå‘ä¸Šèµ° 7 æ­¥ï¼ˆUï¼‰</li>
+                                <li>æ€»å…± 14 æ­¥</li>
+                            </ul>
+
+                            <p><strong>å…³é”®æ´žå¯Ÿï¼š</strong>æ¯æ¡è·¯å¾„å¯ä»¥è¡¨ç¤ºä¸º 7 ä¸ª R å’Œ 7 ä¸ª U çš„æŽ’åˆ—ã€‚</p>
+
+                            <p><strong>é—®é¢˜è½¬åŒ–ï¼š</strong>ä»Ž 14 ä¸ªä½ç½®ä¸­é€‰æ‹© 7 ä¸ªä½ç½®æ”¾ Rï¼ˆå‰©ä½™ä½ç½®è‡ªåŠ¨æ˜¯ Uï¼‰ã€‚</p>
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\binom{14}{7} = \frac{14!}{7! \cdot 7!} = \frac{14 \times 13 \times 12 \times 11 \times 10 \times 9 \times 8}{7 \times 6 \times 5 \times 4 \times 3 \times 2 \times 1}\]
+
+                            \[\binom{14}{7} = 3,432\]
+
+                            <p><strong>ç­”æ¡ˆï¼š3,432 ç§è·¯å¾„</strong></p>
+
+                            <p><strong>ä¸€èˆ¬å…¬å¼ï¼š</strong>å¯¹äºŽ \(m \times n\) ç½‘æ ¼ï¼Œè·¯å¾„æ•°ä¸º \(\binom{m+n}{m} = \binom{m+n}{n}\)ã€‚</p>
+
+                            <p><strong>ä¾‹å­è·¯å¾„ï¼š</strong>RRRRRRRRUUUUUUUï¼ˆå…ˆå…¨éƒ¨å‘å³ï¼Œå†å…¨éƒ¨å‘ä¸Šï¼‰æ˜¯å…¶ä¸­ä¸€ç§ã€‚</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8.4 Stars and Bars -->
+            <div class="subsection" id="section8-4">
+                <h3 class="subsection-title">
+                    <button class="toggle-btn" onclick="toggleSection(this)">â–¶</button>
+                    8.4 Stars and Bars (æ’æ¿æ³•)
+                </h3>
+                <div class="collapsible-content">
+                    <div class="concept-box">
+                        <h4>ðŸ“š æ ¸å¿ƒæ¦‚å¿µ</h4>
+
+                        <p><strong>Stars and Bars æ–¹æ³•ï¼š</strong>ç”¨äºŽè§£å†³å°†ç›¸åŒç‰©å“åˆ†é…åˆ°ä¸åŒå®¹å™¨çš„é—®é¢˜ã€‚</p>
+
+                        <p><strong>åŸºæœ¬é—®é¢˜ï¼š</strong>å°† \(n\) ä¸ªç›¸åŒçš„çƒæ”¾å…¥ \(k\) ä¸ªä¸åŒçš„ç›’å­ï¼Œæ¯ä¸ªç›’å­å¯ä»¥ä¸ºç©ºï¼Œæœ‰å¤šå°‘ç§æ–¹æ³•ï¼Ÿ</p>
+
+                        <p><strong>å¯è§†åŒ–ï¼š</strong>ç”¨ \(n\) ä¸ªæ˜Ÿå· â˜… è¡¨ç¤ºçƒï¼Œç”¨ \(k-1\) ä¸ªç«–çº¿ | è¡¨ç¤ºåˆ†éš”ç¬¦ï¼ˆå°†æ˜Ÿå·åˆ†æˆ \(k\) ç»„ï¼‰ã€‚</p>
+
+                        <p><strong>ä¾‹å­ï¼š</strong>5 ä¸ªçƒæ”¾å…¥ 3 ä¸ªç›’å­ï¼šâ˜…â˜…|â˜…|â˜…â˜… è¡¨ç¤ºç¬¬ä¸€ä¸ªç›’å­ 2 ä¸ªï¼Œç¬¬äºŒä¸ªç›’å­ 1 ä¸ªï¼Œç¬¬ä¸‰ä¸ªç›’å­ 2 ä¸ªã€‚</p>
+
+                        <p><strong>å…¬å¼æŽ¨å¯¼ï¼š</strong></p>
+                        <ul>
+                            <li>æ€»å…±æœ‰ \(n\) ä¸ªæ˜Ÿå·å’Œ \(k-1\) ä¸ªç«–çº¿ï¼Œå…± \(n+k-1\) ä¸ªä½ç½®</li>
+                            <li>ä»Žä¸­é€‰æ‹© \(k-1\) ä¸ªä½ç½®æ”¾ç«–çº¿ï¼ˆæˆ–é€‰æ‹© \(n\) ä¸ªä½ç½®æ”¾æ˜Ÿå·ï¼‰</li>
+                            <li>ç­”æ¡ˆï¼š\(\binom{n+k-1}{k-1} = \binom{n+k-1}{n}\)</li>
+                        </ul>
+
+                        <p><strong>å˜ä½“é—®é¢˜ï¼š</strong></p>
+                        <ul>
+                            <li><strong>æ¯ä¸ªç›’å­è‡³å°‘ä¸€ä¸ªçƒï¼š</strong>å…ˆç»™æ¯ä¸ªç›’å­æ”¾ 1 ä¸ªçƒï¼Œå‰©ä½™ \(n-k\) ä¸ªçƒä»»æ„åˆ†é…ï¼š\(\binom{n-1}{k-1}\)</li>
+                            <li><strong>é™åˆ¶æ¯ä¸ªç›’å­æœ€å¤š \(m\) ä¸ªçƒï¼š</strong>ä½¿ç”¨å®¹æ–¥åŽŸç†</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ðŸ“ é‡è¦å…¬å¼</h4>
+                        <div class="formula-item">
+                            <strong>åŸºæœ¬ Stars and Barsï¼š</strong>
+                            <p>\(n\) ä¸ªç›¸åŒç‰©å“æ”¾å…¥ \(k\) ä¸ªä¸åŒç›’å­ï¼ˆå¯ç©ºï¼‰ï¼š</p>
+                            \[\binom{n+k-1}{k-1} = \binom{n+k-1}{n}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>æ¯ä¸ªç›’å­è‡³å°‘ä¸€ä¸ªï¼š</strong>
+                            <p>\(n\) ä¸ªç›¸åŒç‰©å“æ”¾å…¥ \(k\) ä¸ªä¸åŒç›’å­ï¼ˆéžç©ºï¼‰ï¼š</p>
+                            \[\binom{n-1}{k-1}\]
+                        </div>
+                        <div class="formula-item">
+                            <strong>å¤šé‡ç»„åˆï¼š</strong>
+                            <p>ä»Ž \(k\) ç§å…ƒç´ ä¸­é€‰ \(n\) ä¸ªï¼ˆå¯é‡å¤ï¼‰ï¼š</p>
+                            \[\binom{n+k-1}{n}\]
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>ðŸ’¡ è§£é¢˜æŠ€å·§</h4>
+                        <ul>
+                            <li>è¯†åˆ«é—®é¢˜ç±»åž‹ï¼šç›¸åŒç‰©å“ â†’ ä¸åŒå®¹å™¨ï¼Œè€ƒè™‘ Stars and Bars</li>
+                            <li>ç”»å›¾ç†è§£ï¼šç”¨æ˜Ÿå·å’Œç«–çº¿ç”»å‡ºå…·ä½“ä¾‹å­</li>
+                            <li>è½¬æ¢é—®é¢˜ï¼šå°†é—®é¢˜è½¬æ¢ä¸º"é€‰æ‹©ä½ç½®"çš„é—®é¢˜</li>
+                            <li>æ¯ä¸ªè‡³å°‘ä¸€ä¸ªï¼šå…ˆåˆ†é…å¿…éœ€çš„ï¼Œå†åˆ†é…å‰©ä½™çš„</li>
+                            <li>å¤šé‡ç»„åˆï¼šä»Ž \(n\) ç§å…ƒç´ é€‰ \(k\) ä¸ªï¼ˆå¯é‡å¤ï¼‰= \(k\) ä¸ªç›¸åŒçƒæ”¾å…¥ \(n\) ä¸ªç›’å­</li>
+                        </ul>
+                    </div>
+
+                    <!-- Problem: Distributing Candies -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å°† 10 ä¸ªç›¸åŒçš„ç³–æžœåˆ†ç»™ 4 ä¸ªå°å­©ï¼Œæœ‰å¤šå°‘ç§åˆ†æ³•ï¼Ÿï¼ˆå°å­©å¯ä»¥ä¸å¾—åˆ°ç³–æžœï¼‰
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>è¿™æ˜¯ Stars and Bars é—®é¢˜ï¼š</strong>10 ä¸ªç›¸åŒç‰©å“ï¼Œ4 ä¸ªä¸åŒç›’å­ï¼Œå¯ç©º</p>
+
+                            <p><strong>å¯è§†åŒ–ï¼š</strong>10 ä¸ªæ˜Ÿå·ï¼Œ3 ä¸ªç«–çº¿ï¼ˆåˆ†æˆ 4 ç»„ï¼‰</p>
+                            <p>ä¾‹å¦‚ï¼šâ˜…â˜…â˜…|â˜…|â˜…â˜…â˜…â˜…|â˜…â˜… è¡¨ç¤º (3, 1, 4, 2)</p>
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\binom{10+4-1}{4-1} = \binom{13}{3} = \frac{13 \times 12 \times 11}{3 \times 2 \times 1} = \frac{1,716}{6} = 286\]
+
+                            <p><strong>ç­”æ¡ˆï¼š286 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Each Child Gets at Least One -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>å°† 10 ä¸ªç›¸åŒçš„ç³–æžœåˆ†ç»™ 4 ä¸ªå°å­©ï¼Œæ¯ä¸ªå°å­©è‡³å°‘å¾—åˆ° 1 ä¸ªç³–æžœï¼Œæœ‰å¤šå°‘ç§åˆ†æ³•ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>æ–¹æ³•ï¼š</strong>å…ˆç»™æ¯ä¸ªå°å­© 1 ä¸ªç³–æžœï¼Œå‰©ä½™ \(10 - 4 = 6\) ä¸ªç³–æžœä»»æ„åˆ†é…</p>
+
+                            <p><strong>é—®é¢˜è½¬åŒ–ä¸ºï¼š</strong>6 ä¸ªç›¸åŒç³–æžœåˆ†ç»™ 4 ä¸ªå°å­©ï¼ˆå¯ç©ºï¼‰</p>
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\binom{6+4-1}{4-1} = \binom{9}{3} = \frac{9 \times 8 \times 7}{3 \times 2 \times 1} = \frac{504}{6} = 84\]
+
+                            <p><strong>æˆ–ä½¿ç”¨å…¬å¼ï¼š</strong>\(\binom{n-1}{k-1} = \binom{10-1}{4-1} = \binom{9}{3} = 84\)</p>
+
+                            <p><strong>ç­”æ¡ˆï¼š84 ç§</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Integer Solutions -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>
+                            <br><br>
+                            (a) æ–¹ç¨‹ \(x_1 + x_2 + x_3 + x_4 = 20\) æœ‰å¤šå°‘ç»„éžè´Ÿæ•´æ•°è§£ï¼Ÿ<br>
+                            (b) æœ‰å¤šå°‘ç»„æ­£æ•´æ•°è§£ï¼Ÿ<br>
+                            (c) å¦‚æžœè¦æ±‚ \(x_1 \geq 2, x_2 \geq 1, x_3 \geq 0, x_4 \geq 0\)ï¼Œæœ‰å¤šå°‘ç»„è§£ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(a) éžè´Ÿæ•´æ•°è§£ï¼š</strong></p>
+                            <p>ç­‰ä»·äºŽå°† 20 ä¸ªç›¸åŒç‰©å“æ”¾å…¥ 4 ä¸ªä¸åŒç›’å­ï¼ˆå¯ç©ºï¼‰ï¼š</p>
+                            \[\binom{20+4-1}{4-1} = \binom{23}{3} = \frac{23 \times 22 \times 21}{6} = 1,771\]
+                            <p><strong>ç­”æ¡ˆï¼š1,771 ç»„</strong></p>
+
+                            <p><strong>(b) æ­£æ•´æ•°è§£ï¼š</strong></p>
+                            <p>æ¯ä¸ªå˜é‡è‡³å°‘ä¸º 1ï¼Œç­‰ä»·äºŽå°† 20 ä¸ªç‰©å“æ”¾å…¥ 4 ä¸ªç›’å­ï¼Œæ¯ä¸ªè‡³å°‘ 1 ä¸ªï¼š</p>
+                            \[\binom{20-1}{4-1} = \binom{19}{3} = \frac{19 \times 18 \times 17}{6} = 969\]
+                            <p><strong>ç­”æ¡ˆï¼š969 ç»„</strong></p>
+
+                            <p><strong>(c) å¸¦çº¦æŸæ¡ä»¶çš„è§£ï¼š</strong></p>
+                            <p>è¦æ±‚ï¼š\(x_1 \geq 2, x_2 \geq 1, x_3 \geq 0, x_4 \geq 0\)</p>
+                            <p>è½¬æ¢ï¼šä»¤ \(y_1 = x_1 - 2, y_2 = x_2 - 1, y_3 = x_3, y_4 = x_4\)</p>
+                            <p>åˆ™ \(y_i \geq 0\)ï¼Œä¸”ï¼š</p>
+                            \[(y_1 + 2) + (y_2 + 1) + y_3 + y_4 = 20\]
+                            \[y_1 + y_2 + y_3 + y_4 = 17\]
+                            <p>è¿™æ˜¯éžè´Ÿæ•´æ•°è§£é—®é¢˜ï¼š</p>
+                            \[\binom{17+4-1}{4-1} = \binom{20}{3} = \frac{20 \times 19 \times 18}{6} = 1,140\]
+                            <p><strong>ç­”æ¡ˆï¼š1,140 ç»„</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: Multiset Combinations -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä»Žé›†åˆ \(\{a, b, c, d\}\) ä¸­é€‰ 5 ä¸ªå…ƒç´ ï¼ˆå¯é‡å¤ï¼‰ï¼Œæœ‰å¤šå°‘ç§é€‰æ³•ï¼Ÿä¾‹å¦‚ï¼š\(\{a, a, b, c, d\}\) æ˜¯ä¸€ç§é€‰æ³•ã€‚
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>è¿™æ˜¯å¤šé‡ç»„åˆé—®é¢˜ï¼š</strong>ä»Ž 4 ç§å…ƒç´ ä¸­é€‰ 5 ä¸ªï¼ˆå¯é‡å¤ï¼‰</p>
+
+                            <p><strong>è½¬æ¢ä¸º Stars and Barsï¼š</strong></p>
+                            <ul>
+                                <li>è®¾é€‰ \(x_a\) ä¸ª aï¼Œ\(x_b\) ä¸ª bï¼Œ\(x_c\) ä¸ª cï¼Œ\(x_d\) ä¸ª d</li>
+                                <li>æ»¡è¶³ï¼š\(x_a + x_b + x_c + x_d = 5\)ï¼Œä¸” \(x_i \geq 0\)</li>
+                                <li>è¿™ç­‰ä»·äºŽ 5 ä¸ªç›¸åŒçƒæ”¾å…¥ 4 ä¸ªä¸åŒç›’å­ï¼ˆå¯ç©ºï¼‰</li>
+                            </ul>
+
+                            <p><strong>è®¡ç®—ï¼š</strong></p>
+                            \[\binom{5+4-1}{4-1} = \binom{8}{3} = \frac{8 \times 7 \times 6}{3 \times 2 \times 1} = 56\]
+
+                            <p><strong>ç­”æ¡ˆï¼š56 ç§</strong></p>
+
+                            <p><strong>éªŒè¯å°ä¾‹å­ï¼š</strong>ä»Ž \(\{a, b\}\) ä¸­é€‰ 2 ä¸ªï¼ˆå¯é‡å¤ï¼‰ï¼š</p>
+                            <ul>
+                                <li>\(\{a, a\}\), \(\{a, b\}\), \(\{b, b\}\)ï¼Œå…± 3 ç§</li>
+                                <li>å…¬å¼ï¼š\(\binom{2+2-1}{2-1} = \binom{3}{1} = 3\) âœ“</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Problem: With Upper Bounds -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">Example</span>
+                                <span class="difficulty">â­â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ–¹ç¨‹ \(x_1 + x_2 + x_3 = 10\) çš„éžè´Ÿæ•´æ•°è§£ä¸­ï¼Œæ»¡è¶³ \(x_1 \leq 3\) çš„æœ‰å¤šå°‘ç»„ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>æ–¹æ³• 1ï¼šç›´æŽ¥è®¡æ•°ï¼ˆåˆ†ç±»è®¨è®ºï¼‰</strong></p>
+                            <p>æŒ‰ \(x_1\) çš„å€¼åˆ†ç±»ï¼š</p>
+                            <ul>
+                                <li>\(x_1 = 0\)ï¼š\(x_2 + x_3 = 10\)ï¼Œæœ‰ \(\binom{10+2-1}{2-1} = \binom{11}{1} = 11\) ç»„</li>
+                                <li>\(x_1 = 1\)ï¼š\(x_2 + x_3 = 9\)ï¼Œæœ‰ \(\binom{10}{1} = 10\) ç»„</li>
+                                <li>\(x_1 = 2\)ï¼š\(x_2 + x_3 = 8\)ï¼Œæœ‰ \(\binom{9}{1} = 9\) ç»„</li>
+                                <li>\(x_1 = 3\)ï¼š\(x_2 + x_3 = 7\)ï¼Œæœ‰ \(\binom{8}{1} = 8\) ç»„</li>
+                            </ul>
+                            \[\text{æ€»æ•°} = 11 + 10 + 9 + 8 = 38\]
+
+                            <p><strong>æ–¹æ³• 2ï¼šè¡¥é›†è®¡æ•°</strong></p>
+                            <p>æ€»çš„éžè´Ÿæ•´æ•°è§£ï¼š\(\binom{10+3-1}{3-1} = \binom{12}{2} = 66\)</p>
+                            <p>ä¸æ»¡è¶³ \(x_1 \leq 3\) çš„è§£ï¼ˆå³ \(x_1 \geq 4\)ï¼‰ï¼š</p>
+                            <p>ä»¤ \(y_1 = x_1 - 4 \geq 0\)ï¼Œåˆ™ \(y_1 + x_2 + x_3 = 6\)</p>
+                            <p>éžè´Ÿæ•´æ•°è§£ï¼š\(\binom{6+3-1}{3-1} = \binom{8}{2} = 28\)</p>
+                            \[\text{æ»¡è¶³æ¡ä»¶çš„è§£} = 66 - 28 = 38\]
+
+                            <p><strong>ç­”æ¡ˆï¼š38 ç»„</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 2(a) - Integer Solutions (non-negative) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 2(a)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ–¹ç¨‹ \(y_0 + y_1 + \cdots + y_k = n\) æœ‰å¤šå°‘ç»„éžè´Ÿæ•´æ•°è§£ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>è¿™æ˜¯ç»å…¸çš„ Stars and Bars é—®é¢˜ã€‚</p>
+
+                            <p><strong>é—®é¢˜ç­‰ä»·äºŽï¼š</strong>å°† \(n\) ä¸ªç›¸åŒçš„çƒï¼ˆstarsï¼‰åˆ†é…åˆ° \(k+1\) ä¸ªä¸åŒçš„ç›’å­ï¼ˆå˜é‡ \(y_0, y_1, \ldots, y_k\)ï¼‰ï¼Œæ¯ä¸ªç›’å­å¯ä»¥ä¸ºç©ºã€‚</p>
+
+                            <p><strong>ä½¿ç”¨ Stars and Bars å…¬å¼ï¼š</strong></p>
+                            <ul>
+                                <li>\(n\) ä¸ªæ˜Ÿå·ï¼ˆè¡¨ç¤ºæ€»å’Œä¸º \(n\)ï¼‰</li>
+                                <li>\(k\) ä¸ªç«–çº¿ï¼ˆå°†æ˜Ÿå·åˆ†æˆ \(k+1\) ç»„ï¼‰</li>
+                                <li>æ€»å…± \(n + k\) ä¸ªä½ç½®ï¼Œé€‰æ‹©å…¶ä¸­ \(k\) ä¸ªä½ç½®æ”¾ç«–çº¿</li>
+                            </ul>
+
+                            <p><strong>ç­”æ¡ˆï¼š</strong></p>
+                            \[\binom{n+k}{k} = \binom{n+k}{n}\]
+
+                            <p><strong>è§£é‡Šï¼š</strong>ä»Ž \(n+k\) ä¸ªä½ç½®ä¸­é€‰æ‹© \(k\) ä¸ªä½ç½®æ”¾ç«–çº¿ï¼Œç­‰ä»·äºŽé€‰æ‹© \(n\) ä¸ªä½ç½®æ”¾æ˜Ÿå·ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 2(b) - Integer Solutions (positive) -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 2(b)</span>
+                                <span class="difficulty">â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>æ–¹ç¨‹ \(y_0 + y_1 + \cdots + y_k = n\) æœ‰å¤šå°‘ç»„æ­£æ•´æ•°è§£ï¼Ÿ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>åˆ†æžï¼š</strong>æ¯ä¸ªå˜é‡ \(y_i\) éƒ½å¿…é¡» \(\geq 1\)ã€‚</p>
+
+                            <p><strong>æ–¹æ³• 1ï¼šå˜é‡æ›¿æ¢</strong></p>
+                            <p>ä»¤ \(z_i = y_i - 1 \geq 0\)ï¼Œåˆ™ï¼š</p>
+                            \[\begin{align}
+                            (z_0 + 1) + (z_1 + 1) + \cdots + (z_k + 1) &= n \\
+                            z_0 + z_1 + \cdots + z_k &= n - (k+1)
+                            \end{align}\]
+                            <p>çŽ°åœ¨å˜æˆäº†éžè´Ÿæ•´æ•°è§£é—®é¢˜ã€‚</p>
+
+                            <p><strong>æ–¹æ³• 2ï¼šç›´è§‚ç†è§£</strong></p>
+                            <p>å…ˆç»™æ¯ä¸ªå˜é‡åˆ†é… 1ï¼Œå‰©ä½™ \(n - (k+1)\) ä¸ªå•ä½ä»»æ„åˆ†é…åˆ° \(k+1\) ä¸ªå˜é‡ã€‚</p>
+
+                            <p><strong>ç­”æ¡ˆï¼š</strong></p>
+                            \[\binom{n - (k+1) + k}{k} = \binom{n-1}{k}\]
+
+                            <p><strong>å…¬å¼æŽ¨å¯¼ï¼š</strong></p>
+                            \[\binom{(n - k - 1) + k}{k} = \binom{n-1}{k}\]
+
+                            <p><strong>æ³¨æ„ï¼š</strong>è¿™ä¸ªå…¬å¼è¦æ±‚ \(n \geq k+1\)ï¼ˆå¦åˆ™æ— è§£ï¼‰ã€‚</p>
+                        </div>
+                    </div>
+
+                    <!-- Problem: dis06a Problem 2(c-e) - Berkeley Bowl Fruits -->
+                    <div class="problem-card">
+                        <div class="problem-header">
+                            <div class="problem-meta">
+                                <span class="source-tag">dis06a.pdf - Problem 2(c-e)</span>
+                                <span class="difficulty">â­â­â­</span>
+                            </div>
+                        </div>
+                        <div class="problem-content">
+                            <strong>é¢˜ç›®ï¼š</strong>ä½ åŽ» Berkeley Bowl ä¹° \(k\) ä¸ªæ°´æžœã€‚è®¡ç®—ä»¥ä¸‹æƒ…å†µçš„æ–¹æ³•æ•°ï¼š
+                            <br><br>
+                            (c) å¸‚åœºä¸Šæœ‰æ¡ƒå­å’Œè‹¹æžœï¼ˆ2 ç§æ°´æžœï¼‰<br>
+                            (d) å¸‚åœºä¸Šæœ‰æ¡ƒå­ã€è‹¹æžœã€æ©™å­å’Œæ¢¨ï¼ˆ4 ç§æ°´æžœï¼‰<br>
+                            (e) å¸‚åœºä¸Šæœ‰ \(n\) ç§æ°´æžœï¼Œä¸”ä½ æƒ³è‡³å°‘ä¹° 2 ç§ä¸åŒç±»åž‹çš„æ°´æžœ
+                        </div>
+                        <div class="answer-toggle">
+                            <button class="toggle-answer-btn" onclick="toggleAnswer(this)">æ˜¾ç¤ºç­”æ¡ˆ</button>
+                        </div>
+                        <div class="answer-box">
+                            <strong>è§£ç­”ï¼š</strong>
+
+                            <p><strong>(c) 2 ç§æ°´æžœï¼ˆæ¡ƒå­å’Œè‹¹æžœï¼‰ï¼š</strong></p>
+                            <p>è®¾ä¹° \(x_1\) ä¸ªæ¡ƒå­ï¼Œ\(x_2\) ä¸ªè‹¹æžœï¼Œæ»¡è¶³ \(x_1 + x_2 = k\)ï¼Œå…¶ä¸­ \(x_i \geq 0\)ã€‚</p>
+                            <p>ä½¿ç”¨ Stars and Barsï¼š</p>
+                            \[\binom{k + 2 - 1}{2 - 1} = \binom{k+1}{1} = k+1\]
+                            <p><strong>ç­”æ¡ˆï¼š\(k+1\) ç§</strong></p>
+
+                            <p><strong>(d) 4 ç§æ°´æžœï¼ˆæ¡ƒå­ã€è‹¹æžœã€æ©™å­ã€æ¢¨ï¼‰ï¼š</strong></p>
+                            <p>è®¾ä¹° \(x_1, x_2, x_3, x_4\) ä¸ªå››ç§æ°´æžœï¼Œæ»¡è¶³ \(x_1 + x_2 + x_3 + x_4 = k\)ï¼Œå…¶ä¸­ \(x_i \geq 0\)ã€‚</p>
+                            <p>ä½¿ç”¨ Stars and Barsï¼š</p>
+                            \[\binom{k + 4 - 1}{4 - 1} = \binom{k+3}{3}\]
+                            <p><strong>ç­”æ¡ˆï¼š\(\binom{k+3}{3}\) ç§</strong></p>
+
+                            <p><strong>(e) \(n\) ç§æ°´æžœï¼Œè‡³å°‘ 2 ç§ä¸åŒç±»åž‹ï¼š</strong></p>
+                            <p><strong>æ–¹æ³•ï¼šè¡¥é›†è®¡æ•°</strong></p>
+                            <ul>
+                                <li><strong>æ€»æ–¹æ³•æ•°ï¼š</strong>\(\binom{k+n-1}{n-1}\)ï¼ˆæ²¡æœ‰é™åˆ¶ï¼‰</li>
+                                <li><strong>åªä¹° 1 ç§æ°´æžœçš„æ–¹æ³•æ•°ï¼š</strong>é€‰æ‹©å“ªç§æ°´æžœä¹° \(k\) ä¸ªï¼Œæœ‰ \(n\) ç§é€‰æ‹©</li>
+                            </ul>
+
+                            <p><strong>ç­”æ¡ˆï¼š</strong></p>
+                            \[\binom{k+n-1}{n-1} - n\]
+
+                            <p><strong>éªŒè¯ (c) çš„æƒ…å†µï¼š</strong>\(n = 2, k = k\)</p>
+                            \[\binom{k+2-1}{2-1} - 2 = (k+1) - 2 = k - 1\]
+                            <p>è¿™è¡¨ç¤ºè‡³å°‘ä¹° 2 ç§æ°´æžœæ—¶ï¼ŒæŽ’é™¤äº†"åªä¹°æ¡ƒå­"å’Œ"åªä¹°è‹¹æžœ"è¿™ä¸¤ç§æƒ…å†µ âœ“</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+  </main>
+  <button class="back-to-top" id="backToTop">↑</button>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS 70 综合学习指南 - 证明方法</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/mathjax-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 CS 70 综合学习指南</h1>
+    <div class="header-controls">
+      <input type="text" class="search-box" placeholder="搜索知识点或题目..." id="searchBox">
+      <button class="theme-toggle" id="themeToggle">🌙 深色模式</button>
+      <div class="lang-toggle" id="langToggle">
+        <button type="button" class="theme-toggle" data-lang="zh-CN">中文</button>
+        <button type="button" class="theme-toggle" data-lang="en">English</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+  <nav class="sidebar" id="sidebar">
+    <a class="nav-item" href="logic.html#logic">1. Propositional Logic</a>
+    <a class="nav-subitem" href="logic.html#logic-operators">1.1 基本逻辑运算符</a>
+    <a class="nav-subitem" href="logic.html#logic-equivalence">1.2 逻辑等价</a>
+    <a class="nav-subitem" href="logic.html#logic-quantifiers">1.3 量词</a>
+
+    <a class="nav-item" href="proofs.html#proofs">2. Proof Techniques</a>
+    <a class="nav-subitem" href="#proof-direct">2.1 直接证明</a>
+    <a class="nav-subitem" href="#proof-contradiction">2.2 反证法</a>
+    <a class="nav-subitem" href="#proof-contrapositive">2.3 逆否命题</a>
+    <a class="nav-subitem" href="#proof-pigeonhole">2.4 鸽笼原理</a>
+
+    <a class="nav-item" href="induction.html#induction">3. Induction</a>
+    <a class="nav-subitem" href="induction.html#induction-weak">3.1 弱归纳法</a>
+    <a class="nav-subitem" href="induction.html#induction-strong">3.2 强归纳法</a>
+    <a class="nav-subitem" href="induction.html#induction-formulas">3.3 常用求和公式</a>
+
+    <a class="nav-item" href="matching.html#matching">4. Stable Matching</a>
+    <a class="nav-item" href="graphs.html#graphs">5. Graph Theory</a>
+
+    <a class="nav-item" href="modular.html#section6">6. Modular Arithmetic</a>
+    <a class="nav-item" href="polynomials.html#section7">7. Polynomials</a>
+    <a class="nav-item" href="counting.html#counting">8. Counting</a>
+  </nav>
+
+  <main class="main-content">
+    <section class="section" id="proofs">
+      <h2 class="section-title">2. Proof Techniques（证明方法）</h2>
+
+      <!-- 2.1 Direct Proof -->
+      <div class="subsection" id="proof-direct">
+        <h3 class="subsection-title">
+          <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+          2.1 直接证明（Direct Proof)
+        </h3>
+        <div class="collapsible-content">
+          <div class="concept-box">
+            <h4>📚 核心概念</h4>
+            <p>直接证明是最基本的证明方法，从已知条件出发，通过逻辑推理直接得出结论。</p>
+            <ul>
+              <li><strong>基本思路</strong>：假设前提为真，通过一系列逻辑步骤推导出结论</li>
+              <li><strong>常用技巧</strong>：使用定义、已知定理、代数运算</li>
+            </ul>
+          </div>
+
+          <div class="formula-box">
+            <h4>📐 重要定义</h4>
+            <div class="formula-item">
+              <strong>整除定义：</strong>
+              \[a \mid b \text{ 意思是 } b = ka \text{ 对某个整数 } k\]
+            </div>
+            <div class="formula-item">
+              <strong>合数定义：</strong>
+              \[n \text{ 是合数 } \Leftrightarrow n = ab \text{ 其中 } 1 < a, b < n\]
+            </div>
+            <div class="formula-item">
+              <strong>阶乘定义：</strong>
+              \[n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1\]
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <h4>💡 解题技巧</h4>
+            <ul>
+              <li>从定义出发：将所有术语用定义展开</li>
+              <li>分情况讨论：当问题涉及多种可能性时</li>
+              <li>寻找关键关系：找到已知和待证之间的桥梁</li>
+            </ul>
+          </div>
+
+          <!-- Problem 1: Composite divides factorial -->
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">midterm_fa24.pdf - Q4.1</span>
+                <span class="difficulty">⭐⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>设 \(n > 4\) 是一个合数。证明：
+              \[n \mid (n-1)!\]
+              提示：考虑 \(n\) 是否为完全平方数。
+            </div>
+            <div class="problem-actions">
+              <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <h4>✅ 证明：</h4>
+              <p><strong>情况1：\(n\) 不是完全平方数</strong></p>
+              <ul>
+                <li>因为 \(n\) 是合数且 \(n > 4\)，所以 \(n = ab\) 其中 \(1 < a < b < n\)</li>
+                <li>由于 \(n\) 不是完全平方数，所以 \(a \neq b\)</li>
+                <li>因此 \(a\) 和 \(b\) 都在 \(\{2, 3, \ldots, n-1\}\) 中</li>
+                <li>\((n-1)! = 1 \times 2 \times \cdots \times a \times \cdots \times b \times \cdots \times (n-1)\)</li>
+                <li>所以 \((n-1)!\) 包含因子 \(a\) 和 \(b\)</li>
+                <li>因此 \((n-1)! = ab \times k = n \times k\) 对某个整数 \(k\)</li>
+                <li>故 \(n \mid (n-1)!\) ✓</li>
+              </ul>
+
+              <p><strong>情况2：\(n\) 是完全平方数</strong></p>
+              <ul>
+                <li>设 \(n = p^2\) 其中 \(p\) 是正整数</li>
+                <li>因为 \(n > 4\)，所以 \(p \geq 3\)</li>
+                <li>注意到 \(p\) 和 \(2p\) 都小于 \(n = p^2\)（因为 \(2p < p^2\) 当 \(p \geq 3\) 时）</li>
+                <li>\((n-1)!\) 包含因子 \(p\) 和 \(2p\)</li>
+                <li>\(p \times 2p = 2p^2 = 2n\)</li>
+                <li>所以 \((n-1)! = p \times 2p \times k = 2p^2 \times k = 2n \times k\)</li>
+                <li>因此 \(n \mid (n-1)!\) ✓</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 Proof by Contradiction -->
+      <div class="subsection" id="proof-contradiction">
+        <h3 class="subsection-title">
+          <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+          2.2 反证法（Proof by Contradiction）
+        </h3>
+        <div class="collapsible-content">
+          <div class="concept-box">
+            <h4>📚 核心概念</h4>
+            <p>反证法通过假设结论的否定，推导出矛盾，从而证明原命题为真。</p>
+            <ul>
+              <li><strong>基本步骤</strong>：
+                <ol>
+                  <li>假设结论的否定为真</li>
+                  <li>结合已知条件进行推导</li>
+                  <li>得出矛盾（与已知事实、假设或逻辑矛盾）</li>
+                  <li>结论：原命题必为真</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+
+          <div class="formula-box">
+            <h4>📐 反证法逻辑结构</h4>
+            <div class="formula-item">
+              <strong>要证明：</strong> \(P \Rightarrow Q\)
+              <br><strong>反证法：</strong>假设 \(\neg Q\)，推导出矛盾
+              <br><strong>逻辑等价：</strong>\((P \land \neg Q) \Rightarrow \text{False}\) 等价于 \(P \Rightarrow Q\)
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <h4>💡 何时使用反证法</h4>
+            <ul>
+              <li>证明"不存在"类型的命题</li>
+              <li>证明无理数相关命题</li>
+              <li>直接证明很难找到推导路径时</li>
+              <li>结论的否定更容易操作时</li>
+            </ul>
+          </div>
+
+          <!-- Problem: Irrational square root -->
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">midterm_fa24.pdf - Q4.2</span>
+                <span class="difficulty">⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>证明对于 \(r \in \mathbb{R}\)，如果 \(r^2\) 是无理数，那么 \(r\) 是无理数。
+            </div>
+            <div class="problem-actions">
+              <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <h4>✅ 证明（反证法）：</h4>
+              <ol>
+                <li><strong>假设结论的否定</strong>：假设 \(r\) 是有理数</li>
+                <li>因为 \(r\) 是有理数，所以可以写成 \(r = \frac{a}{b}\) 的形式，其中 \(a, b\) 是整数且 \(b \neq 0\)</li>
+                <li>那么 \(r^2 = \left(\frac{a}{b}\right)^2 = \frac{a^2}{b^2}\)</li>
+                <li>因为 \(a^2\) 和 \(b^2\) 都是整数且 \(b^2 \neq 0\)，所以 \(r^2\) 是有理数</li>
+                <li><strong>矛盾</strong>：这与题目给定的"\(r^2\) 是无理数"矛盾！</li>
+                <li>因此，我们的假设错误</li>
+                <li><strong>结论</strong>：\(r\) 必定是无理数 ✓</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 Proof by Contrapositive -->
+      <div class="subsection" id="proof-contrapositive">
+        <h3 class="subsection-title">
+          <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+          2.3 逆否命题证明（Proof by Contrapositive）
+        </h3>
+        <div class="collapsible-content">
+          <div class="concept-box">
+            <h4>📚 核心概念</h4>
+            <p>利用逆否命题与原命题等价的性质，通过证明逆否命题来证明原命题。</p>
+          </div>
+
+          <div class="formula-box">
+            <h4>📐 逆否命题等价性</h4>
+            <div class="formula-item">
+              <strong>原命题：</strong> \(P \Rightarrow Q\)
+              <br><strong>逆否命题：</strong> \(\neg Q \Rightarrow \neg P\)
+              <br><strong>逻辑等价：</strong> \((P \Rightarrow Q) \equiv (\neg Q \Rightarrow \neg P)\)
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <h4>💡 何时使用逆否证明</h4>
+            <ul>
+              <li>原命题的逆否形式更容易直接证明</li>
+              <li>结论的否定比结论本身更具体、更好操作</li>
+              <li>前提的否定很难直接使用时</li>
+            </ul>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">midterm_sp24.pdf - Q4(b)</span>
+                <span class="difficulty">⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>写出以下命题的逆否命题：<br>
+              "If the robot is powered on, then it is either in motion or its alarm system is activated."
+              <br><br>
+              变量：\(P\): powered on, \(M\): in motion, \(A\): alarm activated
+            </div>
+            <div class="problem-actions">
+              <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <h4>✅ 答案：</h4>
+              <p><strong>原命题：</strong> \(P \Rightarrow (M \lor A)\)</p>
+              <p><strong>逆否命题：</strong> \(\neg(M \lor A) \Rightarrow \neg P\)</p>
+              <p><strong>简化：</strong> \((\neg M \land \neg A) \Rightarrow \neg P\)</p>
+              <p><strong>英文表述：</strong> "If the robot is not in motion and its alarm system is not activated, then it is not powered on."</p>
+            </div>
+          </div>
+
+          <!-- Problem: dis01a Problem 2 - Perfect Square -->
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">dis01a.pdf - Problem 2</span>
+                <span class="difficulty">⭐⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>完全平方数证明
+              <br><br>
+              <strong>(a)</strong> 证明：如果 \(n^2\) 是奇数，那么 \(n\) 也必须是奇数。<br>
+              <strong>(b)</strong> 证明：如果 \(n^2\) 是奇数，那么 \(n^2\) 可以写成 \(8k + 1\) 的形式，其中 \(k\) 是整数。
+            </div>
+            <div class="answer-toggle">
+              <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <strong>解答：</strong>
+
+              <p><strong>(a) 证明：如果 \(n^2\) 是奇数，那么 \(n\) 也是奇数</strong></p>
+
+              <p><strong>证明方法：逆否命题证明（Proof by Contrapositive）</strong></p>
+
+              <p><strong>原命题：</strong>\(n^2 \text{ 奇数} \Rightarrow n \text{ 奇数}\)</p>
+              <p><strong>逆否命题：</strong>\(n \text{ 偶数} \Rightarrow n^2 \text{ 偶数}\)</p>
+
+              <p><strong>证明逆否命题：</strong></p>
+              <ol>
+                <li>假设 \(n\) 是偶数</li>
+                <li>那么 \(n = 2k\) 对某个整数 \(k\)</li>
+                <li>\(n^2 = (2k)^2 = 4k^2 = 2(2k^2)\)</li>
+                <li>设 \(m = 2k^2\)，那么 \(n^2 = 2m\)</li>
+                <li>因此 \(n^2\) 是偶数 ✓</li>
+              </ol>
+
+              <p><strong>结论：</strong>逆否命题成立，因此原命题成立。</p>
+
+              <hr>
+
+              <p><strong>(b) 证明：如果 \(n^2\) 是奇数，那么 \(n^2 = 8k + 1\)</strong></p>
+
+              <p><strong>证明方法：直接证明 + 分情况讨论</strong></p>
+
+              <ol>
+                <li>由 (a) 知，如果 \(n^2\) 是奇数，那么 \(n\) 也是奇数</li>
+                <li>因此 \(n = 2m + 1\) 对某个整数 \(m\)</li>
+                <li>计算 \(n^2\):
+                  \[\begin{align}
+                  n^2 &= (2m + 1)^2 \\
+                  &= 4m^2 + 4m + 1 \\
+                  &= 4m(m + 1) + 1
+                  \end{align}\]
+                </li>
+                <li><strong>关键观察：</strong>\(m\) 和 \(m+1\) 是连续整数，必有一个是偶数</li>
+                <li>因此 \(m(m+1)\) 是偶数，设 \(m(m+1) = 2t\)</li>
+                <li>那么：
+                  \[\begin{align}
+                  n^2 &= 4 \cdot 2t + 1 \\
+                  &= 8t + 1
+                  \end{align}\]
+                </li>
+                <li>设 \(k = t\)，则 \(n^2 = 8k + 1\) ✓</li>
+              </ol>
+
+              <p><strong>关键思想：</strong>奇数的平方除以 8 余 1。这是一个重要的数论性质！</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.4 鸽笼原理 -->
+      <div class="subsection" id="proof-pigeonhole">
+        <h3 class="subsection-title">
+          <button class="toggle-btn" onclick="toggleSection(this)">▶</button>
+          2.4 鸽笼原理（Pigeonhole Principle）
+        </h3>
+        <div class="collapsible-content">
+          <div class="concept-box">
+            <h4>📚 核心概念</h4>
+            <p>鸽笼原理（也称抽屉原理）是一个简单但强大的计数原理。</p>
+          </div>
+
+          <div class="formula-box">
+            <h4>📐 鸽笼原理公式</h4>
+            <div class="formula-item">
+              <strong>基本形式：</strong>
+              如果 \(n\) 个物体放入 \(m\) 个盒子，且 \(n > m\)，<br>
+              那么至少有一个盒子包含多于一个物体。
+            </div>
+            <div class="formula-item">
+              <strong>一般形式：</strong>
+              如果 \(n\) 个物体放入 \(m\) 个盒子，<br>
+              那么至少有一个盒子包含至少 \(\lceil n/m \rceil\) 个物体。
+            </div>
+          </div>
+
+          <div class="tips-box">
+            <h4>💡 应用技巧</h4>
+            <ul>
+              <li>识别"鸽子"（要分配的对象）</li>
+              <li>识别"笼子"（分类标准或容器）</li>
+              <li>计算鸽子和笼子的数量关系</li>
+              <li>常用于证明存在性问题</li>
+            </ul>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">经典应用</span>
+                <span class="difficulty">⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>证明：在任意13个人中，至少有2个人的生日在同一个月。
+            </div>
+            <div class="problem-actions">
+              <button class="btn btn-primary" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <h4>✅ 证明：</h4>
+              <ul>
+                <li><strong>鸽子：</strong>13个人</li>
+                <li><strong>笼子：</strong>12个月份</li>
+                <li>因为 \(13 > 12\)，根据鸽笼原理</li>
+                <li>至少有一个月份包含至少 \(\lceil 13/12 \rceil = 2\) 个人</li>
+                <li>因此至少有2个人的生日在同一个月 ✓</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-header">
+              <div class="problem-meta">
+                <span class="source-tag">dis01a.pdf - Problem 3</span>
+                <span class="difficulty">⭐⭐⭐</span>
+              </div>
+            </div>
+            <div class="problem-content">
+              <strong>题目：</strong>证明：在一个有 \(n \geq 2\) 个人的派对中，至少有 2 个人有相同数量的朋友。
+              <br><br>
+              假设友谊是相互的：如果 Alice 是 Bob 的朋友，那么 Bob 也是 Alice 的朋友。
+            </div>
+            <div class="answer-toggle">
+              <button class="toggle-answer-btn" onclick="toggleAnswer(this)">显示答案</button>
+            </div>
+            <div class="answer-box">
+              <strong>证明（使用鞍笼原理）：</strong>
+
+              <p><strong>分析：</strong></p>
+              <ul>
+                <li>每个人在派对中的朋友数量可能是 0, 1, 2, ..., \(n-1\)</li>
+                <li>这看起来有 \(n\) 种可能的值，但实际上不可能同时出现 0 和 \(n-1\)</li>
+              </ul>
+
+              <p><strong>关键观察：</strong>0 和 \(n-1\) 不能同时存在</p>
+              <ul>
+                <li>如果某人朋友数为 \(n-1\)，则他与其他所有人都是朋友</li>
+                <li>那么就不可能有人朋友数为 0（因为这个人至少与前者是朋友）</li>
+                <li>同理，如果某人朋友数为 0，则没有人能与所有人都是朋友</li>
+              </ul>
+
+              <p><strong>分情况证明：</strong></p>
+
+              <p><strong>情况 1：</strong>存在人朋友数为 0</p>
+              <ul>
+                <li>那么所有人的朋友数只能在 \(\{0, 1, 2, \ldots, n-2\}\) 中</li>
+                <li>这有 \(n-1\) 种可能的值</li>
+                <li>但有 \(n\) 个人（鞍子）</li>
+                <li>根据鞍笼原理，至少有 2 个人有相同数量的朋友 ✓</li>
+              </ul>
+
+              <p><strong>情况 2：</strong>不存在人朋友数为 0</p>
+              <ul>
+                <li>那么所有人的朋友数只能在 \(\{1, 2, \ldots, n-1\}\) 中</li>
+                <li>这有 \(n-1\) 种可能的值</li>
+                <li>但有 \(n\) 个人（鞍子）</li>
+                <li>根据鞍笼原理，至少有 2 个人有相同数量的朋友 ✓</li>
+              </ul>
+
+              <p><strong>结论：</strong>无论哪种情况，都有至少 2 个人有相同数量的朋友。</p>
+
+              <p><strong>关键思想：</strong></p>
+              <ul>
+                <li><strong>鞍子：</strong>\(n\) 个人</li>
+                <li><strong>笼子：</strong>可能的朋友数，但只有 \(n-1\) 种</li>
+                <li>关键是识别出 0 和 \(n-1\) 不能同时存在！</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <button class="back-to-top" id="backToTop">↑</button>
+</body>
+</html>
